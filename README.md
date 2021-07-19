@@ -1,9 +1,8 @@
-# React-Boilerplate
-Pre-set create-react-app project but with custom folder structure. Replace "yourappname" you your app name everywhere in the project and you are good to go!
-
+# simple todo app
 
 # Getting Started with Create React App
 
+<details>
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
