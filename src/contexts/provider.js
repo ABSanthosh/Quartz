@@ -1,31 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "./context";
-import gitHubAuth from "../service/auth";
-import { githubProvider } from "../config/authMethods";
+import {
+  getAuth,
+  gitHubAuthSignin,
+  gitHubAuthLink,
+} from "../firebase/githubAuth";
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [status, setStatus] = useState("loading");
+  const [userState, setUserState] = useState(null);
+
+  useEffect(() => {
+    getAuth().onAuthStateChanged((user) => {
+      if (user) {
+        setUserState(user);
+      }
+    });
+  });
+
+  async function logout() {
+    getAuth().signOut();
+    setUserState(getAuth().currentUser);
+  }
 
   async function login() {
-    try {
-      const response = await gitHubAuth(githubProvider);
-      setUser(response);
-      setStatus("ready");
-      console.log(response);
-      return {
-        status: "success",
-      };
-    } catch (err) {
-      return {
-        status: "fail",
-        message: err || "Error in login",
-      };
+    if (!getAuth().currentUser) {
+      await gitHubAuthSignin(setUserState);
+    } else {
+      await gitHubAuthLink(setUserState);
     }
   }
 
-  const authObject = { user, status, login };
+  const authObject = { userState, login, logout };
 
   return (
     <AuthContext.Provider value={authObject}>{children}</AuthContext.Provider>
