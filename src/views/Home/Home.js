@@ -1,27 +1,23 @@
+import logo from "../../logo.svg";
 import "./Home.scss";
 
-import Github from "../../Assets/Img/github.png";
-import { useAuth } from "../../hooks/useAuth";
-import ProtectedPage from "../../components/ProtectedPage/ProtectedPage";
-
 export default function Home() {
-  const { login } = useAuth();
-
   return (
-    <ProtectedPage>
-      <div className="Home">
-        <div
-          onClick={async () => {
-            await login();
-          }}
-          className="Home__githubSignUp"
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/views/Home/Home.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          <div className="buttonContent">
-            <img src={Github} alt="github" />
-            <span>Sign Up with Github</span>
-          </div>
-        </div>
-      </div>
-    </ProtectedPage>
+          Learn React
+        </a>
+      </header>
+    </div>
   );
 }

@@ -1,15 +1,12 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import * as views from "./views";
-import React from "react";
-import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import * as views from "./views"
+import React from 'react'
 
 export default function Router() {
-  return (
-    <BrowserRouter>
+    return (<BrowserRouter>
       <Switch>
-        <Route exact path="/" component={views.Home} />
-        <ProtectedRoute exact path="/lists" component={views.Lists} />
+        <Route exact path="/"  component={views.Home} />
       </Switch>
     </BrowserRouter>
-  );
+    )
 }
