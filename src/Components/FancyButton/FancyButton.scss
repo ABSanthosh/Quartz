@@ -1,0 +1,26 @@
+@import "../../styles/mixins";
+
+.FancyButtonWrapper {
+  @include make-flex($dir: row);
+  height: 45px;
+  column-gap: 14px;
+  font-family: "Montserrat", sans-serif;
+  width: 140px;
+  border-radius: 5px;
+  background-color: #ffffff;
+
+  border: 1px solid #733f49;
+  cursor: pointer;
+
+  img {
+    height: 24px;
+  }
+  &:hover {
+    background-color: #eeeeee;
+  }
+}
+@media only screen and (max-width: 430px) {
+  .FancyButtonWrapper {
+    width: 80%;
+  }
+}
