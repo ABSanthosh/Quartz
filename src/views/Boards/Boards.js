@@ -1,13 +1,13 @@
 import "./Boards.scss";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 // import PropTypes from "prop-types";
 import { useAuth } from "../../hooks/useAuth";
 import { useHistory } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { getAuth } from "../../firebase/githubAuth";
-import BoardHeader from "./Components/BoardHeader/BoardHeader";
-import FancyButton from "../../Components/FancyButton/FancyButton";
+import "../../Components/FancyButton/FancyButton.scss";
 import NamePlate from "./Components/NamePlate/NamePlate";
+import BoardHeader from "./Components/BoardHeader/BoardHeader";
 function Boards() {
   let history = useHistory();
   const { userState, logout } = useAuth();
@@ -28,6 +28,9 @@ function Boards() {
   });
 
   useEffect(() => {
+    // Stupid netlify! Remove this when deploying to production
+    setBoardTitle("Getting Started");
+
     setNavState(!defaultNavState);
     document.getElementById("NavBarInput").checked = !defaultNavState;
   }, [defaultNavState]);
