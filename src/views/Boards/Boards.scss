@@ -1,0 +1,140 @@
+@import "../../styles/mixins";
+
+.BoardsWrapper {
+  width: 100%;
+  height: calc(100% - 30px);
+  transform: translateY(30px);
+  @include make-flex($dir: row, $just: unset, $align: unset);
+  &__subHeader {
+    max-width: calc(100% - 30px);
+    padding: 5px 15px;
+    height: 40px;
+    @include make-flex($just: flex-start, $dir: row);
+    column-gap: 20px;
+
+    &--title {
+      margin: unset;
+      font-family: "Montserrat", sans-serif;
+      text-align: center;
+      transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+      &--open {
+        transform: translateX(-47px);
+      }
+    }
+
+    &--hamburger {
+      &--open {
+        transform: translateX(-60px);
+      }
+      &--mobileOpen {
+        transform: translateX(205px);
+      }
+      height: 28px;
+      position: relative;
+      width: 28px;
+      @include make-flex();
+      transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+
+      #NavBarInput {
+        cursor: pointer;
+        position: absolute;
+        opacity: 0;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 25px;
+        margin: 0;
+        width: 25px;
+        z-index: 1;
+      }
+      .hamButton {
+        height: 25px;
+        top: 0;
+        left: 0;
+        width: auto;
+        @include make-flex();
+        label {
+          @include make-flex($just: space-around);
+          height: 100%;
+          margin: unset;
+          span {
+            display: block;
+            width: 25px;
+            border-top: 1.3px solid rgb(124, 34, 34);
+            transform-origin: 4px 0px;
+            transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+            &:first-child {
+              transform-origin: 0% 0%;
+            }
+            &:nth-last-child(2) {
+              transform-origin: 0% 100%;
+            }
+          }
+        }
+      }
+
+      #NavBarInput:checked ~ .hamButton > label > .span.HL1 {
+        opacity: 1;
+        transform: rotate(45deg) translate(3px, -4px);
+      }
+      #NavBarInput:checked ~ .hamButton > label > .span.HL2 {
+        opacity: 0;
+        transform: rotate(0deg) scale(0.2, 0.2);
+      }
+      #NavBarInput:checked ~ .hamButton > label > .span.HL3 {
+        transform: rotate(-45deg) translate(4px, 0px);
+      }
+    }
+  }
+
+  &__sideBar {
+    width: 240px; /* add the padding here*/
+    background-color: #f3efe9;
+    height: calc(100% - 0px);
+    // padding: 0 20px;
+    border-right: 4px solid #cc8296;
+    transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+    margin-left: -240px; /*and here*/
+
+    &--open {
+      margin-left: 0px !important;
+    }
+    &--top,
+    &--bottom {
+        width: 100%;
+      @include make-flex();
+    }
+
+    &--top {
+      margin-top: 50px;
+    }
+    &--bottom {
+      margin-bottom: 20px;
+    }
+
+    @include make-flex($just: space-between);
+  }
+
+  &__frame {
+    height: 100%;
+    width: 100%;
+    transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+    &--open {
+      width: calc(100% - 260px);
+    }
+  }
+
+  &__contentContainer {
+    height: calc(100% - 65px);
+    padding: 0 15px 15px 15px;
+    width: calc(100% - 30px);
+  }
+}
+
+@media only screen and (max-width: 980px) {
+  .BoardsWrapper {
+    &__sideBar {
+      position: fixed;
+    }
+  }
+}
