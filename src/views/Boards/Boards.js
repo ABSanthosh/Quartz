@@ -9,12 +9,11 @@ import "../../Components/FancyButton/FancyButton.scss";
 import NamePlate from "./Components/NamePlate/NamePlate";
 import BoardHeader from "./Components/BoardHeader/BoardHeader";
 import PageContent from "./Components/PageContent/PageContent";
-import ContentEditable from "react-contenteditable";
 import EditableBlock from "./Components/EditableBlock/EditableBlock";
 
 function Boards() {
   let history = useHistory();
-  const { userState, logout } = useAuth();
+  const { logout } = useAuth();
 
   const defaultNavState = useMediaQuery({
     query: "(max-width: 980px)",
