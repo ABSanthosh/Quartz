@@ -17,6 +17,26 @@
       font-family: "Montserrat", sans-serif;
       text-align: center;
       transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+
+      max-width: 230px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 5px;
+
+      &::before {
+        -webkit-text-fill-color: rgb(55, 53, 47) !important;
+      }
+
+      &:focus {
+        background-color: #f3efe9;
+        cursor: text;
+        &::before {
+          content: "";
+        }
+      }
       &--open {
         transform: translateX(-47px);
       }
@@ -91,7 +111,6 @@
     width: 240px; /* add the padding here*/
     background-color: #f3efe9;
     height: calc(100% - 0px);
-    // padding: 0 20px;
     border-right: 4px solid #cc8296;
     transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
     margin-left: -240px; /*and here*/
@@ -101,7 +120,7 @@
     }
     &--top,
     &--bottom {
-        width: 100%;
+      width: 100%;
       @include make-flex();
     }
 
@@ -119,15 +138,31 @@
     height: 100%;
     width: 100%;
     transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+
     &--open {
-      width: calc(100% - 260px);
+      width: calc(100% - 244px);
     }
   }
 
   &__contentContainer {
-    height: calc(100% - 65px);
-    padding: 0 15px 15px 15px;
-    width: calc(100% - 30px);
+    transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+
+    max-height: calc(100% - 50px);
+    height: auto;
+
+    width: 100%;
+    @include make-flex($just: flex-start);
+    overflow: auto;
+    &--title {
+      // box-sizing: border-box;
+      // padding-left: 96px;
+      // padding-right: 96px;
+      margin-bottom: 15px;
+
+      margin-top: 80px;
+      max-width: 100%;
+      width: calc(900px - 192px);
+    }
   }
 }
 
@@ -135,6 +170,33 @@
   .BoardsWrapper {
     &__sideBar {
       position: fixed;
+    }
+    &__frame {
+      &--open {
+        width: 100%;
+      }
+    }
+    // &__contentContainer {
+    //   &--title {
+    //     width: calc(100% - 52px);
+    //     padding-left: 24px;
+    //     padding-right: 24px;
+    //     margin-top: 30px;
+    //   }
+    // }
+  }
+}
+
+@media only screen and (max-width: 968px) {
+  .BoardsWrapper {
+    &__contentContainer {
+      &--title {
+        width: calc(100% - 52px);
+        padding-left: 24px;
+        padding-right: 24px;
+        margin-top: 25px;
+        margin-bottom: 15px;
+      }
     }
   }
 }

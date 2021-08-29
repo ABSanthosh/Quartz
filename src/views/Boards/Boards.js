@@ -8,6 +8,10 @@ import { getAuth } from "../../firebase/githubAuth";
 import "../../Components/FancyButton/FancyButton.scss";
 import NamePlate from "./Components/NamePlate/NamePlate";
 import BoardHeader from "./Components/BoardHeader/BoardHeader";
+import PageContent from "./Components/PageContent/PageContent";
+import ContentEditable from "react-contenteditable";
+import EditableBlock from "./Components/EditableBlock/EditableBlock";
+
 function Boards() {
   let history = useHistory();
   const { userState, logout } = useAuth();
@@ -91,18 +95,31 @@ function Boards() {
               </label>
             </div>
           </div>
-          <p
+          <EditableBlock
+            html={boardTitle}
+            onChange={(e) => {
+              setBoardTitle(e.target.value);
+            }}
+            placeholder="Untitled"
+            tagName="p"
             className={`BoardsWrapper__subHeader--title ${
               navState && !defaultNavState
                 ? "BoardsWrapper__subHeader--title--open"
                 : ""
             }`}
-          >
-            {boardTitle}
-          </p>
+          />
         </div>
         <div className="BoardsWrapper__contentContainer">
-          <p>{userState.uid}</p>
+          <EditableBlock
+            className="BoardsWrapper__contentContainer--title"
+            html={boardTitle}
+            onChange={(e) => {
+              setBoardTitle(e.target.value);
+            }}
+            placeholder="Untitled"
+            tagName="h1"
+          />
+          <PageContent navState={navState} />
         </div>
       </div>
     </div>
