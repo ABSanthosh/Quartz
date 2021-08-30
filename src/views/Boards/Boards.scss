@@ -26,6 +26,12 @@
       padding: 5px 10px;
       border-radius: 5px;
 
+      br {
+        content: " ";
+      }
+      br:after {
+        content: " ";
+      }
       &::before {
         -webkit-text-fill-color: rgb(55, 53, 47) !important;
       }
@@ -162,6 +168,12 @@
       margin-top: 80px;
       max-width: 100%;
       width: calc(900px - 192px);
+
+      color: rgb(55, 53, 47);
+      font-weight: 700;
+      line-height: 1.2;
+      font-size: 40px;
+      cursor: text;
     }
   }
 }

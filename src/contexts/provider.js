@@ -6,10 +6,14 @@ import {
   gitHubAuthSignin,
   gitHubAuthLink,
 } from "../firebase/githubAuth";
+import md5 from "../Utils/md5";
 
 export function AuthProvider({ children }) {
+  const initialBlock = { id: md5(), html: "", tagName: "div" };
+
   const [userState, setUserState] = useState(null);
   const [status, setStatus] = useState("loading");
+  const [pageDetails, setPageDetails] = useState([initialBlock]);
 
   useEffect(() => {
     getAuth().onAuthStateChanged((user) => {
@@ -33,7 +37,14 @@ export function AuthProvider({ children }) {
     }
   }
 
-  const authObject = { userState, login, logout, status };
+  const authObject = {
+    userState,
+    pageDetails,
+    setPageDetails,
+    login,
+    logout,
+    status,
+  };
 
   return (
     <AuthContext.Provider value={authObject}>{children}</AuthContext.Provider>

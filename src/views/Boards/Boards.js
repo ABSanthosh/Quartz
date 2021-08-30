@@ -95,9 +95,23 @@ function Boards() {
             </div>
           </div>
           <EditableBlock
-            html={boardTitle}
+            html={boardTitle.replace("<div><br></div>", "&nbsp")}
             onChange={(e) => {
               setBoardTitle(e.target.value);
+            }}
+            onKeyDown={(e) => {
+              if (!e) {
+                e = window.event;
+              }
+              var keyCode = e.which || e.keyCode;
+              if (keyCode === 13 && !e.shiftKey) {
+                console.log("Just enter");
+                if (e.preventDefault) {
+                  e.preventDefault();
+                } else {
+                  e.returnValue = false;
+                }
+              }
             }}
             placeholder="Untitled"
             tagName="p"
@@ -112,6 +126,21 @@ function Boards() {
           <EditableBlock
             className="BoardsWrapper__contentContainer--title"
             html={boardTitle}
+            onKeyDown={(e) => {
+              if (!e) {
+                e = window.event;
+              }
+              var keyCode = e.which || e.keyCode;
+              if (keyCode === 13 && !e.shiftKey) {
+                console.log("Just enter");
+                if (e.preventDefault) {
+                  e.preventDefault();
+                } else {
+                  e.returnValue = false;
+                }
+                document.execCommand("insertLineBreak");
+              }
+            }}
             onChange={(e) => {
               setBoardTitle(e.target.value);
             }}

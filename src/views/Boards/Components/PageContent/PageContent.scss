@@ -11,6 +11,14 @@
   line-height: 1.5;
   padding-bottom: 30vh;
   transition: width 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+
+  &__block {
+    width: 100%;
+    white-space: pre-wrap;
+    word-break: break-word;
+    caret-color: rgb(55, 53, 47);
+    padding: 3px 2px;
+  }
 }
 
 @media only screen and (max-width: 968px) {
