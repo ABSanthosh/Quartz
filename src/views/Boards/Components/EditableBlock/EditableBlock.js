@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import "./EditableBlock.scss";
 import ContentEditable from "react-contenteditable";
@@ -18,8 +18,8 @@ function EditableBlock({
 }) {
   const blockRef = useRef();
 
-  const [innerHtml, setInnerHtml] = useState(html);
-  const [isPlaceholder, setIsPlaceholder] = useState(true);
+  // const [innerHtml, setInnerHtml] = useState(html);
+  // const [isPlaceholder, setIsPlaceholder] = useState(true);
   return (
     <ContentEditable
       className={`EditableBlockWrapper ${className} ${
@@ -29,21 +29,14 @@ function EditableBlock({
       tagName={tagName}
       html={html}
       disabled={isDisabled}
-      placeholder={isPlaceholder ? placeholder : ""}
+      placeholder={placeholder}
       onChange={(e) => {
         updateData({ id: id, html: blockRef.current.innerHTML });
-        // setInnerHtml(blockRef.current.innerHTML);
-        // if (blockRef.current.innerHTML === "") {
-        //   setIsPlaceholder(true);
-        // } else {
-        //   setIsPlaceholder(false);
-        // }
-        // console.log(blockRef.current.innerHTML);
       }}
       onKeyDown={(e) => {
         if (e.key === "Enter") {
           e.preventDefault();
-          console.log("enter")
+          console.log("enter");
           addBlock({ id: id, ref: blockRef });
         }
         if (e.key === "Backspace" && html === "") {
