@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import "./EditableBlock.scss";
 import ContentEditable from "react-contenteditable";
+import setCaretToEnd from "../../../../Utils/setCaretToEnd";
 
 function EditableBlock({
   className,
@@ -10,7 +11,8 @@ function EditableBlock({
   html,
   placeholder,
   addBlock,
-  removeBlock,
+  tabIndex,
+  removeCurrentBlock,
   isDisabled,
   updateData,
   id,
@@ -25,6 +27,15 @@ function EditableBlock({
       className={`EditableBlockWrapper ${className} ${
         html === "" ? "EditableBlockPlaceHolder" : ""
       }`}
+      tabIndex={tabIndex}
+      // onPaste={(e) => {
+      //   e.preventDefault();
+      //   const text = e.clipboardData
+      //     .getData("text/html")
+      //     .replaceAll("/background-color:.*;/", "");
+      //   console.log(text);
+      //   document.execCommand("insertHTML", false, text);
+      // }}
       innerRef={blockRef}
       tagName={tagName}
       html={html}
@@ -34,14 +45,37 @@ function EditableBlock({
         updateData({ id: id, html: blockRef.current.innerHTML });
       }}
       onKeyDown={(e) => {
+        // console.log(e.key);
         if (e.key === "Enter") {
           e.preventDefault();
-          console.log("enter");
           addBlock({ id: id, ref: blockRef });
         }
-        if (e.key === "Backspace" && html === "") {
+        if (
+          e.key === "Backspace" &&
+          (html === "" || blockRef.current.innerHTML === "")
+        ) {
           e.preventDefault();
-          removeBlock({ id: id, ref: blockRef });
+          removeCurrentBlock({ id: id, ref: blockRef });
+        }
+        if (e.key === "ArrowDown" && blockRef.current.nextSibling) {
+          e.preventDefault();
+          setCaretToEnd(blockRef.current, e.key);
+        }
+        if (e.key === "ArrowUp" && blockRef.current.previousElementSibling) {
+          e.preventDefault();
+          setCaretToEnd(blockRef.current, e.key);
+        }
+        if (e.key === "ArrowLeft" && window.getSelection().anchorOffset === 0) {
+          e.preventDefault();
+          setCaretToEnd(blockRef.current, e.key);
+        }
+        if (
+          e.key === "ArrowRight" &&
+          window.getSelection().anchorOffset ===
+            blockRef.current.innerHTML.length
+        ) {
+          e.preventDefault();
+          setCaretToEnd(blockRef.current, e.key);
         }
       }}
       {...props}
@@ -58,8 +92,9 @@ EditableBlock.propTypes = {
   isDisabled: PropTypes.bool,
   addBlock: PropTypes.func,
   id: PropTypes.string,
-  removeBlock: PropTypes.func,
+  removeCurrentBlock: PropTypes.func,
   updateData: PropTypes.func,
+  tabIndex: PropTypes.number,
 };
 
 EditableBlock.defaultProps = {
@@ -71,8 +106,9 @@ EditableBlock.defaultProps = {
   isDisabled: false,
   addBlock: () => {},
   id: "",
-  removeBlock: () => {},
+  removeCurrentBlock: () => {},
   updateData: () => {},
+  tabIndex: 0,
 };
 
 export default EditableBlock;
