@@ -1,4 +1,5 @@
 function setCaretToPos(pos, el) {
+  console.log(el.innerText);
   for (var node of el.childNodes) {
     if (node.nodeType === 3) {
       if (node.length >= pos) {
@@ -50,18 +51,29 @@ function right(el) {
 }
 
 export default function setCaretToEnd(el, direction) {
-  //   const range = document.createRange();
   const sel = window.getSelection();
+
   if (direction === "ArrowDown") {
-    setCaretToPos(sel.anchorOffset, el.nextSibling);
+    if (el.nextSibling.innerText !== "") {
+      setCaretToPos(sel.anchorOffset, el.nextSibling);
+    } else {
+      right(el.nextSibling);
+    }
   }
   if (direction === "ArrowUp") {
-    setCaretToPos(sel.anchorOffset, el.previousElementSibling);
+    if (el.previousElementSibling.innerText !== "") {
+      setCaretToPos(sel.anchorOffset, el.previousElementSibling);
+    } else {
+      left(el.previousElementSibling);
+    }
   }
   if (direction === "ArrowLeft" && el.previousElementSibling) {
     left(el.previousElementSibling);
   }
   if (direction === "ArrowRight" && el.nextSibling) {
     right(el.nextSibling);
+  }
+  if (direction === "Backspace") {
+    left(el.previousElementSibling);
   }
 }

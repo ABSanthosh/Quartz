@@ -7,7 +7,10 @@ import { useAuth } from "../../../../hooks/useAuth";
 import setCaretToEnd from "../../../../Utils/setCaretToEnd";
 
 function PageContent({ navState }) {
-  const { pageDetails, setPageDetails } = useAuth();
+  const initialBlock = { id: md5(), html: "", tagName: "div" };
+  // const { pageDetails, setPageDetails } = useAuth();
+
+  const [pageDetails, setPageDetails] = useState([initialBlock]);
 
   const [nextFocus, setNextFocus] = useState({});
 
@@ -15,11 +18,9 @@ function PageContent({ navState }) {
     if (nextFocus.current) nextFocus.current.nextSibling.focus();
   }, [nextFocus]);
 
-
   function addBlock(currentBlock) {
     const newBlock = { id: md5(), html: "", tagName: "div" };
     const index = pageDetails.map((block) => block.id).indexOf(currentBlock.id);
-    console.log(pageDetails);
     const updatedPageDetails = [...pageDetails];
     updatedPageDetails.splice(index + 1, 0, newBlock);
 
@@ -30,6 +31,18 @@ function PageContent({ navState }) {
     }
   }
 
+  function deletePreviousBlock(currentBlock) {
+    console.log(currentBlock.ref.current.nextSibling.innerText);
+    const blocks = pageDetails;
+    const index = blocks.map((block) => block.id).indexOf(currentBlock.id);
+    const updatedPageDetails = [...pageDetails];
+    updatedPageDetails[index] =
+      updatedPageDetails[index] +
+      currentBlock.ref.current.nextSibling.innerHTML;
+    updatedPageDetails.splice(index + 1, 1);
+    setPageDetails(updatedPageDetails);
+  }
+
   function removeCurrentBlock(currentBlock) {
     const previousBlock = currentBlock.ref.current.previousElementSibling;
     if (previousBlock) {
@@ -38,8 +51,7 @@ function PageContent({ navState }) {
       const updatedPageDetails = [...blocks];
       updatedPageDetails.splice(index, 1);
       setPageDetails(updatedPageDetails);
-      setCaretToEnd(previousBlock);
-      previousBlock.focus();
+      setCaretToEnd(currentBlock.ref.current, "Backspace");
     }
   }
 
@@ -70,6 +82,7 @@ function PageContent({ navState }) {
             addBlock={addBlock}
             removeCurrentBlock={removeCurrentBlock}
             updateData={updateData}
+            deletePreviousBlock={deletePreviousBlock}
           />
         );
       })}

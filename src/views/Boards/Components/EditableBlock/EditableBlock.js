@@ -15,6 +15,7 @@ function EditableBlock({
   removeCurrentBlock,
   isDisabled,
   updateData,
+  deletePreviousBlock,
   id,
   ...props
 }) {
@@ -28,14 +29,6 @@ function EditableBlock({
         html === "" ? "EditableBlockPlaceHolder" : ""
       }`}
       tabIndex={tabIndex}
-      // onPaste={(e) => {
-      //   e.preventDefault();
-      //   const text = e.clipboardData
-      //     .getData("text/html")
-      //     .replaceAll("/background-color:.*;/", "");
-      //   console.log(text);
-      //   document.execCommand("insertHTML", false, text);
-      // }}
       innerRef={blockRef}
       tagName={tagName}
       html={html}
@@ -56,6 +49,15 @@ function EditableBlock({
         ) {
           e.preventDefault();
           removeCurrentBlock({ id: id, ref: blockRef });
+        }
+        if (
+          e.key === "Delete" &&
+          blockRef.current.nextSibling &&
+          window.getSelection().anchorOffset ===
+            blockRef.current.innerHTML.length
+        ) {
+          e.preventDefault();
+          deletePreviousBlock({ id: id, ref: blockRef });
         }
         if (e.key === "ArrowDown" && blockRef.current.nextSibling) {
           e.preventDefault();
@@ -95,6 +97,7 @@ EditableBlock.propTypes = {
   removeCurrentBlock: PropTypes.func,
   updateData: PropTypes.func,
   tabIndex: PropTypes.number,
+  deletePreviousBlock: PropTypes.func,
 };
 
 EditableBlock.defaultProps = {
@@ -109,6 +112,7 @@ EditableBlock.defaultProps = {
   removeCurrentBlock: () => {},
   updateData: () => {},
   tabIndex: 0,
+  deletePreviousBlock: () => {},
 };
 
 export default EditableBlock;
