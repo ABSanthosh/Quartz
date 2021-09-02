@@ -1,5 +1,4 @@
 function setCaretToPos(pos, el) {
-  console.log(el.innerText);
   for (var node of el.childNodes) {
     if (node.nodeType === 3) {
       if (node.length >= pos) {

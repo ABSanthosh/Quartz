@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import "./PageContent.scss";
 import EditableBlock from "../EditableBlock/EditableBlock";
@@ -7,24 +7,31 @@ import { useAuth } from "../../../../hooks/useAuth";
 import setCaretToEnd from "../../../../Utils/setCaretToEnd";
 
 function PageContent({ navState }) {
-  const initialBlock = { id: md5(), html: "", tagName: "div" };
-  // const { pageDetails, setPageDetails } = useAuth();
+  const { pageDetails, setPageDetails } = useAuth();
 
-  const [pageDetails, setPageDetails] = useState([initialBlock]);
+  const pageRef = useRef(pageDetails);
 
   const [nextFocus, setNextFocus] = useState({});
+
+  useEffect(() => {
+    pageRef.current = pageDetails;
+    console.log(pageDetails);
+  }, [pageDetails]);
 
   useEffect(() => {
     if (nextFocus.current) nextFocus.current.nextSibling.focus();
   }, [nextFocus]);
 
+  // Functioning add block 
   function addBlock(currentBlock) {
     const newBlock = { id: md5(), html: "", tagName: "div" };
-    const index = pageDetails.map((block) => block.id).indexOf(currentBlock.id);
-    const updatedPageDetails = [...pageDetails];
-    updatedPageDetails.splice(index + 1, 0, newBlock);
+    const index = pageRef.current
+      .map((block) => block.id)
+      .indexOf(currentBlock.id);
 
-    setPageDetails(updatedPageDetails);
+    const updatedPageDetails = [...pageRef.current];
+    updatedPageDetails.splice(index + 1, 0, newBlock);
+    pageRef.current = updatedPageDetails;
     setNextFocus(currentBlock.ref);
     if (currentBlock.ref.current.nextSibling) {
       currentBlock.ref.current.nextSibling.focus();
@@ -32,35 +39,35 @@ function PageContent({ navState }) {
   }
 
   function deletePreviousBlock(currentBlock) {
-    console.log(currentBlock.ref.current.nextSibling.innerText);
-    const blocks = pageDetails;
+    const blocks = pageRef.current;
     const index = blocks.map((block) => block.id).indexOf(currentBlock.id);
-    const updatedPageDetails = [...pageDetails];
+    const updatedPageDetails = [...pageRef.current];
     updatedPageDetails[index] =
-      updatedPageDetails[index] +
-      currentBlock.ref.current.nextSibling.innerHTML;
+      updatedPageDetails[index] + pageRef.current.nextSibling.innerHTML;
     updatedPageDetails.splice(index + 1, 1);
-    setPageDetails(updatedPageDetails);
+    pageRef.current = updatedPageDetails;
   }
 
   function removeCurrentBlock(currentBlock) {
     const previousBlock = currentBlock.ref.current.previousElementSibling;
     if (previousBlock) {
-      const blocks = pageDetails;
+      const blocks = pageRef.current;
       const index = blocks.map((block) => block.id).indexOf(currentBlock.id);
       const updatedPageDetails = [...blocks];
       updatedPageDetails.splice(index, 1);
-      setPageDetails(updatedPageDetails);
+      pageRef.current = updatedPageDetails;
       setCaretToEnd(currentBlock.ref.current, "Backspace");
     }
   }
 
   function updateData(currentBlock) {
-    const blocks = pageDetails;
+    const blocks = pageRef.current;
+    console.log(blocks);
     const index = blocks.map((block) => block.id).indexOf(currentBlock.id);
     const updatedPageDetails = [...blocks];
     updatedPageDetails[index].html = currentBlock.html;
-    setPageDetails(updatedPageDetails);
+    pageRef.current = updatedPageDetails;
+    setPageDetails(pageRef.current);
   }
 
   return (
@@ -69,19 +76,20 @@ function PageContent({ navState }) {
         navState ? "PageContentWrapper--open" : ""
       }`}
     >
-      {pageDetails.map((block, key) => {
+      {pageRef.current.map((block, key) => {
         return (
           <EditableBlock
             key={key}
-            tabIndex={key}
             id={block.id}
-            className="PageContentWrapper__block"
-            tagName={block.tagName}
+            tabIndex={key}
             html={block.html}
-            placeholder="Type '/' for commands"
+            pageRef={pageRef}
             addBlock={addBlock}
-            removeCurrentBlock={removeCurrentBlock}
             updateData={updateData}
+            tagName={block.tagName}
+            placeholder="Type '/' for commands"
+            className="PageContentWrapper__block"
+            removeCurrentBlock={removeCurrentBlock}
             deletePreviousBlock={deletePreviousBlock}
           />
         );

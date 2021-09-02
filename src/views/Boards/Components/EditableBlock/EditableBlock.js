@@ -5,24 +5,22 @@ import ContentEditable from "react-contenteditable";
 import setCaretToEnd from "../../../../Utils/setCaretToEnd";
 
 function EditableBlock({
-  className,
+  id,
+  html,
+  pageRef,
   tagName,
   onChange,
-  html,
-  placeholder,
   addBlock,
   tabIndex,
-  removeCurrentBlock,
-  isDisabled,
+  className,
   updateData,
+  isDisabled,
+  placeholder,
+  removeCurrentBlock,
   deletePreviousBlock,
-  id,
   ...props
 }) {
   const blockRef = useRef();
-
-  // const [innerHtml, setInnerHtml] = useState(html);
-  // const [isPlaceholder, setIsPlaceholder] = useState(true);
   return (
     <ContentEditable
       className={`EditableBlockWrapper ${className} ${
@@ -35,20 +33,19 @@ function EditableBlock({
       disabled={isDisabled}
       placeholder={placeholder}
       onChange={(e) => {
-        updateData({ id: id, html: blockRef.current.innerHTML });
+        updateData({ id: id, html: blockRef.current.innerHTML,parentRef: pageRef });
       }}
       onKeyDown={(e) => {
-        // console.log(e.key);
         if (e.key === "Enter") {
           e.preventDefault();
-          addBlock({ id: id, ref: blockRef });
+          addBlock({ id: id, ref: blockRef,parentRef: pageRef });
         }
         if (
           e.key === "Backspace" &&
           (html === "" || blockRef.current.innerHTML === "")
         ) {
           e.preventDefault();
-          removeCurrentBlock({ id: id, ref: blockRef });
+          removeCurrentBlock({ id: id, ref: blockRef,parentRef: pageRef });
         }
         if (
           e.key === "Delete" &&
@@ -57,7 +54,7 @@ function EditableBlock({
             blockRef.current.innerHTML.length
         ) {
           e.preventDefault();
-          deletePreviousBlock({ id: id, ref: blockRef });
+          deletePreviousBlock({ id: id, ref: blockRef,parentRef: pageRef });
         }
         if (e.key === "ArrowDown" && blockRef.current.nextSibling) {
           e.preventDefault();
@@ -86,32 +83,34 @@ function EditableBlock({
 }
 
 EditableBlock.propTypes = {
-  className: PropTypes.string,
-  tagName: PropTypes.string,
-  onChange: PropTypes.func,
-  html: PropTypes.string,
-  placeholder: PropTypes.string,
-  isDisabled: PropTypes.bool,
-  addBlock: PropTypes.func,
   id: PropTypes.string,
-  removeCurrentBlock: PropTypes.func,
-  updateData: PropTypes.func,
+  html: PropTypes.string,
+  onChange: PropTypes.func,
+  addBlock: PropTypes.func,
+  tagName: PropTypes.string,
   tabIndex: PropTypes.number,
+  isDisabled: PropTypes.bool,
+  updateData: PropTypes.func,
+  className: PropTypes.string,
+  testFunction: PropTypes.func,
+  placeholder: PropTypes.string,
+  removeCurrentBlock: PropTypes.func,
   deletePreviousBlock: PropTypes.func,
 };
 
 EditableBlock.defaultProps = {
+  id: "",
+  html: "",
+  tabIndex: 0,
   className: "",
   tagName: "div",
-  onChange: () => {},
-  html: "",
   placeholder: "",
   isDisabled: false,
+  onChange: () => {},
   addBlock: () => {},
-  id: "",
-  removeCurrentBlock: () => {},
   updateData: () => {},
-  tabIndex: 0,
+  testFunction: () => {},
+  removeCurrentBlock: () => {},
   deletePreviousBlock: () => {},
 };
 
