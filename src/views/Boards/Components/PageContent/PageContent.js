@@ -4,7 +4,10 @@ import "./PageContent.scss";
 import EditableBlock from "../EditableBlock/EditableBlock";
 import md5 from "../../../../Utils/md5";
 import { useAuth } from "../../../../hooks/useAuth";
-import setCaretToEnd from "../../../../Utils/setCaretToEnd";
+import setCaretToEnd, {
+  right,
+  setCaretToPos,
+} from "../../../../Utils/setCaretToEnd";
 
 function PageContent({ navState }) {
   const { pageDetails, setPageDetails } = useAuth();
@@ -12,32 +15,67 @@ function PageContent({ navState }) {
   const pageRef = useRef(pageDetails);
 
   const [nextFocus, setNextFocus] = useState({});
+  const [backspaceFocus, setBackspaceFocus] = useState(null);
+  const [newLineFocus, setNewLineFocus] = useState(null);
 
   useEffect(() => {
     pageRef.current = pageDetails;
-    console.log(pageDetails);
   }, [pageDetails]);
 
   useEffect(() => {
-    if (nextFocus.current) nextFocus.current.nextSibling.focus();
-  }, [nextFocus]);
+    if (newLineFocus !== null) {
+      console.log("newLineFocus", newLineFocus);
+      setCaretToPos(0, newLineFocus);
+      setNewLineFocus(null);
+    }
 
-  // Functioning add block 
+    if (nextFocus.current) {
+      nextFocus.current.nextSibling.focus();
+      setNextFocus({ current: null });
+    }
+  }, [newLineFocus, nextFocus]);
+
+  useEffect(() => {
+    if (backspaceFocus !== null) {
+      setCaretToPos(backspaceFocus[0], backspaceFocus[1]);
+      backspaceFocus[1].focus();
+      setBackspaceFocus(null);
+    }
+  }, [backspaceFocus]);
+
+  // Functioning add block
   function addBlock(currentBlock) {
-    const newBlock = { id: md5(), html: "", tagName: "div" };
+    const remainingOldLine = currentBlock.ref.current.innerHTML.slice(
+      0,
+      currentBlock.offset
+    );
+
+    const newBlock = {
+      id: md5(),
+      html: currentBlock.ref.current.innerHTML.slice(
+        currentBlock.offset,
+        currentBlock.ref.current.innerHTML.length
+      ),
+      tagName: "div",
+    };
+
     const index = pageRef.current
       .map((block) => block.id)
       .indexOf(currentBlock.id);
 
     const updatedPageDetails = [...pageRef.current];
+    updatedPageDetails[index].html = remainingOldLine;
     updatedPageDetails.splice(index + 1, 0, newBlock);
     pageRef.current = updatedPageDetails;
-    setNextFocus(currentBlock.ref);
+    setPageDetails(pageRef.current);
     if (currentBlock.ref.current.nextSibling) {
       currentBlock.ref.current.nextSibling.focus();
     }
+    setNewLineFocus(currentBlock.ref.current.nextSibling);
+    setNextFocus(currentBlock.ref);
   }
 
+  // TODO: Delete button functionality
   function deletePreviousBlock(currentBlock) {
     const blocks = pageRef.current;
     const index = blocks.map((block) => block.id).indexOf(currentBlock.id);
@@ -48,21 +86,29 @@ function PageContent({ navState }) {
     pageRef.current = updatedPageDetails;
   }
 
+  // Functioning delete block function
   function removeCurrentBlock(currentBlock) {
     const previousBlock = currentBlock.ref.current.previousElementSibling;
     if (previousBlock) {
       const blocks = pageRef.current;
       const index = blocks.map((block) => block.id).indexOf(currentBlock.id);
       const updatedPageDetails = [...blocks];
+      console.log(
+        updatedPageDetails[index - 1],
+        currentBlock.ref.current.innerHTML
+      );
+      const previousBlockLength = updatedPageDetails[index - 1].html.length;
+      updatedPageDetails[index - 1].html =
+        updatedPageDetails[index - 1].html + currentBlock.ref.current.innerHTML;
       updatedPageDetails.splice(index, 1);
       pageRef.current = updatedPageDetails;
-      setCaretToEnd(currentBlock.ref.current, "Backspace");
+      setBackspaceFocus([previousBlockLength, previousBlock]);
+      setPageDetails(pageRef.current);
     }
   }
 
   function updateData(currentBlock) {
     const blocks = pageRef.current;
-    console.log(blocks);
     const index = blocks.map((block) => block.id).indexOf(currentBlock.id);
     const updatedPageDetails = [...blocks];
     updatedPageDetails[index].html = currentBlock.html;
@@ -83,7 +129,6 @@ function PageContent({ navState }) {
             id={block.id}
             tabIndex={key}
             html={block.html}
-            pageRef={pageRef}
             addBlock={addBlock}
             updateData={updateData}
             tagName={block.tagName}
@@ -102,8 +147,6 @@ PageContent.propTypes = {
   navState: PropTypes.bool.isRequired,
 };
 
-PageContent.defaultProps = {
-  // bla: 'test',
-};
+PageContent.defaultProps = {};
 
 export default PageContent;

@@ -7,7 +7,7 @@ import setCaretToEnd from "../../../../Utils/setCaretToEnd";
 function EditableBlock({
   id,
   html,
-  pageRef,
+
   tagName,
   onChange,
   addBlock,
@@ -33,19 +33,25 @@ function EditableBlock({
       disabled={isDisabled}
       placeholder={placeholder}
       onChange={(e) => {
-        updateData({ id: id, html: blockRef.current.innerHTML,parentRef: pageRef });
+        updateData({ id: id, html: blockRef.current.innerHTML });
       }}
       onKeyDown={(e) => {
         if (e.key === "Enter") {
           e.preventDefault();
-          addBlock({ id: id, ref: blockRef,parentRef: pageRef });
+          // console.log(blockRef.current.innerHTML.slice(window.getSelection().anchorOffset,blockRef.current.innerHTML.length))
+          addBlock({
+            id: id,
+            ref: blockRef,
+            offset: window.getSelection().anchorOffset,
+          });
         }
         if (
           e.key === "Backspace" &&
-          (html === "" || blockRef.current.innerHTML === "")
+          window.getSelection().anchorOffset === 0
+          // (html === "" || blockRef.current.innerHTML === "")
         ) {
           e.preventDefault();
-          removeCurrentBlock({ id: id, ref: blockRef,parentRef: pageRef });
+          removeCurrentBlock({ id: id, ref: blockRef });
         }
         if (
           e.key === "Delete" &&
@@ -54,7 +60,7 @@ function EditableBlock({
             blockRef.current.innerHTML.length
         ) {
           e.preventDefault();
-          deletePreviousBlock({ id: id, ref: blockRef,parentRef: pageRef });
+          deletePreviousBlock({ id: id, ref: blockRef });
         }
         if (e.key === "ArrowDown" && blockRef.current.nextSibling) {
           e.preventDefault();
@@ -92,7 +98,6 @@ EditableBlock.propTypes = {
   isDisabled: PropTypes.bool,
   updateData: PropTypes.func,
   className: PropTypes.string,
-  testFunction: PropTypes.func,
   placeholder: PropTypes.string,
   removeCurrentBlock: PropTypes.func,
   deletePreviousBlock: PropTypes.func,
@@ -109,7 +114,6 @@ EditableBlock.defaultProps = {
   onChange: () => {},
   addBlock: () => {},
   updateData: () => {},
-  testFunction: () => {},
   removeCurrentBlock: () => {},
   deletePreviousBlock: () => {},
 };

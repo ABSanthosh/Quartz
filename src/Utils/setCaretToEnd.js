@@ -1,4 +1,4 @@
-function setCaretToPos(pos, el) {
+export function setCaretToPos(pos, el) {
   for (var node of el.childNodes) {
     if (node.nodeType === 3) {
       if (node.length >= pos) {
@@ -29,7 +29,7 @@ function setCaretToPos(pos, el) {
   return pos;
 }
 
-function left(el) {
+export function left(el) {
   const range = document.createRange();
   const sel = window.getSelection();
   range.selectNodeContents(el);
@@ -39,7 +39,7 @@ function left(el) {
   el.focus();
 }
 
-function right(el) {
+export function right(el) {
   const range = document.createRange();
   const sel = window.getSelection();
   range.selectNodeContents(el);
