@@ -4,10 +4,7 @@ import "./PageContent.scss";
 import EditableBlock from "../EditableBlock/EditableBlock";
 import md5 from "../../../../Utils/md5";
 import { useAuth } from "../../../../hooks/useAuth";
-import setCaretToEnd, {
-  right,
-  setCaretToPos,
-} from "../../../../Utils/setCaretToEnd";
+import { setCaretToPos } from "../../../../Utils/setCaretToEnd";
 
 function PageContent({ navState }) {
   const { pageDetails, setPageDetails } = useAuth();
@@ -28,12 +25,14 @@ function PageContent({ navState }) {
       setCaretToPos(0, newLineFocus);
       setNewLineFocus(null);
     }
+  }, [newLineFocus]);
 
+  useEffect(() => {
     if (nextFocus.current) {
       nextFocus.current.nextSibling.focus();
       setNextFocus({ current: null });
     }
-  }, [newLineFocus, nextFocus]);
+  }, [nextFocus]);
 
   useEffect(() => {
     if (backspaceFocus !== null) {
@@ -75,15 +74,24 @@ function PageContent({ navState }) {
     setNextFocus(currentBlock.ref);
   }
 
-  // TODO: Delete button functionality
   function deletePreviousBlock(currentBlock) {
-    const blocks = pageRef.current;
-    const index = blocks.map((block) => block.id).indexOf(currentBlock.id);
-    const updatedPageDetails = [...pageRef.current];
-    updatedPageDetails[index] =
-      updatedPageDetails[index] + pageRef.current.nextSibling.innerHTML;
-    updatedPageDetails.splice(index + 1, 1);
-    pageRef.current = updatedPageDetails;
+    const nextBlock = currentBlock.ref.current.nextSibling;
+    if (nextBlock) {
+      const blocks = pageRef.current;
+      const index = blocks.map((block) => block.id).indexOf(currentBlock.id);
+      const updatedPageDetails = [...blocks];
+      updatedPageDetails[index].html += updatedPageDetails[index + 1].html;
+      updatedPageDetails.splice(index + 1, 1);
+      pageRef.current = updatedPageDetails;
+      setPageDetails(pageRef.current);
+      setBackspaceFocus([
+        currentBlock.ref.current.innerHTML.length,
+        currentBlock.ref.current,
+      ]);
+
+      console.log(updatedPageDetails[index + 1]);
+      setNewLineFocus(currentBlock.ref.current);
+    }
   }
 
   // Functioning delete block function
@@ -93,10 +101,7 @@ function PageContent({ navState }) {
       const blocks = pageRef.current;
       const index = blocks.map((block) => block.id).indexOf(currentBlock.id);
       const updatedPageDetails = [...blocks];
-      console.log(
-        updatedPageDetails[index - 1],
-        currentBlock.ref.current.innerHTML
-      );
+
       const previousBlockLength = updatedPageDetails[index - 1].html.length;
       updatedPageDetails[index - 1].html =
         updatedPageDetails[index - 1].html + currentBlock.ref.current.innerHTML;
