@@ -9,11 +9,39 @@ import {
 import md5 from "../Utils/md5";
 
 export function AuthProvider({ children }) {
-  const initialBlock = { id: md5(), html: "", tagName: "div" };
-
+  // const initialBlock = { id: md5(), html: "", tagName: "div" };
+  // const initialBoard = {
+  //   boardId: md5(),
+  //   boardTitle: "",
+  //   blocks: [{ id: md5(), html: "", tagName: "div" }],
+  // };
+  const initialBoards = [
+    {
+      boardId: md5(),
+      boardTitle: "Board 1",
+      blocks: [{ id: md5(), html: "This is board 1", tagName: "div" }],
+    },
+    {
+      boardId: md5(),
+      boardTitle: "Board 2",
+      blocks: [{ id: md5(), html: "This is board 2", tagName: "div" }],
+    },
+    {
+      boardId: md5(),
+      boardTitle: "Board 3",
+      blocks: [{ id: md5(), html: "This is board 3", tagName: "div" }],
+    },
+    {
+      boardId: md5(),
+      boardTitle: "Board 4",
+      blocks: [{ id: md5(), html: "This is board 4", tagName: "div" }],
+    },
+  ];
   const [userState, setUserState] = useState(null);
   const [status, setStatus] = useState("loading");
-  const [pageDetails, setPageDetails] = useState([initialBlock]);
+  const [allBoardDetails, setAllBoardDetails] = useState(initialBoards);
+  const [currentBoard, setCurrentBoard] = useState(initialBoards[0]);
+  const [pageDetails, setPageDetails] = useState(currentBoard.blocks);
 
   useEffect(() => {
     getAuth().onAuthStateChanged((user) => {
@@ -38,12 +66,16 @@ export function AuthProvider({ children }) {
   }
 
   const authObject = {
+    login,
+    status,
+    logout,
     userState,
     pageDetails,
+    currentBoard,
     setPageDetails,
-    login,
-    logout,
-    status,
+    allBoardDetails,
+    setCurrentBoard,
+    setAllBoardDetails,
   };
 
   return (

@@ -131,9 +131,18 @@
     }
 
     &--top {
+      row-gap: 25px;
       margin-top: 50px;
+      &__boards {
+        width: 100%;
+        max-height: 340px;
+        overflow-y: auto;
+        @include make-flex($just: flex-start);
+        row-gap: 5px;
+      }
     }
     &--bottom {
+      row-gap: 18px;
       margin-bottom: 20px;
     }
 
@@ -160,10 +169,11 @@
     @include make-flex($just: flex-start);
     overflow: auto;
     &--title {
-      // box-sizing: border-box;
-      // padding-left: 96px;
-      // padding-right: 96px;
-      margin-bottom: 15px;
+      padding: 10px;
+      @include make-flex($align: flex-start);
+
+      box-sizing: border-box;
+      margin-bottom: 20px;
 
       margin-top: 80px;
       max-width: 100%;
@@ -171,9 +181,11 @@
 
       color: rgb(55, 53, 47);
       font-weight: 700;
-      line-height: 1.2;
       font-size: 40px;
       cursor: text;
+      &::before {
+        padding: unset;
+      }
     }
   }
 }

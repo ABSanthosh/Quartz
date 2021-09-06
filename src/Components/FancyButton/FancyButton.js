@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import "./FancyButton.scss";
 // import { useAuth } from "../../hooks/useAuth";
 
-function FancyButton({ text, className, isLogin, children, ...props }) {
+function FancyButton({ text, className, children, ...props }) {
   return (
     <div
       {...props}
@@ -19,13 +19,13 @@ FancyButton.propTypes = {
   text: PropTypes.string.isRequired,
   className: PropTypes.string,
   children: PropTypes.node,
-  isLogin: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 
 FancyButton.defaultProps = {
   className: "",
   children: null,
-  isLogin: false,
+  onClick: () => {},
 };
 
 export default FancyButton;

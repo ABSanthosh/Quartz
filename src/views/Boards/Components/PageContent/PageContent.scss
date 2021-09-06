@@ -5,7 +5,7 @@
   flex-grow: 1;
   width: calc(900px - 192px);
   max-width: 100%;
-
+  row-gap: 2px;
   @include make-flex($align: flex-start);
   font-size: 16px;
   line-height: 1.5;

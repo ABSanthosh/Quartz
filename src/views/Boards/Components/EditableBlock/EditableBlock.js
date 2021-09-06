@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import "./EditableBlock.scss";
 import ContentEditable from "react-contenteditable";
@@ -7,20 +7,22 @@ import setCaretToEnd from "../../../../Utils/setCaretToEnd";
 function EditableBlock({
   id,
   html,
-
   tagName,
   onChange,
   addBlock,
   tabIndex,
+  onKeyDown,
   className,
   updateData,
   isDisabled,
+  isPageBlock,
   placeholder,
   removeCurrentBlock,
   deletePreviousBlock,
   ...props
 }) {
   const blockRef = useRef();
+  // TODO: Make / command box and take tag input
   return (
     <ContentEditable
       className={`EditableBlockWrapper ${className} ${
@@ -29,27 +31,26 @@ function EditableBlock({
       tabIndex={tabIndex}
       innerRef={blockRef}
       tagName={tagName}
+      data-id={id}
       html={html}
       disabled={isDisabled}
       placeholder={placeholder}
       onChange={(e) => {
+        onChange(e);
         updateData({ id: id, html: blockRef.current.innerHTML });
       }}
       onKeyDown={(e) => {
+        onKeyDown(e);
         if (e.key === "Enter") {
           e.preventDefault();
-          // console.log(blockRef.current.innerHTML.slice(window.getSelection().anchorOffset,blockRef.current.innerHTML.length))
           addBlock({
             id: id,
             ref: blockRef,
             offset: window.getSelection().anchorOffset,
           });
         }
-        if (
-          e.key === "Backspace" &&
-          window.getSelection().anchorOffset === 0
-          // (html === "" || blockRef.current.innerHTML === "")
-        ) {
+        if (e.key === "Backspace" && window.getSelection().anchorOffset === 0) {
+          console.log("backspace");
           e.preventDefault();
           removeCurrentBlock({ id: id, ref: blockRef });
         }
@@ -93,10 +94,12 @@ EditableBlock.propTypes = {
   html: PropTypes.string,
   onChange: PropTypes.func,
   addBlock: PropTypes.func,
+  onKeyDown: PropTypes.func,
   tagName: PropTypes.string,
   tabIndex: PropTypes.number,
   isDisabled: PropTypes.bool,
   updateData: PropTypes.func,
+  isPageBlock: PropTypes.bool,
   className: PropTypes.string,
   placeholder: PropTypes.string,
   removeCurrentBlock: PropTypes.func,
@@ -111,8 +114,10 @@ EditableBlock.defaultProps = {
   tagName: "div",
   placeholder: "",
   isDisabled: false,
+  isPageBlock: false,
   onChange: () => {},
   addBlock: () => {},
+  onKeyDown: () => {},
   updateData: () => {},
   removeCurrentBlock: () => {},
   deletePreviousBlock: () => {},

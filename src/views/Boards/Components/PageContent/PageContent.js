@@ -7,7 +7,7 @@ import { useAuth } from "../../../../hooks/useAuth";
 import { setCaretToPos } from "../../../../Utils/setCaretToEnd";
 
 function PageContent({ navState }) {
-  const { pageDetails, setPageDetails } = useAuth();
+  const { setPageDetails, pageDetails, currentBoard } = useAuth();
 
   const pageRef = useRef(pageDetails);
 
@@ -17,11 +17,12 @@ function PageContent({ navState }) {
 
   useEffect(() => {
     pageRef.current = pageDetails;
+    currentBoard.blocks = pageRef.current;
   }, [pageDetails]);
 
   useEffect(() => {
     if (newLineFocus !== null) {
-      console.log("newLineFocus", newLineFocus);
+      // console.log("newLineFocus", newLineFocus);
       setCaretToPos(0, newLineFocus);
       setNewLineFocus(null);
     }
@@ -71,7 +72,6 @@ function PageContent({ navState }) {
       currentBlock.ref.current.nextSibling.focus();
     }
     setNewLineFocus(currentBlock.ref.current.nextSibling);
-    setNextFocus(currentBlock.ref);
   }
 
   function deletePreviousBlock(currentBlock) {
@@ -89,7 +89,7 @@ function PageContent({ navState }) {
         currentBlock.ref.current,
       ]);
 
-      console.log(updatedPageDetails[index + 1]);
+      // console.log(updatedPageDetails[index + 1]);
       setNewLineFocus(currentBlock.ref.current);
     }
   }
@@ -100,15 +100,18 @@ function PageContent({ navState }) {
     if (previousBlock) {
       const blocks = pageRef.current;
       const index = blocks.map((block) => block.id).indexOf(currentBlock.id);
-      const updatedPageDetails = [...blocks];
-
-      const previousBlockLength = updatedPageDetails[index - 1].html.length;
-      updatedPageDetails[index - 1].html =
-        updatedPageDetails[index - 1].html + currentBlock.ref.current.innerHTML;
-      updatedPageDetails.splice(index, 1);
-      pageRef.current = updatedPageDetails;
-      setBackspaceFocus([previousBlockLength, previousBlock]);
-      setPageDetails(pageRef.current);
+      // console.log(currentBlock.id, index);
+      if (index > 0) {
+        const updatedPageDetails = [...blocks];
+        const previousBlockLength = updatedPageDetails[index - 1].html.length;
+        updatedPageDetails[index - 1].html =
+          updatedPageDetails[index - 1].html +
+          currentBlock.ref.current.innerHTML;
+        updatedPageDetails.splice(index, 1);
+        pageRef.current = updatedPageDetails;
+        setBackspaceFocus([previousBlockLength, previousBlock]);
+        setPageDetails(pageRef.current);
+      }
     }
   }
 
@@ -134,10 +137,11 @@ function PageContent({ navState }) {
             id={block.id}
             tabIndex={key}
             html={block.html}
+            isPageBlock={true}
             addBlock={addBlock}
             updateData={updateData}
             tagName={block.tagName}
-            placeholder="Type '/' for commands"
+            placeholder="Type '/' for commands (comming soon)"
             className="PageContentWrapper__block"
             removeCurrentBlock={removeCurrentBlock}
             deletePreviousBlock={deletePreviousBlock}
