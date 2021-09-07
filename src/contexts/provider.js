@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "./context";
 import {
@@ -9,7 +9,6 @@ import {
 import md5 from "../Utils/md5";
 import firebase from "firebase";
 import { useFirebaseLoading } from "../hooks/useFirebaseLoading";
-
 export function AuthProvider({ children }) {
   const initialBoards = [
     {
@@ -23,7 +22,9 @@ export function AuthProvider({ children }) {
   const [allBoardDetails, setAllBoardDetails] = useState(initialBoards);
   const [status, setStatus] = useState("loading");
   const [currentBoard, setCurrentBoard] = useState(initialBoards[0]);
-  const [pageDetails, setPageDetails] = useState(currentBoard.blocks);
+  const [pageDetails, setPageDetails] = useState(
+    initialBoards[0].blocks || currentBoard.blocks
+  );
 
   const { startFBLoading, stopFBLoading } = useFirebaseLoading();
   useEffect(() => {
@@ -40,14 +41,13 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     startFBLoading();
     if (userState) {
-      var db = firebase.database().ref(userState.uid);
-      db.on("value", (snapshot) => {
+      var db = firebase.database().ref(`/${userState.uid}`);
+      db.once("value", (snapshot) => {
         const data = snapshot.val();
         if (data) {
           setAllBoardDetails(data);
           setCurrentBoard(data[0]);
           stopFBLoading();
-          console.log("useEffect", currentBoard);
         }
       });
     }

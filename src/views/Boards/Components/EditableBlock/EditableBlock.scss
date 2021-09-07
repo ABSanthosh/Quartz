@@ -53,17 +53,33 @@
 }
 
 .EditableBlockPlaceHolder {
-  &:focus {
-    &::before {
-      content: attr(placeholder);
-      white-space: pre-wrap;
-      word-break: break-word;
-      caret-color: rgb(55, 53, 47);
-      padding: 3px 2px;
-      min-height: 1em;
-      color: rgb(55, 53, 47);
-      -webkit-text-fill-color: rgb(55 53 47 / 23%);
-      cursor: text;
-    }
+  // &:focus {
+  &::before {
+    content: attr(placeholder);
+    white-space: pre-wrap;
+    word-break: break-word;
+    caret-color: rgb(55, 53, 47);
+    padding: 3px 2px;
+    min-height: 1em;
+    color: rgb(55, 53, 47);
+    -webkit-text-fill-color: rgb(55 53 47 / 23%);
+    cursor: text;
   }
+  // }
 }
+
+// .EditableBlockWrapper .PageContentWrapper__block .EditableBlockPlaceHolder {
+//   &:focus {
+//     &::before {
+//       content: attr(placeholder);
+//       white-space: pre-wrap;
+//       word-break: break-word;
+//       caret-color: rgb(55, 53, 47);
+//       padding: 3px 2px;
+//       min-height: 1em;
+//       color: rgb(55, 53, 47);
+//       -webkit-text-fill-color: rgb(55 53 47 / 23%);
+//       cursor: text;
+//     }
+//   }
+// }

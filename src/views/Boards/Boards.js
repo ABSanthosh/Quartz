@@ -25,6 +25,7 @@ function Boards() {
     allBoardDetails,
     userState,
     setCurrentBoard,
+    setPageDetails,
     setAllBoardDetails,
   } = useAuth();
 
@@ -41,17 +42,21 @@ function Boards() {
   const [boardTitle, setBoardTitle] = useState(currentBoard.boardTitle);
 
   useEffect(() => {
-    console.log(SyncStatusSize);
-  }, [SyncStatusSize]);
-  useEffect(() => {
     currentBoard.boardTitle = boardTitle;
   }, [boardTitle]);
 
   useEffect(() => {
+    const changedBoard = allBoardDetails.at(-1);
+    setCurrentBoard(changedBoard);
+    setPageDetails(changedBoard.blocks);
+    console.log("all", changedBoard);
+  }, [allBoardDetails.length]);
+
+  useEffect(() => {
     window.clearTimeout(firebaseSyncTimer.current);
     firebaseSyncTimer.current = window.setTimeout(() => {
-      setSyncState(false);
       window.clearTimeout(firebaseSyncTimer.current);
+      setSyncState(false);
       if (userState) {
         firebase
           .database()
@@ -61,7 +66,7 @@ function Boards() {
             setSyncState(true);
           });
       }
-    }, 8000);
+    }, 4000);
     setCurrentBoard(currentBoard);
   }, [
     setCurrentBoard,
@@ -123,7 +128,10 @@ function Boards() {
               <BoardSelecter
                 boardDetails={board}
                 setCurrentBoard={setCurrentBoard}
+                allBoardDetails={allBoardDetails}
+                setAllBoardDetails={setAllBoardDetails}
                 key={key}
+                setSyncState={setSyncState}
               />
             ))}
           </div>
@@ -139,6 +147,17 @@ function Boards() {
               };
               const boardsList = [...allBoardDetails, newBoard];
               setAllBoardDetails(boardsList);
+
+              setSyncState(false);
+              if (userState) {
+                firebase
+                  .database()
+                  .ref(userState.uid)
+                  .set(allBoardDetails)
+                  .then(() => {
+                    setSyncState(true);
+                  });
+              }
             }}
             text="New Board"
           />
@@ -189,7 +208,7 @@ function Boards() {
               </div>
             </div>
             <EditableBlock
-              html={boardTitle.replace("<div><br></div>", "&nbsp")}
+              html={boardTitle.replaceAll("<div><br></div>", "&nbsp")}
               onChange={(e) => {
                 setBoardTitle(e.target.value);
               }}
@@ -227,7 +246,6 @@ function Boards() {
                     .set(allBoardDetails)
                     .then(() => {
                       setSyncState(true);
-                      console.log("firebase synced");
                     });
                 }
               }}

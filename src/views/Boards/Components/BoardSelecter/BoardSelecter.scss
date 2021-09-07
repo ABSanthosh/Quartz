@@ -6,7 +6,7 @@
   width: 100%;
   height: 27px;
   padding: 3px 20px;
-  @include make-flex($dir: row, $just: flex-start);
+  @include make-flex($dir: row, $just: space-between);
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
   cursor: pointer;
@@ -14,19 +14,25 @@
     background-color: #fafafa;
   }
 
+  &--current{
+    background-color: #fafafa;
+  }
+
   &__Content {
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 174px;
+    // max-width: 174px;
+    width: 100%;
     overflow: hidden;
   }
   &__optionsToggle {
-    height: 20px;
-    width: 20px;
-    border-radius: 5px;
+    height: 22px;
+    width: 22px;
+    border-radius: 3px;
     @include make-flex();
-    position: absolute;
+    // position: absolute;
     right: 10px;
+    z-index: 3;
 
     &:hover {
       background-color: #ececec;

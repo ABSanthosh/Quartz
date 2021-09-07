@@ -185,6 +185,7 @@
     height: 100%;
     width: 100%;
     transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+    background-image: url(../../Assets/Img/paperEffect.png);
 
     &--open {
       width: calc(100% - 244px);

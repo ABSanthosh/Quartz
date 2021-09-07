@@ -8,7 +8,7 @@ export function useFirebaseLoading() {
     }
     document
       .getElementById("root")
-      .insertAdjacentHTML("afterend", '<div id="loading-dock"></div>');
+      .insertAdjacentHTML("beforebegin", '<div id="loading-dock"></div>');
     reactDom.render(
       <FirebaseLoader />,
       document.getElementById("loading-dock")
