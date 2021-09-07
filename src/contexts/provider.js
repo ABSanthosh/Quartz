@@ -8,9 +8,9 @@ import {
 } from "../firebase/githubAuth";
 import md5 from "../Utils/md5";
 import firebase from "firebase";
+import { useFirebaseLoading } from "../hooks/useFirebaseLoading";
 
 export function AuthProvider({ children }) {
-  let firebaseSyncTimer = useRef();
   const initialBoards = [
     {
       boardId: md5(),
@@ -25,22 +25,28 @@ export function AuthProvider({ children }) {
   const [currentBoard, setCurrentBoard] = useState(initialBoards[0]);
   const [pageDetails, setPageDetails] = useState(currentBoard.blocks);
 
+  const { startFBLoading, stopFBLoading } = useFirebaseLoading();
   useEffect(() => {
     getAuth().onAuthStateChanged((user) => {
       if (user) {
         setUserState(user);
         setStatus("ready");
+      } else {
+        stopFBLoading();
       }
     });
   });
 
   useEffect(() => {
+    startFBLoading();
     if (userState) {
       var db = firebase.database().ref(userState.uid);
       db.on("value", (snapshot) => {
         const data = snapshot.val();
         if (data) {
           setAllBoardDetails(data);
+          setCurrentBoard(data[0]);
+          stopFBLoading();
           console.log("useEffect", currentBoard);
         }
       });

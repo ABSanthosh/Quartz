@@ -1,7 +1,6 @@
 .loader-ios {
-  position: absolute;
-  top: 12px;
-  right: 20px;
+  height: 27px;
+  width: 27px;
   animation: iosIntro 0.6s;
 
   svg {
@@ -57,11 +56,11 @@
 
 @keyframes iosIntro {
   from {
-    transform: scale(0);
-    opacity: 0;
+    // transform: scale(0);
+    // opacity: 0;
   }
   to {
-    transform: scale(1);
-    opacity: 1;
+    // transform: scale(1);
+    // opacity: 1;
   }
 }

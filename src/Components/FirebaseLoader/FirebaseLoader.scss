@@ -1,1 +1,20 @@
-/* your css code */
+@import "../../styles/mixins";
+
+.FirebaseLoaderWrapper {
+  @include make-flex($dir: row);
+  position: relative;
+  height: 55px;
+  column-gap: 10px;
+  width: 190px;
+  background-color: #faf6ee;
+  border: 1px solid #733f49;
+  border-radius: 4px;
+  span {
+    font-family: "Ruda", sans-serif;
+    font-size: 1.3rem;
+    height: 27px;
+    width: auto;
+    display: flex;
+    align-items: flex-end;
+  }
+}
