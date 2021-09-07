@@ -32,24 +32,36 @@ function Boards() {
     query: "(max-width: 980px)",
   });
 
+  const SyncStatusSize = useMediaQuery({
+    query: "(max-width: 380px)",
+  });
+
   const [navState, setNavState] = useState(false);
+  const [syncState, setSyncState] = useState(true);
   const [boardTitle, setBoardTitle] = useState(currentBoard.boardTitle);
 
+  useEffect(() => {
+    console.log(SyncStatusSize);
+  }, [SyncStatusSize]);
   useEffect(() => {
     currentBoard.boardTitle = boardTitle;
   }, [boardTitle]);
 
   useEffect(() => {
     window.clearTimeout(firebaseSyncTimer.current);
-
     firebaseSyncTimer.current = window.setTimeout(() => {
+      setSyncState(false);
       window.clearTimeout(firebaseSyncTimer.current);
       if (userState) {
-        firebase.database().ref(userState.uid).set(allBoardDetails).then(()=>{
-          console.log("firebase synced")
-        })
+        firebase
+          .database()
+          .ref(userState.uid)
+          .set(allBoardDetails)
+          .then(() => {
+            setSyncState(true);
+          });
       }
-    }, 12000);
+    }, 8000);
     setCurrentBoard(currentBoard);
   }, [
     setCurrentBoard,
@@ -77,10 +89,14 @@ function Boards() {
     document.getElementById("NavBarInput").checked = !defaultNavState;
   }, [defaultNavState]);
 
+  // TODO: focus to next line on enter
+  // TODO: Manual sync button in sub header
+  // TODO: Delete board option in borad selecter
+  // TODO - Done: Default board on loading
   return (
     <div className="BoardsWrapper">
       <BoardHeader />
-      <pre
+      {/* <pre
         style={{
           position: "absolute",
           top: "0px",
@@ -94,7 +110,7 @@ function Boards() {
         }}
       >
         {JSON.stringify(allBoardDetails, null, 2)}
-      </pre>
+      </pre> */}
       <nav
         className={`BoardsWrapper__sideBar ${
           navState ? "BoardsWrapper__sideBar--open" : ""
@@ -144,59 +160,96 @@ function Boards() {
         }`}
       >
         <div className="BoardsWrapper__subHeader">
-          <div
-            className={`BoardsWrapper__subHeader--hamburger ${
-              navState && !defaultNavState
-                ? "BoardsWrapper__subHeader--hamburger--open"
-                : ""
-            }
+          <div className="BoardsWrapper__subHeader--left">
+            <div
+              className={`BoardsWrapper__subHeader--hamburger ${
+                navState && !defaultNavState
+                  ? "BoardsWrapper__subHeader--hamburger--open"
+                  : ""
+              }
             ${
               navState && defaultNavState
                 ? "BoardsWrapper__subHeader--hamburger--mobileOpen"
                 : ""
             }`}
-          >
-            <input
-              type="checkbox"
-              id="NavBarInput"
-              onChange={() => {
-                setNavState(!navState);
+            >
+              <input
+                type="checkbox"
+                id="NavBarInput"
+                onChange={() => {
+                  setNavState(!navState);
+                }}
+              />
+              <div className="hamButton">
+                <label className="HamMenu" htmlFor="NavBarInput">
+                  <span className="span HL1" />
+                  <span className="span HL2" />
+                  <span className="span HL3" />
+                </label>
+              </div>
+            </div>
+            <EditableBlock
+              html={boardTitle.replace("<div><br></div>", "&nbsp")}
+              onChange={(e) => {
+                setBoardTitle(e.target.value);
               }}
+              onKeyDown={(e) => {
+                if (!e) {
+                  e = window.event;
+                }
+                var keyCode = e.which || e.keyCode;
+                if (keyCode === 13 && !e.shiftKey) {
+                  if (e.preventDefault) {
+                    e.preventDefault();
+                  } else {
+                    e.returnValue = false;
+                  }
+                }
+              }}
+              placeholder="Untitled"
+              tagName="p"
+              className={`BoardsWrapper__subHeader--title ${
+                navState && !defaultNavState
+                  ? "BoardsWrapper__subHeader--title--open"
+                  : ""
+              }`}
             />
-            <div className="hamButton">
-              <label className="HamMenu" htmlFor="NavBarInput">
-                <span className="span HL1" />
-                <span className="span HL2" />
-                <span className="span HL3" />
-              </label>
+          </div>
+          <div className="BoardsWrapper__subHeader--right">
+            <div
+              className="BoardsWrapper__subHeader__sync"
+              onClick={() => {
+                setSyncState(false);
+                if (userState) {
+                  firebase
+                    .database()
+                    .ref(userState.uid)
+                    .set(allBoardDetails)
+                    .then(() => {
+                      setSyncState(true);
+                      console.log("firebase synced");
+                    });
+                }
+              }}
+            >
+              {!syncState ? (
+                <>
+                  <svg viewBox="0 0 30 30" className="syncIcon">
+                    <path d="M3,3 L5,3 L5,6.701 C7.384,3.83 10.977,2 15,2 C22.18,2 28,7.82 28,15 C28,22.18 22.18,28 15,28 C7.82,28 2,22.18 2,15 L4,15 C4,21.075 8.925,26 15,26 C21.075,26 26,21.075 26,15 C26,8.925 21.075,4 15,4 C11.142,4 7.76,5.994 5.798,9 L11,9 L11,11 L3,11 L3,3 Z"></path>
+                  </svg>
+                  {!SyncStatusSize ? "Syncing" : ""}
+                </>
+              ) : (
+                <>
+                  <svg viewBox="0 0 14 14" className="check">
+                    <polygon points="5.5 11.9993304 14 3.49933039 12.5 2 5.5 8.99933039 1.5 4.9968652 0 6.49933039"></polygon>
+                  </svg>
+                  {!SyncStatusSize ? "Synced" : ""}
+                </>
+              )}
+              {/* Sync */}
             </div>
           </div>
-          <EditableBlock
-            html={boardTitle.replace("<div><br></div>", "&nbsp")}
-            onChange={(e) => {
-              setBoardTitle(e.target.value);
-            }}
-            onKeyDown={(e) => {
-              if (!e) {
-                e = window.event;
-              }
-              var keyCode = e.which || e.keyCode;
-              if (keyCode === 13 && !e.shiftKey) {
-                if (e.preventDefault) {
-                  e.preventDefault();
-                } else {
-                  e.returnValue = false;
-                }
-              }
-            }}
-            placeholder="Untitled"
-            tagName="p"
-            className={`BoardsWrapper__subHeader--title ${
-              navState && !defaultNavState
-                ? "BoardsWrapper__subHeader--title--open"
-                : ""
-            }`}
-          />
         </div>
         <div className="BoardsWrapper__contentContainer">
           <EditableBlock

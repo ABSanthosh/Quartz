@@ -53,6 +53,12 @@ export function AuthProvider({ children }) {
     }
   }, [userState]);
 
+  useEffect(() => {
+    if (!allBoardDetails.includes(currentBoard)) {
+      setCurrentBoard(allBoardDetails[0]);
+    }
+  }, [allBoardDetails, currentBoard]);
+
   async function logout() {
     getAuth().signOut();
     setUserState(getAuth().currentUser);

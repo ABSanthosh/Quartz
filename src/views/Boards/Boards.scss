@@ -9,9 +9,41 @@
     max-width: calc(100% - 30px);
     padding: 5px 15px;
     height: 40px;
-    @include make-flex($just: flex-start, $dir: row);
-    column-gap: 20px;
-
+    @include make-flex($just: space-between, $dir: row);
+    &--left {
+      column-gap: 20px;
+      @include make-flex($dir: row);
+    }
+    &--right {
+      column-gap: 10px;
+      @include make-flex($dir: row);
+      height: 100%;
+      width: auto;
+    }
+    &__sync {
+      height: 30px;
+      padding: 0px 6px;
+      width: auto;
+      background-color: #fff;
+      cursor: pointer;
+      border-radius: 4px;
+      &:hover {
+        background-color: rgb(245, 245, 245);
+      }
+      @include make-flex($dir: row);
+      column-gap: 4px;
+      .syncIcon {
+        animation: SpinAround 1.5s linear infinite;
+      }
+      svg {
+        width: 15px;
+        height: 15px;
+        display: block;
+        fill: rgba(55, 53, 47, 0.8);
+        flex-shrink: 0;
+        backface-visibility: hidden;
+      }
+    }
     &--title {
       margin: unset;
       font-family: "Montserrat", sans-serif;
@@ -200,14 +232,6 @@
         width: 100%;
       }
     }
-    // &__contentContainer {
-    //   &--title {
-    //     width: calc(100% - 52px);
-    //     padding-left: 24px;
-    //     padding-right: 24px;
-    //     margin-top: 30px;
-    //   }
-    // }
   }
 }
 
@@ -222,5 +246,26 @@
         margin-bottom: 15px;
       }
     }
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  .BoardsWrapper {
+    &__subHeader {
+      &--title {
+        max-width: 205px;
+      }
+    }
+    &__contentContainer {
+      &--title {
+        font-size: 35px;
+      }
+    }
+  }
+}
+
+@keyframes SpinAround {
+  to {
+    transform: rotate(-360deg);
   }
 }
