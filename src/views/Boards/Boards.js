@@ -1,5 +1,5 @@
 import "./Boards.scss";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // import PropTypes from "prop-types";
 import { useAuth } from "../../hooks/useAuth";
 import { useHistory } from "react-router-dom";
@@ -13,14 +13,17 @@ import PageContent from "./Components/PageContent/PageContent";
 import EditableBlock from "./Components/EditableBlock/EditableBlock";
 import FancyButton from "../../Components/FancyButton/FancyButton";
 import BoardSelecter from "./Components/BoardSelecter/BoardSelecter";
+import firebase from "firebase";
 
 function Boards() {
   let history = useHistory();
+  let firebaseSyncTimer = useRef();
   const {
     pageDetails,
     logout,
     currentBoard,
     allBoardDetails,
+    userState,
     setCurrentBoard,
     setAllBoardDetails,
   } = useAuth();
@@ -32,20 +35,30 @@ function Boards() {
   const [navState, setNavState] = useState(false);
   const [boardTitle, setBoardTitle] = useState(currentBoard.boardTitle);
 
-  // useEffect(() => {
-  //   console.log(currentBoard, boardTitle);
-  //   if (boardTitle !== currentBoard.boardTitle) {
-  //     setBoardTitle(currentBoard.boardTitle);
-  //   }
-  // });
   useEffect(() => {
-    // console.log(
-    //   currentBoard,
-    //   boardTitle,
-    //   currentBoard.boardTitle === boardTitle
-    // );
     currentBoard.boardTitle = boardTitle;
   }, [boardTitle]);
+
+  useEffect(() => {
+    window.clearTimeout(firebaseSyncTimer.current);
+
+    firebaseSyncTimer.current = window.setTimeout(() => {
+      window.clearTimeout(firebaseSyncTimer.current);
+      if (userState) {
+        firebase.database().ref(userState.uid).set(allBoardDetails).then(()=>{
+          console.log("firebase synced")
+        })
+      }
+    }, 12000);
+    setCurrentBoard(currentBoard);
+  }, [
+    setCurrentBoard,
+    allBoardDetails,
+    userState,
+    currentBoard,
+    currentBoard.boardTitle,
+    pageDetails,
+  ]);
 
   useEffect(() => {
     setBoardTitle(currentBoard.boardTitle);
@@ -60,9 +73,6 @@ function Boards() {
   });
 
   useEffect(() => {
-    // Stupid netlify! Remove this when deploying to production
-    // setBoardTitle("Getting Started");
-
     setNavState(!defaultNavState);
     document.getElementById("NavBarInput").checked = !defaultNavState;
   }, [defaultNavState]);
@@ -84,8 +94,6 @@ function Boards() {
         }}
       >
         {JSON.stringify(allBoardDetails, null, 2)}
-        {/* {JSON.stringify(boardTitle, null, 2)}
-        {JSON.stringify(pageDetails, null, 2)} */}
       </pre>
       <nav
         className={`BoardsWrapper__sideBar ${
@@ -99,8 +107,6 @@ function Boards() {
               <BoardSelecter
                 boardDetails={board}
                 setCurrentBoard={setCurrentBoard}
-                // board={board}
-                // title={board.boardTitle === "" ? "Untitled" : board.boardTitle}
                 key={key}
               />
             ))}
@@ -171,15 +177,11 @@ function Boards() {
               setBoardTitle(e.target.value);
             }}
             onKeyDown={(e) => {
-              if (e.key === "Pause") {
-                console.log(e.key);
-              }
               if (!e) {
                 e = window.event;
               }
               var keyCode = e.which || e.keyCode;
               if (keyCode === 13 && !e.shiftKey) {
-                console.log("Just enter");
                 if (e.preventDefault) {
                   e.preventDefault();
                 } else {
@@ -202,7 +204,6 @@ function Boards() {
             html={boardTitle}
             onKeyDown={(e) => {
               if (!e) {
-                console.log(e.key);
                 e = window.event;
               }
               var keyCode = e.which || e.keyCode;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "./context";
 import {
@@ -7,39 +7,21 @@ import {
   gitHubAuthLink,
 } from "../firebase/githubAuth";
 import md5 from "../Utils/md5";
+import firebase from "firebase";
 
 export function AuthProvider({ children }) {
-  // const initialBlock = { id: md5(), html: "", tagName: "div" };
-  // const initialBoard = {
-  //   boardId: md5(),
-  //   boardTitle: "",
-  //   blocks: [{ id: md5(), html: "", tagName: "div" }],
-  // };
+  let firebaseSyncTimer = useRef();
   const initialBoards = [
     {
       boardId: md5(),
-      boardTitle: "Board 1",
-      blocks: [{ id: md5(), html: "This is board 1", tagName: "div" }],
-    },
-    {
-      boardId: md5(),
-      boardTitle: "Board 2",
-      blocks: [{ id: md5(), html: "This is board 2", tagName: "div" }],
-    },
-    {
-      boardId: md5(),
-      boardTitle: "Board 3",
-      blocks: [{ id: md5(), html: "This is board 3", tagName: "div" }],
-    },
-    {
-      boardId: md5(),
-      boardTitle: "Board 4",
-      blocks: [{ id: md5(), html: "This is board 4", tagName: "div" }],
+      boardTitle: "",
+      blocks: [{ id: md5(), html: "", tagName: "div" }],
     },
   ];
+
   const [userState, setUserState] = useState(null);
-  const [status, setStatus] = useState("loading");
   const [allBoardDetails, setAllBoardDetails] = useState(initialBoards);
+  const [status, setStatus] = useState("loading");
   const [currentBoard, setCurrentBoard] = useState(initialBoards[0]);
   const [pageDetails, setPageDetails] = useState(currentBoard.blocks);
 
@@ -51,6 +33,19 @@ export function AuthProvider({ children }) {
       }
     });
   });
+
+  useEffect(() => {
+    if (userState) {
+      var db = firebase.database().ref(userState.uid);
+      db.on("value", (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          setAllBoardDetails(data);
+          console.log("useEffect", currentBoard);
+        }
+      });
+    }
+  }, [userState]);
 
   async function logout() {
     getAuth().signOut();

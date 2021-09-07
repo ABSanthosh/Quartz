@@ -50,7 +50,6 @@ function EditableBlock({
           });
         }
         if (e.key === "Backspace" && window.getSelection().anchorOffset === 0) {
-          console.log("backspace");
           e.preventDefault();
           removeCurrentBlock({ id: id, ref: blockRef });
         }

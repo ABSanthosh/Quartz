@@ -22,7 +22,6 @@ function PageContent({ navState }) {
 
   useEffect(() => {
     if (newLineFocus !== null) {
-      // console.log("newLineFocus", newLineFocus);
       setCaretToPos(0, newLineFocus);
       setNewLineFocus(null);
     }
@@ -89,7 +88,6 @@ function PageContent({ navState }) {
         currentBlock.ref.current,
       ]);
 
-      // console.log(updatedPageDetails[index + 1]);
       setNewLineFocus(currentBlock.ref.current);
     }
   }
@@ -100,7 +98,6 @@ function PageContent({ navState }) {
     if (previousBlock) {
       const blocks = pageRef.current;
       const index = blocks.map((block) => block.id).indexOf(currentBlock.id);
-      // console.log(currentBlock.id, index);
       if (index > 0) {
         const updatedPageDetails = [...blocks];
         const previousBlockLength = updatedPageDetails[index - 1].html.length;
