@@ -23,7 +23,7 @@ export function AuthProvider({ children }) {
   const [status, setStatus] = useState("loading");
   const [currentBoard, setCurrentBoard] = useState(initialBoards[0]);
   const [pageDetails, setPageDetails] = useState(
-    initialBoards[0].blocks || currentBoard.blocks
+    currentBoard.blocks || initialBoards[0].blocks
   );
 
   const { startFBLoading, stopFBLoading } = useFirebaseLoading();
@@ -51,6 +51,7 @@ export function AuthProvider({ children }) {
         }
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userState]);
 
   useEffect(() => {

@@ -25,7 +25,6 @@ function Boards() {
     allBoardDetails,
     userState,
     setCurrentBoard,
-    setPageDetails,
     setAllBoardDetails,
   } = useAuth();
 
@@ -43,14 +42,14 @@ function Boards() {
 
   useEffect(() => {
     currentBoard.boardTitle = boardTitle;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [boardTitle]);
 
-  useEffect(() => {
-    const changedBoard = allBoardDetails.at(-1);
-    setCurrentBoard(changedBoard);
-    setPageDetails(changedBoard.blocks);
-    console.log("all", changedBoard);
-  }, [allBoardDetails.length]);
+  // useEffect(() => {
+  //   setCurrentBoard(1);
+  //   setPageDetails(allBoardDetails.at(-1).blocks);
+  //   console.log("all", allBoardDetails);
+  // }, [allBoardDetails.length]);
 
   useEffect(() => {
     window.clearTimeout(firebaseSyncTimer.current);
@@ -79,6 +78,7 @@ function Boards() {
 
   useEffect(() => {
     setBoardTitle(currentBoard.boardTitle);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentBoard.boardId]);
 
   useEffect(() => {

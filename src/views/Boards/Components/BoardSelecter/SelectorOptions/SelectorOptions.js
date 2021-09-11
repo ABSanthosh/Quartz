@@ -1,8 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
 import "./SelectorOptions.scss";
 
-function SelectorOptions(props) {
+function SelectorOptions() {
   return (
     <div className="SelectorOptionsWrapper">
       <div className="SelectorOptionsWrapper__item">
@@ -14,13 +13,5 @@ function SelectorOptions(props) {
     </div>
   );
 }
-
-SelectorOptions.propTypes = {
-  // bla: PropTypes.string,
-};
-
-SelectorOptions.defaultProps = {
-  // bla: 'test',
-};
 
 export default SelectorOptions;

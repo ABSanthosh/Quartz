@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import "./BoardSelecter.scss";
 import { useAuth } from "../../../../hooks/useAuth";

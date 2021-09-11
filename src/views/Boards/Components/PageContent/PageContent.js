@@ -18,7 +18,7 @@ function PageContent({ navState }) {
   useEffect(() => {
     pageRef.current = pageDetails;
     currentBoard.blocks = pageRef.current;
-  }, [pageDetails]);
+  }, [pageDetails,currentBoard]);
 
   useEffect(() => {
     if (newLineFocus !== null) {
