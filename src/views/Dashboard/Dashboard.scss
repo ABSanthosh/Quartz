@@ -1,0 +1,8 @@
+@import "../../styles/mixins";
+
+.DashboardWrapper {
+  width: 100%;
+  height: calc(100% - 30px);
+  transform: translateY(30px);
+  @include make-flex($dir: row, $just: unset, $align: unset);
+}
