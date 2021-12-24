@@ -6,7 +6,7 @@ export const getAuth = () => {
 
 const githubProvider = new firebase.auth.GithubAuthProvider();
 
-export const gitHubAuthSignin = (setUser) => {
+export const gitHubAuthSignIn = (setUser) => {
   getAuth()
     .signInWithPopup(githubProvider)
     .then((res) => {

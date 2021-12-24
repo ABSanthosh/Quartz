@@ -2,11 +2,11 @@
 
 .BoardsWrapper {
   width: 100%;
-  height: calc(100% - 30px);
+  height: 100%;
   transform: translateY(30px);
   @include make-flex($dir: row, $just: unset, $align: unset);
   &__subHeader {
-    max-width: calc(100% - 30px);
+    max-width: 100%;
     padding: 5px 15px;
     height: 40px;
     @include make-flex($just: space-between, $dir: row);
@@ -148,7 +148,7 @@
   &__sideBar {
     width: 240px; /* add the padding here*/
     background-color: #f3efe9;
-    height: calc(100% - 0px);
+    height: 100%;
     border-right: 4px solid #cc8296;
     transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
     margin-left: -240px; /*and here*/
@@ -188,7 +188,7 @@
     background-image: url(../../Assets/Img/paperEffect.png);
 
     &--open {
-      width: calc(100% - 244px);
+      width: 100%;
     }
   }
 
@@ -196,7 +196,7 @@
     background-color: #cc8296;
     transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
 
-    max-height: calc(100% - 50px);
+    max-height: 100%;
     height: auto;
 
     width: 100%;
@@ -211,7 +211,7 @@
 
       margin-top: 80px;
       max-width: 100%;
-      width: calc(900px - 192px);
+      width: 900px;
 
       color: rgb(55, 53, 47);
       font-weight: 700;
@@ -241,7 +241,7 @@
   .BoardsWrapper {
     &__contentContainer {
       &--title {
-        width: calc(100% - 52px);
+        width: 100%;
         padding-left: 24px;
         padding-right: 24px;
         margin-top: 25px;

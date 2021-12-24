@@ -48,7 +48,7 @@
       margin: unset;
       font-family: "Montserrat", sans-serif;
       text-align: center;
-      transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+      transition: transform 0.5s ease-in-out;
 
       max-width: 230px;
       text-overflow: ellipsis;
@@ -91,7 +91,7 @@
       position: relative;
       width: 28px;
       @include make-flex();
-      transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+      transition: all 0.3s ease-in-out;
 
       #NavBarInput {
         cursor: pointer;
@@ -120,7 +120,7 @@
             width: 25px;
             border-top: 1.3px solid rgb(124, 34, 34);
             transform-origin: 4px 0px;
-            transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+            transition: transform 0.5s ease-in-out;
             &:first-child {
               transform-origin: 0% 0%;
             }
@@ -148,9 +148,9 @@
   &__sideBar {
     width: 240px; /* add the padding here*/
     background-color: #f3efe9;
-    height: calc(100% - 0px);
+    height: 100%;
     border-right: 4px solid #cc8296;
-    transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+    transition: all 0.3s ease-in-out;
     margin-left: -240px; /*and here*/
 
     &--open {
@@ -184,7 +184,7 @@
   &__frame {
     height: 100%;
     width: 100%;
-    transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+    transition: all 0.3s ease-in-out;
     background-image: url(../../Assets/Img/paperEffect.png);
 
     &--open {
@@ -194,9 +194,9 @@
 
   &__contentContainer {
     background-color: #cc8296;
-    transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+    transition: all 0.3s ease-in-out;
 
-    max-height: calc(100% - 50px);
+    max-height: 100%;
     height: auto;
 
     width: 100%;
@@ -241,7 +241,7 @@
   .DashboardWrapper {
     &__contentContainer {
       &--title {
-        width: calc(100% - 52px);
+        width: 100%;
         padding-left: 24px;
         padding-right: 24px;
         margin-top: 25px;

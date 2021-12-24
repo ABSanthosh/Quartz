@@ -1,0 +1,21 @@
+@import "../../../../styles/mixins";
+
+.SideBarItemWrapper {
+  height: 50px;
+  width: 100%;
+  @include make-flex($dir: row, $just: flex-start);
+  padding: 0 20px;
+  gap: 10px;
+  cursor: pointer;
+  svg {
+    height: 35px;
+  }
+  p {
+    height: 100%;
+    font-size: 18px;
+    @include make-flex();
+  }
+  &:hover {
+    background-color: #e4e0dc;
+  }
+}

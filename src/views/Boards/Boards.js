@@ -35,7 +35,7 @@ function Boards() {
 
   useEffect(() => {
     currentBoard.boardTitle = boardTitle;
-  }, [boardTitle]);
+  }, [boardTitle, currentBoard]);
 
   useEffect(() => {
     window.clearTimeout(firebaseSyncTimer.current);

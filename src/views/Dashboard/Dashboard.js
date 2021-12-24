@@ -6,11 +6,18 @@ import { useMediaQuery } from "react-responsive";
 
 import DashboardHeader from "./Components/DashboardHeader/DashboardHeader";
 import NamePlate from "./Components/NamePlate/NamePlate";
+import SideBarItem from "./Components/SideBarItem/SideBarItem";
+
+import { ReactComponent as DashboardIcon } from "../../Assets/Img/dashboard.svg";
+import { ReactComponent as StickyNotes } from "../../Assets/Img/notes.svg";
 
 function Dashboard(props) {
+  // Hooks
+  const { logout } = useAuth();
   const [navState, setNavState] = useState(false);
   const [syncState, setSyncState] = useState(true);
 
+  // Media queries
   const defaultNavState = useMediaQuery({
     query: "(max-width: 980px)",
   });
@@ -18,8 +25,6 @@ function Dashboard(props) {
   const SyncStatusSize = useMediaQuery({
     query: "(max-width: 380px)",
   });
-
-  const { logout } = useAuth();
 
   return (
     <div className="DashboardWrapper">
@@ -31,7 +36,14 @@ function Dashboard(props) {
       >
         <div className="DashboardWrapper__sideBar--top">
           <NamePlate />
-          <div className="DashboardWrapper__sideBar--top__boards"></div>
+          <div className="DashboardWrapper__sideBar--top__boards">
+            <SideBarItem text="Boards">
+              <DashboardIcon />
+            </SideBarItem>
+            <SideBarItem text="Notes">
+              <StickyNotes />
+            </SideBarItem>
+          </div>
         </div>
         <div className="DashboardWrapper__sideBar--bottom">
           <div

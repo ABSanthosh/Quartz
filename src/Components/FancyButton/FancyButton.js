@@ -5,12 +5,9 @@ import "./FancyButton.scss";
 
 function FancyButton({ text, className, children, ...props }) {
   return (
-    <div
-      {...props}
-      className={`FancyButtonWrapper ${className}`}
-    >
-      {text}
+    <div {...props} className={`FancyButtonWrapper ${className}`}>
       {children}
+      {text}
     </div>
   );
 }
