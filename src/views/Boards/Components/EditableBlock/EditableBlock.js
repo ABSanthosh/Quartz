@@ -46,7 +46,10 @@ function EditableBlock({
           addBlock({
             id: id,
             ref: blockRef,
-            offset: window.getSelection().anchorOffset,
+            offset:
+              blockRef.current.innerHTML.length === 1
+                ? window.getSelection().anchorOffset + 1
+                : window.getSelection().anchorOffset,
           });
         }
         if (e.key === "Backspace" && window.getSelection().anchorOffset === 0) {
@@ -74,6 +77,13 @@ function EditableBlock({
           e.preventDefault();
           setCaretToEnd(blockRef.current, e.key);
         }
+        // if (
+        //   e.key === "ArrowLeft" ||
+        //   e.key === "ArrowRight" ||
+        //   e.key === "Pause"
+        // ) {
+        //   console.log(window.getSelection().anchorOffset);
+        // }
         if (
           e.key === "ArrowRight" &&
           window.getSelection().anchorOffset ===

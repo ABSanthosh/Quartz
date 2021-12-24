@@ -18,7 +18,7 @@ function PageContent({ navState }) {
   useEffect(() => {
     pageRef.current = pageDetails;
     currentBoard.blocks = pageRef.current;
-  }, [pageDetails,currentBoard]);
+  }, [pageDetails, currentBoard]);
 
   useEffect(() => {
     if (newLineFocus !== null) {
@@ -67,10 +67,11 @@ function PageContent({ navState }) {
     updatedPageDetails.splice(index + 1, 0, newBlock);
     pageRef.current = updatedPageDetails;
     setPageDetails(pageRef.current);
-    if (currentBlock.ref.current.nextSibling) {
-      currentBlock.ref.current.nextSibling.focus();
-    }
-    setNewLineFocus(currentBlock.ref.current.nextSibling);
+    // if (currentBlock.ref.current.nextSibling) {
+    //   currentBlock.ref.current.nextSibling.focus();
+    // }
+    setNextFocus(currentBlock.ref);
+    // setNewLineFocus(currentBlock.ref.current.nextSibling);
   }
 
   function deletePreviousBlock(currentBlock) {
@@ -79,7 +80,11 @@ function PageContent({ navState }) {
       const blocks = pageRef.current;
       const index = blocks.map((block) => block.id).indexOf(currentBlock.id);
       const updatedPageDetails = [...blocks];
-      updatedPageDetails[index].html += updatedPageDetails[index + 1].html;
+      if (updatedPageDetails[index].html.length !== 0) {
+        updatedPageDetails[index].html += updatedPageDetails[index + 1].html;
+      } else {
+        updatedPageDetails[index].html = "";
+      }
       updatedPageDetails.splice(index + 1, 1);
       pageRef.current = updatedPageDetails;
       setPageDetails(pageRef.current);
