@@ -1,20 +1,14 @@
 import "./Boards.scss";
 import React, { useEffect, useRef, useState } from "react";
-// import PropTypes from "prop-types";
 import { useAuth } from "../../hooks/useAuth";
 import { useHistory } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-import md5 from "../../Utils/md5";
 import { getAuth } from "../../firebase/githubAuth";
-import "../../Components/FancyButton/FancyButton.scss";
 import NamePlate from "./Components/NamePlate/NamePlate";
 import BoardHeader from "./Components/BoardHeader/BoardHeader";
-import PageContent from "./Components/PageContent/PageContent";
-import EditableBlock from "./Components/EditableBlock/EditableBlock";
-import FancyButton from "../../Components/FancyButton/FancyButton";
-import BoardSelecter from "./Components/BoardSelecter/BoardSelecter";
 import firebase from "firebase";
 
+import "../../Components/FancyButton/FancyButton.scss";
 function Boards() {
   let history = useHistory();
   let firebaseSyncTimer = useRef();
@@ -25,7 +19,6 @@ function Boards() {
     allBoardDetails,
     userState,
     setCurrentBoard,
-    setAllBoardDetails,
   } = useAuth();
 
   const defaultNavState = useMediaQuery({
@@ -42,14 +35,7 @@ function Boards() {
 
   useEffect(() => {
     currentBoard.boardTitle = boardTitle;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [boardTitle]);
-
-  // useEffect(() => {
-  //   setCurrentBoard(1);
-  //   setPageDetails(allBoardDetails.at(-1).blocks);
-  //   console.log("all", allBoardDetails);
-  // }, [allBoardDetails.length]);
 
   useEffect(() => {
     window.clearTimeout(firebaseSyncTimer.current);
@@ -94,28 +80,9 @@ function Boards() {
     document.getElementById("NavBarInput").checked = !defaultNavState;
   }, [defaultNavState]);
 
-  // TODO: focus to next line on enter
-  // TODO: Manual sync button in sub header
-  // TODO: Delete board option in borad selecter
-  // TODO - Done: Default board on loading
   return (
     <div className="BoardsWrapper">
       <BoardHeader />
-      {/* <pre
-        style={{
-          position: "absolute",
-          top: "0px",
-          right: "0px",
-          height: "auto",
-          zIndex: "1000",
-          padding: "20px",
-          maxWidth: "500px",
-          borderRadius: "5px",
-          backgroundColor: "#cfcfff",
-        }}
-      >
-        {JSON.stringify(allBoardDetails, null, 2)}
-      </pre> */}
       <nav
         className={`BoardsWrapper__sideBar ${
           navState ? "BoardsWrapper__sideBar--open" : ""
@@ -123,45 +90,9 @@ function Boards() {
       >
         <div className="BoardsWrapper__sideBar--top">
           <NamePlate />
-          <div className="BoardsWrapper__sideBar--top__boards">
-            {allBoardDetails.map((board, key) => (
-              <BoardSelecter
-                boardDetails={board}
-                setCurrentBoard={setCurrentBoard}
-                allBoardDetails={allBoardDetails}
-                setAllBoardDetails={setAllBoardDetails}
-                key={key}
-                setSyncState={setSyncState}
-              />
-            ))}
-          </div>
+          <div className="BoardsWrapper__sideBar--top__boards"></div>
         </div>
         <div className="BoardsWrapper__sideBar--bottom">
-          <FancyButton
-            style={{ width: "80%" }}
-            onClick={() => {
-              const newBoard = {
-                boardId: md5(),
-                boardTitle: "",
-                blocks: [{ id: md5(), html: "", tagName: "div" }],
-              };
-              const boardsList = [...allBoardDetails, newBoard];
-              setAllBoardDetails(boardsList);
-
-              setSyncState(false);
-              if (userState) {
-                firebase
-                  .database()
-                  .ref(userState.uid)
-                  .set(allBoardDetails)
-                  .then(() => {
-                    setSyncState(true);
-                  });
-              }
-            }}
-            text="New Board"
-          />
-
           <div
             style={{ width: "80%" }}
             className="FancyButtonWrapper"
@@ -207,47 +138,21 @@ function Boards() {
                 </label>
               </div>
             </div>
-            <EditableBlock
-              html={boardTitle.replaceAll("<div><br></div>", "&nbsp")}
-              onChange={(e) => {
-                setBoardTitle(e.target.value);
-              }}
-              onKeyDown={(e) => {
-                if (!e) {
-                  e = window.event;
-                }
-                var keyCode = e.which || e.keyCode;
-                if (keyCode === 13 && !e.shiftKey) {
-                  if (e.preventDefault) {
-                    e.preventDefault();
-                  } else {
-                    e.returnValue = false;
-                  }
-                }
-              }}
-              placeholder="Untitled"
-              tagName="p"
-              className={`BoardsWrapper__subHeader--title ${
-                navState && !defaultNavState
-                  ? "BoardsWrapper__subHeader--title--open"
-                  : ""
-              }`}
-            />
           </div>
           <div className="BoardsWrapper__subHeader--right">
             <div
               className="BoardsWrapper__subHeader__sync"
               onClick={() => {
                 setSyncState(false);
-                if (userState) {
-                  firebase
-                    .database()
-                    .ref(userState.uid)
-                    .set(allBoardDetails)
-                    .then(() => {
-                      setSyncState(true);
-                    });
-                }
+                // if (userState) {
+                //   firebase
+                //     .database()
+                //     .ref(userState.uid)
+                //     .set(allBoardDetails)
+                //     .then(() => {
+                //       setSyncState(true);
+                //     });
+                // }
               }}
             >
               {!syncState ? (
@@ -265,40 +170,10 @@ function Boards() {
                   {!SyncStatusSize ? "Synced" : ""}
                 </>
               )}
-              {/* Sync */}
             </div>
           </div>
         </div>
-        <div className="BoardsWrapper__contentContainer">
-          <EditableBlock
-            className="BoardsWrapper__contentContainer--title"
-            html={boardTitle}
-            onKeyDown={(e) => {
-              if (!e) {
-                e = window.event;
-              }
-              var keyCode = e.which || e.keyCode;
-              if (keyCode === 13 && !e.shiftKey) {
-                if (e.preventDefault) {
-                  e.preventDefault();
-                } else {
-                  e.returnValue = false;
-                }
-                document.execCommand("insertLineBreak");
-              }
-            }}
-            onChange={(e) => {
-              setBoardTitle(e.target.value);
-              currentBoard.boardTitle = e.target.value
-                .replaceAll("&nbsp;", " ")
-                .replaceAll("<div><br></div>", " ")
-                .replaceAll("<br>", " ");
-            }}
-            placeholder="Untitled"
-            tagName="h1"
-          />
-          <PageContent navState={navState} />
-        </div>
+        <div className="BoardsWrapper__contentContainer"></div>
       </div>
     </div>
   );

@@ -8,7 +8,9 @@ export default function Router() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={views.Home} />
-        <ProtectedRoute exact path="/boards" component={views.Boards} />
+        {/* <ProtectedRoute exact path="/boards" component={views.Boards} /> */}
+        <ProtectedRoute exact path="/dashboard" component={views.Dashboard} />
+        <Route exact path="*" component={views.Home} />
       </Switch>
     </BrowserRouter>
   );
