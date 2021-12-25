@@ -11,20 +11,30 @@ import SideBarItem from "./Components/SideBarItem/SideBarItem";
 import { ReactComponent as DashboardIcon } from "../../Assets/Img/dashboard.svg";
 import { ReactComponent as StickyNotes } from "../../Assets/Img/notes.svg";
 
+import { useStoreState, useStoreActions } from "easy-peasy";
+import BoardsContainer from "./Components/BoardsContainer/BoardsContainer";
+import NotesContainer from "./Components/NotesContainer/NotesContainer";
+
 function Dashboard(props) {
   // Hooks
   const { logout } = useAuth();
   const [navState, setNavState] = useState(false);
-  const [syncState, setSyncState] = useState(true);
+  // const [syncState, setSyncState] = useState(true);
+
+  // Store
+  const currentOption = useStoreState((state) => state.currentOption);
+  const setCurrentOption = useStoreActions(
+    (actions) => actions.setCurrentOption
+  );
 
   // Media queries
   const defaultNavState = useMediaQuery({
     query: "(max-width: 980px)",
   });
 
-  const SyncStatusSize = useMediaQuery({
-    query: "(max-width: 380px)",
-  });
+  // const SyncStatusSize = useMediaQuery({
+  //   query: "(max-width: 380px)",
+  // });
 
   return (
     <div className="DashboardWrapper">
@@ -37,10 +47,18 @@ function Dashboard(props) {
         <div className="DashboardWrapper__sideBar--top">
           <NamePlate />
           <div className="DashboardWrapper__sideBar--top__boards">
-            <SideBarItem text="Boards">
+            <SideBarItem
+              text="Boards"
+              onClick={() => setCurrentOption("Boards")}
+              isActive={currentOption === "Boards"}
+            >
               <DashboardIcon />
             </SideBarItem>
-            <SideBarItem text="Notes">
+            <SideBarItem
+              text="Notes"
+              onClick={() => setCurrentOption("Notes")}
+              isActive={currentOption === "Notes"}
+            >
               <StickyNotes />
             </SideBarItem>
           </div>
@@ -92,21 +110,13 @@ function Dashboard(props) {
                 </label>
               </div>
             </div>
+            <p>{currentOption}</p>
           </div>
           <div className="DashboardWrapper__subHeader--right">
-            <div
+            {/* <div
               className="DashboardWrapper__subHeader__sync"
               onClick={() => {
                 setSyncState(false);
-                // if (userState) {
-                //   firebase
-                //     .database()
-                //     .ref(userState.uid)
-                //     .set(allBoardDetails)
-                //     .then(() => {
-                //       setSyncState(true);
-                //     });
-                // }
               }}
             >
               {!syncState ? (
@@ -124,10 +134,13 @@ function Dashboard(props) {
                   {!SyncStatusSize ? "Synced" : ""}
                 </>
               )}
-            </div>
+            </div> */}
           </div>
         </div>
-        <div className="DashboardWrapper__contentContainer"></div>
+        <div className="DashboardWrapper__contentContainer">
+          {currentOption === "Boards" && <BoardsContainer />}
+          {currentOption === "Notes" && <NotesContainer />}
+        </div>
       </div>
     </div>
   );
