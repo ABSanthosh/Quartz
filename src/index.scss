@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Ruda&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 @import "./styles/mixins";
 
 body {
@@ -9,8 +10,6 @@ body {
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
 
-  font-family: Segoe UI, Helvetica Neue, Roboto, Helvetica, Arial, Tahoma,
-    Verdana, "sans-serif";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -19,6 +18,9 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
+  font-family: "Roboto", sans-serif;
+  color: #3a3a3a;
 }
 ::-webkit-scrollbar {
   background: transparent;
