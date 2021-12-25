@@ -1,0 +1,125 @@
+@import "../../../../styles/mixins";
+
+.StickyNoteWrapper {
+  height: 90%;
+  width: 755px;
+  min-height: 430px;
+  max-width: 750px;
+  border-radius: 8px;
+  transition: all 0.1s ease-in-out;
+  @include make-flex($just: flex-start);
+  //   background-color: #fff6cb;
+  box-shadow: 0px 0px 7px 1px rgb(0 0 0 / 7%);
+
+  &__header {
+    width: 100%;
+    height: 58px;
+    &--stripe {
+      //   background-color: #ffee92;
+      height: 6px;
+      width: 100%;
+      border-radius: 8px 8px 0 0;
+    }
+    &--details {
+      height: 52px;
+      width: 100%;
+      padding: 10px 12px;
+      @include make-flex($dir: row, $just: flex-end);
+      svg {
+        border-radius: 4px;
+        cursor: pointer;
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.07);
+        }
+        &:active {
+          background-color: rgba(0, 0, 0, 0.171);
+        }
+      }
+    }
+  }
+  &__content {
+    height: calc(100% - 12px);
+    width: 100%;
+    margin-top: 12px;
+    padding: 0 48px;
+    &--editableContent {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  &__toolbar {
+    padding: 12px 12px;
+    width: 100%;
+    @include make-flex($dir: row, $just: space-between);
+    flex-wrap: nowrap;
+    &--left {
+      width: 275px;
+      @include make-flex($dir: row, $just: space-around);
+      cursor: pointer;
+      &--item {
+        z-index: 1;
+        @include make-flex();
+        height: 35px;
+        width: 35px;
+        border-radius: 4px;
+        img {
+          height: 28px;
+          filter: invert(100%);
+        }
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.07);
+        }
+        &--active {
+          background-color: rgba(0, 0, 0, 0.07);
+        }
+      }
+    }
+
+    &--right {
+      span {
+        display: inline-block;
+        text-overflow: clip;
+        white-space: nowrap;
+      }
+      font-size: 15px;
+      padding: 0 12px;
+      color: #605e5c;
+    }
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .StickyNoteWrapper {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 915px) {
+  .StickyNoteWrapper {
+    width: 94%;
+  }
+}
+
+@media only screen and (max-width: 1400px) {
+  .StickyNoteWrapper {
+    width: 95%;
+  }
+}
+
+@media only screen and (max-height: 650px) {
+  .StickyNoteWrapper {
+    height: 100%;
+  }
+}
+
+@media only screen and (max-width: 580px) {
+  .StickyNoteWrapper {
+    width: 100%;
+    border-radius: 0;
+    &__header {
+      &--stripe {
+        border-radius: 0;
+      }
+    }
+  }
+}

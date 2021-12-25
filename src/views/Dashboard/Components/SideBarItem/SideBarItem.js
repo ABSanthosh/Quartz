@@ -2,9 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./SideBarItem.scss";
 
-function SideBarItem({ children, text }) {
+function SideBarItem({ children, text, isActive, ...props }) {
   return (
-    <div className="SideBarItemWrapper">
+    <div
+      className={`SideBarItemWrapper ${
+        isActive ? "SideBarItemWrapperActive" : ""
+      }`}
+      {...props}
+    >
       {children}
       <p>{text}</p>
     </div>

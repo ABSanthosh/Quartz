@@ -19,3 +19,10 @@
     background-color: #e4e0dc;
   }
 }
+
+.SideBarItemWrapperActive {
+  background-color: #e2d7cd;
+  &:hover {
+    background-color: #e2d7cd;
+  }
+}
