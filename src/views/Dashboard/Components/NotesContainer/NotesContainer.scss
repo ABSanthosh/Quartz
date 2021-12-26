@@ -142,6 +142,14 @@
   }
 }
 
+@media only screen and (max-width: 915px) {
+  .NotesContainerWrapper {
+    &__right {
+      padding: 0 0;
+    }
+  }
+}
+
 @media only screen and (max-height: 650px) {
   .NotesContainerWrapper {
     &__right {
