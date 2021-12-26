@@ -1,0 +1,82 @@
+@import "../../../../../../styles/mixins";
+
+.ContextMenuWrapper {
+  // height: 108px;
+  width: 180px;
+  background-color: white;
+  border-radius: 2px;
+  font-size: 14px;
+  position: absolute;
+  box-shadow: rgb(0 0 0 / 13%) 0px 3.2px 7.2px 0px,
+    rgb(0 0 0 / 11%) 0px 0.6px 1.8px 0px;
+  outline: transparent;
+  z-index: 3;
+  &--item {
+    width: 100%;
+    height: 38px;
+    padding: 0 15px;
+    background-color: white;
+    @include make-flex($dir: row, $just: space-between);
+    border: none;
+    cursor: pointer;
+    &:hover {
+      background-color: #edebe9;
+    }
+    p {
+      color: #323130;
+      font-family: "Segoe UI";
+      font-size: 17px;
+      @include make-flex();
+      height: 100%;
+    }
+
+    &__ColorOptionBox {
+      position: absolute;
+      top: 0;
+      // left: -180.45px;
+      width: 180px;
+
+      border-radius: 2px;
+      box-shadow: rgb(0 0 0 / 13%) 0px 3.2px 7.2px 0px,
+        rgb(0 0 0 / 11%) 0px 0.6px 1.8px 0px;
+      outline: transparent;
+
+      background-color: white;
+      &--item {
+        width: 100%;
+        height: 38px;
+        padding: 0 8px 0 4px;
+        @include make-flex($dir: row, $just: flex-start);
+        &:hover {
+          background-color: #edebe959;
+        }
+        .ContextMenuWrapper__checkMark {
+          height: 100%;
+          width: 16px;
+          margin: 0 4px;
+        }
+        span {
+          font-size: 17px;
+          height: 100%;
+          margin: 0 4px;
+          display: inline-flex;
+          align-items: center;
+          text-align: start;
+          flex-grow: 1;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          text-transform: capitalize;
+        }
+        .ContextMenuWrapper__colorBall {
+          width: 16px;
+          height: 16px;
+          margin: 0 4px;
+          content: "";
+          border-radius: 100%;
+          // background-color: #605e5c;
+        }
+      }
+    }
+  }
+}
