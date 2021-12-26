@@ -28,24 +28,32 @@ function ContextMenu({ data, isContext, setIsContext, className, direction }) {
   };
 
   function handleClick({ target }) {
-    // console.log(
-    //   target.className.baseVal ? target.className.baseVal : target.className
-    // );
-    if (
-      !optionRef.current.contains(target) ||
-      !optionRef.current === target ||
-      !isDescendant(
-        document.querySelector(
-          `.${
-            target.className.baseVal
-              ? target.className.baseVal
-              : target.className
-          }`
+    try {
+      if (
+        !optionRef.current.contains(target) ||
+        !optionRef.current === target ||
+        !isDescendant(
+          document.querySelector(
+            `.${
+              target.className.baseVal
+                ? target.className.baseVal
+                : target.className
+            }`
+          )
         )
-      )
-    ) {
-      setIsContext(false);
-      setIsColorOption(false);
+      ) {
+        setIsContext(false);
+        setIsColorOption(false);
+      }
+    } catch (err) {
+      if (
+        !optionRef.current.contains(target) ||
+        !optionRef.current === target ||
+        isDescendant(target)
+      ) {
+        setIsContext(false);
+        setIsColorOption(false);
+      }
     }
   }
 
@@ -94,7 +102,9 @@ function ContextMenu({ data, isContext, setIsContext, className, direction }) {
                 setIsContext(false);
               }}
             >
-              <div className="ContextMenuWrapper__checkMark" />
+              <div className="ContextMenuWrapper__checkMark">
+                {data.theme === themes[item] ? <>&#10003;</> : ""}
+              </div>
               <div
                 className="ContextMenuWrapper__colorBall"
                 style={{ backgroundColor: themes[item].primary }}

@@ -6,6 +6,7 @@ import { useStoreActions, useStoreState } from "easy-peasy";
 import { ReactComponent as DropdownIcon } from "../../../../Assets/Img/dropdownIcon.svg";
 import StickyNote from "./Components/StickyNote/StickyNote";
 import ContextMenu from "./Components/ContextMenu/ContextMenu";
+import { ReactComponent as Dots } from "../../../../Assets/Img/StickyNotes/dots.svg";
 
 function NotesContainer() {
   const notes = useStoreState((state) => state.notes);
@@ -17,6 +18,10 @@ function NotesContainer() {
   const [notesDropdownState, setNotesDropdownState] = useState(false);
 
   const dropdown = useMediaQuery({
+    query: "(max-width: 840px)",
+  });
+
+  const contextMenuPositionState = useMediaQuery({
     query: "(max-width: 840px)",
   });
 
@@ -52,7 +57,7 @@ function NotesContainer() {
         isContext={isSideContext}
         setIsContext={setIsSideContext}
         data={contextData}
-        direction="right"
+        direction={contextMenuPositionState ? "left" : "right"}
       />
       <div className="NotesContainerWrapper">
         <div
@@ -66,8 +71,14 @@ function NotesContainer() {
             {notes.map((note, index) => (
               <div
                 className="NotesContainerWrapper__listItem"
+                data-long-press-delay="500"
                 key={index}
-                onClick={() => setSelectedNote(note.id)}
+                onClick={(e) => {
+                  // console.log(e.target.className.baseVal);
+                  if (!e.target.className.baseVal) {
+                    setSelectedNote(note.id);
+                  }
+                }}
                 onContextMenu={(e) => {
                   e.preventDefault();
                   setContextData(note);
@@ -88,6 +99,33 @@ function NotesContainer() {
                 />
                 <div className="NotesContainerWrapper__listItem--time">
                   <span>{note.lastModified}</span>
+                  {contextMenuPositionState && (
+                    <Dots
+                      className={`NotesContainerWrapper__optionsButton${index}`}
+                      onClick={() => {
+                        setContextData(note);
+                        setIsSideContext(!isSideContext);
+                        const optionsButton = document.querySelector(
+                          ".NotesContainerWrapper__optionsButton" + index
+                        );
+                        var position = optionsButton.getBoundingClientRect();
+                        var positionX = position.x;
+                        var positionY = position.y;
+
+                        var contextMenu = document.querySelector(
+                          ".NotesContainerWrapper--contextMenu"
+                        );
+
+                        contextMenu.style.left =
+                          positionX -
+                          (contextMenu.clientWidth -
+                            optionsButton.clientWidth) +
+                          "px";
+
+                        contextMenu.style.top = positionY + 1 + "px";
+                      }}
+                    />
+                  )}
                 </div>
                 <div className="NotesContainerWrapper__listItem--content">
                   {note.content}

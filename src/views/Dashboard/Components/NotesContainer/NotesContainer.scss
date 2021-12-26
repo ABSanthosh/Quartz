@@ -73,6 +73,16 @@
       span {
         width: auto;
       }
+      svg {
+        border-radius: 4px;
+        cursor: pointer;
+        // &:hover {
+        //   background-color: rgba(0, 0, 0, 0.07);
+        // }
+        // &:active {
+        //   background-color: rgba(0, 0, 0, 0.171);
+        // }
+      }
     }
     &--content {
       color: #323130;

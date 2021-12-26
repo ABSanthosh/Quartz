@@ -9,7 +9,7 @@ export default function ProtectedPage({ children }) {
   useEffect(() => {
     getAuth().onAuthStateChanged((user) => {
       if (user) {
-        history.push("/dashboard");
+        history.push("/app/dashboard");
       }
     });
   });

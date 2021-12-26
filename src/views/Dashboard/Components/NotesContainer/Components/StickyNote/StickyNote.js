@@ -30,9 +30,7 @@ function StickyNote() {
     <div
       className="StickyNoteWrapper"
       style={{ backgroundColor: data.theme.primary }}
-      onContextMenu={(e) => {
-        console.log(data);
-      }}
+
     >
       <ContextMenu
         setIsContext={setIsContext}

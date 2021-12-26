@@ -16,17 +16,17 @@ export function AuthProvider({ children }) {
   const { stopFBLoading } = useFirebaseLoading();
   const storeActions = useStoreActions((action) => action);
 
-  useEffect(() => {
-    getAuth().onAuthStateChanged((user) => {
-      if (user) {
-        setUserState(user);
-        setStatus("ready");
-        storeActions.setUserState(user);
-      } else {
-        stopFBLoading();
-      }
-    });
-  }, [storeActions, stopFBLoading]);
+  // useEffect(() => {
+  getAuth().onAuthStateChanged((user) => {
+    if (user) {
+      setUserState(user);
+      setStatus("ready");
+      storeActions.setUserState(user);
+    } else {
+      stopFBLoading();
+    }
+  });
+  // }, [storeActions, stopFBLoading]);
 
   async function logout() {
     getAuth().signOut();

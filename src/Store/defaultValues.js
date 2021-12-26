@@ -136,4 +136,4 @@ const defaultBoards = [
   },
 ];
 
-export { defaultNotes, defaultBoards,themes };
+export { defaultNotes, defaultBoards, themes };
