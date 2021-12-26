@@ -1,4 +1,4 @@
-@import "../../../../styles/mixins";
+@import "../../../../../../styles/mixins";
 
 .StickyNoteWrapper {
   height: 90%;
@@ -8,7 +8,6 @@
   border-radius: 8px;
   transition: all 0.1s ease-in-out;
   @include make-flex($just: flex-start);
-  //   background-color: #fff6cb;
   box-shadow: 0px 0px 7px 1px rgb(0 0 0 / 7%);
 
   &__header {
@@ -45,6 +44,9 @@
     &--editableContent {
       height: 100%;
       width: 100%;
+      font-size: 16px;
+      line-height: 20px;
+      letter-spacing: 0.2px;
     }
   }
   &__toolbar {
@@ -86,6 +88,7 @@
       color: #605e5c;
     }
   }
+
 }
 
 @media only screen and (max-width: 1200px) {
