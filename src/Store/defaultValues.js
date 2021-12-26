@@ -43,13 +43,6 @@ const defaultNotes = [
     content: "This is note 5",
     theme: themes.purple,
   },
-  {
-    id: 6,
-    title: "Note 6",
-    lastModified: "5.12 PM",
-    content: "This is note 6",
-    theme: themes.blue,
-  },
 ];
 
 const defaultBoards = [
@@ -143,4 +136,4 @@ const defaultBoards = [
   },
 ];
 
-export { defaultNotes, defaultBoards };
+export { defaultNotes, defaultBoards,themes };
