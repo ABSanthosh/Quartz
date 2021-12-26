@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "./StickyNote.scss";
 import { ReactComponent as Dots } from "../../../../../../Assets/Img/StickyNotes/dots.svg";
@@ -9,6 +9,7 @@ import Italics from "../../../../../../Assets/Img/StickyNotes/Italic.png";
 import List from "../../../../../../Assets/Img/StickyNotes/list.png";
 import Strike from "../../../../../../Assets/Img/StickyNotes/strikethrough.png";
 import ContextMenu from "../ContextMenu/ContextMenu";
+import { useMediaQuery } from "react-responsive";
 
 import { useStoreState } from "easy-peasy";
 
@@ -21,6 +22,9 @@ function StickyNote() {
 
   const data = useStoreState((state) => state.selectedNote);
 
+  const contextMenuPositionState = useMediaQuery({
+    query: "(max-width: 840px)",
+  });
 
   return (
     <div
@@ -61,7 +65,10 @@ function StickyNote() {
                 positionX -
                 (contextMenu.clientWidth - optionsButton.clientWidth) +
                 "px";
-              contextMenu.style.top = positionY + 8 + "px";
+
+              !contextMenuPositionState
+                ? (contextMenu.style.top = positionY + 8 + "px")
+                : (contextMenu.style.top = 52 + "px");
             }}
           />
         </div>

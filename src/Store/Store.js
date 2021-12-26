@@ -57,12 +57,13 @@ const Store = createStore({
     }
   }),
   addNote: action((state) => {
+    var today = new Date();
     const newNote = {
       id: new Date().getTime(),
       title: "New note",
       content: "New note, this is",
       theme: themes.yellow,
-      lastModified: new Date().toLocaleString(),
+      lastModified: today.getHours() + ":" + today.getMinutes(),
     };
     state.notes.push(newNote);
     state.selectedNote = newNote;
