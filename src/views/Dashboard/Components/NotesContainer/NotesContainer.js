@@ -4,14 +4,18 @@ import "./NotesContainer.scss";
 import { useMediaQuery } from "react-responsive";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import { ReactComponent as DropdownIcon } from "../../../../Assets/Img/dropdownIcon.svg";
-import StickyNote from "../StickyNote/StickyNote";
+import StickyNote from "./Components/StickyNote/StickyNote";
+import ContextMenu from "./Components/ContextMenu/ContextMenu";
 
 function NotesContainer() {
   const notes = useStoreState((state) => state.notes);
-  const selectedNote = useStoreState((state) => state.selectedNote);
+  let selectedNote = useStoreState((state) => state.selectedNote);
   const setSelectedNote = useStoreActions((action) => action.setSelectedNote);
 
+  const [isSideContext, setIsSideContext] = useState(false);
+  const [contextData, setContextData] = useState({});
   const [notesDropdownState, setNotesDropdownState] = useState(false);
+
   const dropdown = useMediaQuery({
     query: "(max-width: 840px)",
   });
@@ -26,7 +30,7 @@ function NotesContainer() {
         document.querySelector("#dropdownCheckbox").click();
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedNote]);
 
   return (
@@ -43,6 +47,13 @@ function NotesContainer() {
           <DropdownIcon />
         </button>
       )}
+      <ContextMenu
+        className="NotesContainerWrapper--contextMenu"
+        isContext={isSideContext}
+        setIsContext={setIsSideContext}
+        data={contextData}
+        direction="right"
+      />
       <div className="NotesContainerWrapper">
         <div
           className={`NotesContainerWrapper__left ${
@@ -56,7 +67,17 @@ function NotesContainer() {
               <div
                 className="NotesContainerWrapper__listItem"
                 key={index}
-                onClick={() => setSelectedNote(index)}
+                onClick={() => setSelectedNote(note.id)}
+                onContextMenu={(e) => {
+                  e.preventDefault();
+                  setContextData(note);
+                  setIsSideContext(true);
+                  var contextMenu = document.querySelector(
+                    ".NotesContainerWrapper--contextMenu"
+                  );
+                  contextMenu.style.left = e.pageX + "px";
+                  contextMenu.style.top = e.pageY - 29 + "px";
+                }}
                 style={{
                   backgroundColor: note.theme.primary,
                 }}

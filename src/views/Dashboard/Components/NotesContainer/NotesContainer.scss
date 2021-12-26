@@ -13,14 +13,18 @@
     @include make-flex($just: flex-start);
 
     &__container {
-      @include make-flex();
+      @include make-flex($just: flex-start);
       gap: 16px;
       padding: 16px;
       width: 100%;
       height: auto;
       overflow-y: auto;
-      ::-webkit-scrollbar-track {
+
+      &::-webkit-scrollbar-track {
         background: #edece900;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
       }
     }
   }
