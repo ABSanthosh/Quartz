@@ -1,15 +1,18 @@
-import { createStore, action } from "easy-peasy";
+import { createStore, action, computed } from "easy-peasy";
 import { defaultBoards, defaultNotes, themes } from "./defaultValues";
 
 let localNotesList = defaultNotes;
+let localBoardsList = defaultBoards;
 
 const Store = createStore({
   notes: localNotesList,
-  boards: defaultBoards,
+  boards: localBoardsList,
   currentOption: "Notes",
   userState: null,
 
   selectedNote: localNotesList[0],
+  noteCount: computed(({ notes }) => notes.length),
+  boardsCount: computed(({ boards }) => boards.length),
 
   setSelectedNoteColor: action((state, payload) => {
     const id = payload.id;
@@ -29,6 +32,40 @@ const Store = createStore({
 
   setSelectedNote: action((state, payload) => {
     state.selectedNote = state.notes.find((note) => note.id === payload);
+  }),
+
+  setLastModified: action((state, payload) => {
+    const id = payload.id;
+    const lastModified = payload.lastModified;
+    const note = state.notes.find((note) => note.id === id);
+    note.lastModified = lastModified;
+
+    state.notes = state.notes.map((note) => {
+      if (note.id === id) {
+        return note;
+      }
+      return note;
+    });
+    // set selected note
+    state.selectedNote = state.notes.find((note) => note.id === id);
+  }),
+
+  setSelectedNoteContent: action((state, payload) => {
+    const id = payload.id;
+    const content = payload.content;
+    const sanitizedContent = payload.sanitizedContent;
+    const note = state.notes.find((note) => note.id === id);
+    note.content = content;
+    note.sanitizedContent = sanitizedContent;
+
+    state.notes = state.notes.map((note) => {
+      if (note.id === id) {
+        return note;
+      }
+      return note;
+    });
+    // set selected note
+    state.selectedNote = state.notes.find((note) => note.id === id);
   }),
 
   setCurrentOption: action((state, payload) => {
@@ -56,6 +93,7 @@ const Store = createStore({
       }
     }
   }),
+  
   addNote: action((state) => {
     var today = new Date();
     const newNote = {
