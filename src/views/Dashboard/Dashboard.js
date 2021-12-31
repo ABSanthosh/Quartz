@@ -27,6 +27,9 @@ function Dashboard(props) {
     (actions) => actions.setCurrentOption
   );
 
+  const noteCount = useStoreState((state) => state.noteCount);
+  const boardCount = useStoreState((state) => state.boardCount);
+
   // Media queries
   const defaultNavState = useMediaQuery({
     query: "(max-width: 980px)",
@@ -51,6 +54,7 @@ function Dashboard(props) {
               text="Boards"
               onClick={() => setCurrentOption("Boards")}
               isActive={currentOption === "Boards"}
+              count={boardCount}
             >
               <DashboardIcon />
             </SideBarItem>
@@ -58,6 +62,7 @@ function Dashboard(props) {
               text="Notes"
               onClick={() => setCurrentOption("Notes")}
               isActive={currentOption === "Notes"}
+              count={noteCount}
             >
               <StickyNotes />
             </SideBarItem>
