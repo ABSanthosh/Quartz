@@ -1,17 +1,19 @@
-import React, { useState } from "react";
 import PropTypes from "prop-types";
-import "./StickyNote.scss";
+import React, { useState } from "react";
+import ContextMenu from "../ContextMenu/ContextMenu";
+
+import Bold from "../../../../../../Assets/Img/StickyNotes/Bold.png";
+import List from "../../../../../../Assets/Img/StickyNotes/list.png";
+import Italics from "../../../../../../Assets/Img/StickyNotes/Italic.png";
+import Strike from "../../../../../../Assets/Img/StickyNotes/strikethrough.png";
 import { ReactComponent as Dots } from "../../../../../../Assets/Img/StickyNotes/dots.svg";
 import { ReactComponent as Photo } from "../../../../../../Assets/Img/StickyNotes/photo.svg";
 
-import Bold from "../../../../../../Assets/Img/StickyNotes/Bold.png";
-import Italics from "../../../../../../Assets/Img/StickyNotes/Italic.png";
-import List from "../../../../../../Assets/Img/StickyNotes/list.png";
-import Strike from "../../../../../../Assets/Img/StickyNotes/strikethrough.png";
-import ContextMenu from "../ContextMenu/ContextMenu";
+import { useStoreState } from "easy-peasy";
 import { useMediaQuery } from "react-responsive";
 
-import { useStoreState } from "easy-peasy";
+import "./StickyNote.scss";
+import ContentEditor from "./ContentEditor";
 
 function StickyNote() {
   const [isBold, setIsBold] = useState(false);
@@ -26,11 +28,47 @@ function StickyNote() {
     query: "(max-width: 840px)",
   });
 
+  const handleCursorElement = () => {
+    let element = window.getSelection().getRangeAt(0)
+      .commonAncestorContainer.parentNode;
+
+    let elementList = [];
+    while (
+      element.className !== "StickyNoteWrapper__content--editableContent"
+    ) {
+      elementList.push(element.tagName);
+      element = element.parentNode;
+    }
+
+    if (elementList.includes("B")) {
+      setIsBold(true);
+    } else {
+      setIsBold(false);
+    }
+
+    if (elementList.includes("I")) {
+      setIsItalic(true);
+    } else {
+      setIsItalic(false);
+    }
+
+    if (elementList.includes("UL")) {
+      setIsList(true);
+    } else {
+      setIsList(false);
+    }
+
+    if (elementList.includes("STRIKE")) {
+      setIsStrike(true);
+    } else {
+      setIsStrike(false);
+    }
+  };
+
   return (
     <div
       className="StickyNoteWrapper"
       style={{ backgroundColor: data.theme.primary }}
-
     >
       <ContextMenu
         setIsContext={setIsContext}
@@ -72,51 +110,61 @@ function StickyNote() {
         </div>
       </header>
       <article className="StickyNoteWrapper__content">
-        <div className="StickyNoteWrapper__content--editableContent">
-          {data.content}
-        </div>
+        <ContentEditor handleCursorElement={handleCursorElement} />
       </article>
       <footer className="StickyNoteWrapper__toolbar">
         <div className="StickyNoteWrapper__toolbar--left">
-          <div
+          <button
             className={`StickyNoteWrapper__toolbar--left--item ${
               isBold ? "StickyNoteWrapper__toolbar--left--item--active" : ""
             }`}
-            onClick={() => setIsBold(!isBold)}
+            onClick={() => {
+              setIsBold(!isBold);
+              document.execCommand("bold", false);
+            }}
           >
             <img src={Bold} alt="bold" />
-          </div>
-          <div
+          </button>
+          <button
             className={`StickyNoteWrapper__toolbar--left--item ${
               isItalic ? "StickyNoteWrapper__toolbar--left--item--active" : ""
             }`}
-            onClick={() => setIsItalic(!isItalic)}
+            onClick={() => {
+              setIsItalic(!isItalic);
+              document.execCommand("italic", false);
+            }}
           >
             <img src={Italics} alt="Italics" />
-          </div>
-          <div
+          </button>
+          <button
             className={`StickyNoteWrapper__toolbar--left--item ${
               isList ? "StickyNoteWrapper__toolbar--left--item--active" : ""
             }`}
-            onClick={() => setIsList(!isList)}
+            onClick={() => {
+              setIsList(!isList);
+              document.execCommand("insertUnorderedList", false);
+            }}
           >
             <img src={List} alt="List" />
-          </div>
-          <div
+          </button>
+          <button
             className={`StickyNoteWrapper__toolbar--left--item ${
               isStrike ? "StickyNoteWrapper__toolbar--left--item--active" : ""
             }`}
-            onClick={() => setIsStrike(!isStrike)}
+            onClick={() => {
+              setIsStrike(!isStrike);
+              document.execCommand("strikeThrough", false);
+            }}
           >
             <img src={Strike} alt="Strike" />
-          </div>
-          <div
+          </button>
+          <button
             className={`StickyNoteWrapper__toolbar--left--item ${
-              isBold ? "StickyNoteWrapper__toolbar--left--item--active" : ""
+              false ? "StickyNoteWrapper__toolbar--left--item--active" : ""
             }`}
           >
             <Photo />
-          </div>
+          </button>
         </div>
 
         <div className="StickyNoteWrapper__toolbar--right">

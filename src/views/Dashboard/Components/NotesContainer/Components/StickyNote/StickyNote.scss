@@ -37,16 +37,41 @@
     }
   }
   &__content {
-    height: calc(100% - 12px);
     width: 100%;
-    margin-top: 12px;
-    padding: 0 48px;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    overflow: hidden;
+    overflow-y: auto;
+
     &--editableContent {
-      height: 100%;
       width: 100%;
+      min-height: 100%;
       font-size: 16px;
       line-height: 20px;
       letter-spacing: 0.2px;
+      outline: 0px solid transparent;
+
+      user-select: text;
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
+    }
+
+    &--editableContainer {
+      height: 100%;
+      max-height: 100%;
+      padding: 0 48px;
+      overflow-y: auto;
+      li {
+        margin-left: 20px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: #edece900;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+      }
     }
   }
   &__toolbar {
@@ -57,19 +82,21 @@
     &--left {
       width: 275px;
       @include make-flex($dir: row, $just: space-around);
-      cursor: pointer;
       &--item {
+        cursor: pointer;
         z-index: 1;
         @include make-flex();
+        border: none;
+        background-color: #ffffff00;
         height: 35px;
         width: 35px;
-        border-radius: 4px;
+        border-radius: 3px;
         img {
           height: 28px;
           filter: invert(100%);
         }
         &:hover {
-          background-color: rgba(0, 0, 0, 0.07);
+          background-color: rgba(0, 0, 0, 0.027);
         }
         &--active {
           background-color: rgba(0, 0, 0, 0.07);
@@ -109,10 +136,16 @@
   }
 }
 
-
 @media only screen and (max-height: 650px) {
   .StickyNoteWrapper {
     height: 100%;
+  }
+}
+
+@media only screen and (max-height: 475px) {
+  .StickyNoteWrapper {
+    &__content {
+    }
   }
 }
 
