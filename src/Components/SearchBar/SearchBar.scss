@@ -1,0 +1,64 @@
+@import "../../styles/mixins";
+
+.SearchBarWrapper {
+  width: calc(100% - 32px);
+  position: relative;
+  &__input {
+    width: 100%;
+    border: 1px solid #bf8e8d;
+    border-radius: 5px;
+    height: 38px;
+    padding: 0 0 0 38px;
+
+    inline-size: 100%;
+    line-height: 22px;
+    font-size: 17px;
+    font-weight: 500;
+
+    &:active,
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: #bfbfbe;
+      // font-size: 16px;
+    }
+  }
+
+  &__icon {
+    height: 38px;
+    width: 38px;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: inline-block;
+    background-size: 21px 21px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-image: url(../../Assets//Img/search.png);
+  }
+
+  &__clear {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-size: 15px 15px;
+    background-repeat: no-repeat;
+    width: 15px;
+    height: 15px;
+    background-position: 50%;
+    inline-size: 38px;
+    block-size: 38px;
+    opacity: 0.7;
+    background-image: url(../../Assets//Img/close.png);
+    cursor: pointer;
+
+    &:focus,
+    &:active,
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
