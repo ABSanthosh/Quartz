@@ -36,10 +36,16 @@
   }
 
   &__listItem {
-    min-height: 124px;
+    // min-height: 124px;
     // min-height: 64px;
+    height: fit-content;
     width: 100%;
     border-radius: 8px;
+
+    padding-left: 1px;
+    padding-right: 1px;
+    padding-bottom: 16px;
+
     @include make-flex($just: flex-start);
     // background-color: #fff6cb;
     box-shadow: 0px 0px 7px 1px rgb(0 0 0 / 7%);
@@ -56,41 +62,61 @@
     -moz-user-select: none;
     -ms-user-select: none;
 
-    &--header {
-      // background-color: #ffee92;
-      height: 6px;
-      width: 100%;
-      border-radius: 8px 8px 0 0;
-    }
     &--time {
       height: 16px;
+      margin-top: 4px;
       color: #605e5c;
       width: 100%;
       font-size: 11px;
       line-height: 10px;
       @include make-flex($dir: row, $just: flex-end);
       padding: 0 10px;
+      // margin-bottom: 4px;
       span {
+        height: inherit;
         width: auto;
       }
       svg {
         border-radius: 4px;
         cursor: pointer;
-        // &:hover {
-        //   background-color: rgba(0, 0, 0, 0.07);
-        // }
-        // &:active {
-        //   background-color: rgba(0, 0, 0, 0.171);
-        // }
       }
     }
     &--content {
-      color: #323130;
+      & > * {
+        color: #323130;
+        font-size: 14px;
+        line-height: 20px;
+        word-break: break-word;
+      }
       font-size: 14px;
-      line-height: 20px;
       width: 100%;
       padding: 0 20px;
+      // margin-bottom: 4px;
       height: 100%;
+      max-height: 104.34px;
+      overflow: hidden;
+    }
+
+    &--AddNote {
+      cursor: pointer;
+    }
+    &--NoItemsFound,
+    &--AddNote {
+      width: 100%;
+      @include make-flex($dir: row);
+      gap: 10px;
+      height: 50px;
+      border: 1px solid #868282;
+      border-radius: 8px;
+      svg {
+        opacity: 0.5;
+      }
+      p {
+        color: #868282;
+        height: 100%;
+        @include make-flex();
+        font-size: 17px;
+      }
     }
   }
 
@@ -103,6 +129,7 @@
     cursor: pointer;
     font-size: 18px;
     line-height: 31px;
+    z-index: 1;
     gap: 5px;
     position: relative;
     input {

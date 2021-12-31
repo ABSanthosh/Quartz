@@ -1,21 +1,31 @@
 import React, { useEffect, useState } from "react";
-// import PropTypes from "prop-types";
 import "./NotesContainer.scss";
 import { useMediaQuery } from "react-responsive";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import { ReactComponent as DropdownIcon } from "../../../../Assets/Img/dropdownIcon.svg";
 import StickyNote from "./Components/StickyNote/StickyNote";
 import ContextMenu from "./Components/ContextMenu/ContextMenu";
-import { ReactComponent as Dots } from "../../../../Assets/Img/StickyNotes/dots.svg";
+import { ReactComponent as Sad } from "../../../../Assets/Img/sad.svg";
+import { ReactComponent as Plus } from "../../../../Assets/Img/plus.svg";
+
+import SearchBar from "../../../../Components/SearchBar/SearchBar";
+import Fuse from "fuse.js";
+import NotesListItem from "./Components/NotesListItem/NotesListItem";
 
 function NotesContainer() {
   const notes = useStoreState((state) => state.notes);
   let selectedNote = useStoreState((state) => state.selectedNote);
   const setSelectedNote = useStoreActions((action) => action.setSelectedNote);
+  const addNote = useStoreActions((actions) => actions.addNote);
 
   const [isSideContext, setIsSideContext] = useState(false);
+  const [searchResults, setSearchResults] = useState(null);
   const [contextData, setContextData] = useState({});
   const [notesDropdownState, setNotesDropdownState] = useState(false);
+
+  const fuse = new Fuse(notes, {
+    keys: ["sanitizedContent"],
+  });
 
   const dropdown = useMediaQuery({
     query: "(max-width: 840px)",
@@ -67,71 +77,72 @@ function NotesContainer() {
               : "NotesContainerWrapper__left--close"
           }`}
         >
+          <SearchBar
+            style={contextMenuPositionState ? { marginTop: "16px" } : {}}
+            placeholder="Search all notes"
+            callBack={(val) => {
+              if (val !== "") {
+                setSearchResults(
+                  fuse.search(`=${val}`).map((item) => item.item)
+                );
+              } else {
+                setSearchResults(null);
+              }
+            }}
+          />
           <div className="NotesContainerWrapper__left__container">
-            {notes.map((note, index) => (
+            {!searchResults &&
+              notes.map((note, index) => (
+                <NotesListItem
+                  contextMenuPositionState={contextMenuPositionState}
+                  note={note}
+                  key={index}
+                  setSelectedNote={setSelectedNote}
+                  setContextData={setContextData}
+                  setIsSideContext={setIsSideContext}
+                  index={index}
+                  isSideContext={isSideContext}
+                />
+              ))}
+
+            {searchResults &&
+              searchResults.length > 0 &&
+              searchResults.map((note, index) => (
+                <NotesListItem
+                  contextMenuPositionState={contextMenuPositionState}
+                  note={note}
+                  key={index}
+                  onClick={() => {
+                    setSearchResults(null);
+                    document.querySelector(".SearchBarWrapper__input").value =
+                      "";
+                  }}
+                  setSelectedNote={setSelectedNote}
+                  setContextData={setContextData}
+                  setIsSideContext={setIsSideContext}
+                  index={index}
+                  isSideContext={isSideContext}
+                />
+              ))}
+
+            {searchResults && searchResults.length === 0 && (
+              <div className="NotesContainerWrapper__listItem--NoItemsFound">
+                <Sad />
+                <p>No Notes found</p>
+              </div>
+            )}
+
+            {notes.length === 0 && (
               <div
-                className="NotesContainerWrapper__listItem"
-                data-long-press-delay="500"
-                key={index}
-                onClick={(e) => {
-                  // console.log(e.target.className.baseVal);
-                  if (!e.target.className.baseVal) {
-                    setSelectedNote(note.id);
-                  }
-                }}
-                onContextMenu={(e) => {
-                  e.preventDefault();
-                  setContextData(note);
-                  setIsSideContext(true);
-                  var contextMenu = document.querySelector(
-                    ".NotesContainerWrapper--contextMenu"
-                  );
-                  contextMenu.style.left = e.pageX + "px";
-                  contextMenu.style.top = e.pageY - 29 + "px";
-                }}
-                style={{
-                  backgroundColor: note.theme.primary,
+                className="NotesContainerWrapper__listItem--AddNote"
+                onClick={() => {
+                  addNote();
                 }}
               >
-                <span
-                  className="NotesContainerWrapper__listItem--header"
-                  style={{ backgroundColor: note.theme.secondary }}
-                />
-                <div className="NotesContainerWrapper__listItem--time">
-                  <span>{note.lastModified}</span>
-                  {contextMenuPositionState && (
-                    <Dots
-                      className={`NotesContainerWrapper__optionsButton${index}`}
-                      onClick={() => {
-                        setContextData(note);
-                        setIsSideContext(!isSideContext);
-                        const optionsButton = document.querySelector(
-                          ".NotesContainerWrapper__optionsButton" + index
-                        );
-                        var position = optionsButton.getBoundingClientRect();
-                        var positionX = position.x;
-                        var positionY = position.y;
-
-                        var contextMenu = document.querySelector(
-                          ".NotesContainerWrapper--contextMenu"
-                        );
-
-                        contextMenu.style.left =
-                          positionX -
-                          (contextMenu.clientWidth -
-                            optionsButton.clientWidth) +
-                          "px";
-
-                        contextMenu.style.top = positionY + 1 + "px";
-                      }}
-                    />
-                  )}
-                </div>
-                <div className="NotesContainerWrapper__listItem--content">
-                  {note.content}
-                </div>
+                <Plus />
+                <p>Add note</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
         <div className="NotesContainerWrapper__right">
