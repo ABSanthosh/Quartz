@@ -1,6 +1,6 @@
 @import "../../styles/mixins";
 
-.FirebaseLoaderWrapper {
+.SupabaseLoaderWrapper {
   @include make-flex($dir: row);
   position: relative;
   height: 55px;

@@ -5,10 +5,10 @@ import { useAuth } from "../../../../hooks/useAuth";
 
 function NamePlate(props) {
   const { userState } = useAuth();
-  
+
   return (
     <div className="NamePlateWrapper">
-      <p>{userState.displayName}</p>
+      <p>{userState.user_metadata.preferred_username}</p>
     </div>
   );
 }

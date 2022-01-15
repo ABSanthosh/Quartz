@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./FancyButton.scss";
-// import { useAuth } from "../../hooks/useAuth";
 
 function FancyButton({ text, className, children, ...props }) {
   return (

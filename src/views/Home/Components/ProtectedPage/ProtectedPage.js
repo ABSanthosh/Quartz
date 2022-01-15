@@ -1,18 +1,20 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { getAuth } from "../../../../firebase/githubAuth";
-// import { getAuth } from "../../firebase/githubAuth";
 import PropTypes from "prop-types";
+import supabase from "../../../../supabase/supabase-config";
 
 export default function ProtectedPage({ children }) {
   let history = useHistory();
   useEffect(() => {
-    getAuth().onAuthStateChanged((user) => {
-      if (user) {
-        history.push("/app/dashboard");
+    supabase.auth.onAuthStateChange((event) => {
+      if (event === "SIGNED_IN") {
+        window.onload = () => {
+          history.push("/app/dashboard");
+        };
       }
     });
   });
+
   return <>{children}</>;
 }
 

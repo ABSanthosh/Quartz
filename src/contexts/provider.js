@@ -1,44 +1,61 @@
-import { useState } from "react";
-import {
-  getAuth,
-  gitHubAuthSignIn,
-  gitHubAuthLink,
-} from "../firebase/githubAuth";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { useFirebaseLoading } from "../hooks/useFirebaseLoading";
+import { useSupabaseLoading } from "../hooks/useSupabaseLoading";
 import { AuthContext } from "./context";
 import { useStoreActions } from "easy-peasy";
+import supabase from "../supabase/supabase-config";
+import { useHistory } from "react-router-dom";
 
 export function AuthProvider({ children }) {
   const [userState, setUserState] = useState(null);
   const [status, setStatus] = useState("loading");
 
-  const { stopFBLoading } = useFirebaseLoading();
+  const { stopFBLoading } = useSupabaseLoading();
   const storeActions = useStoreActions((action) => action);
+  let history = useHistory();
 
-  // useEffect(() => {
-  getAuth().onAuthStateChanged((user) => {
-    if (user) {
-      setUserState(user);
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((event) => {
+      if (event === "SIGNED_IN" || event === "USER_UPDATED") {
+        const supaUser = supabase.auth.user();
+        // console.log("supaUser", supaUser);
+        setUserState(supaUser);
+        setStatus("ready");
+        storeActions.setUser(supaUser);
+
+        if (event === "SIGNED_IN") {
+          history.push("/app/dashboard");
+        }
+      } else {
+        stopFBLoading();
+      }
+    });
+  }, [storeActions, stopFBLoading]);
+
+  useEffect(() => {
+    checkUser();
+    window.addEventListener("hashchange", function () {
+      checkUser();
+    });
+  }, []);
+
+  async function checkUser() {
+    const supaUser = supabase.auth.user();
+    setUserState(supaUser);
+    if (supaUser) {
       setStatus("ready");
-      storeActions.setUserState(user);
-    } else {
-      stopFBLoading();
     }
-  });
-  // }, [storeActions, stopFBLoading]);
+  }
 
   async function logout() {
-    getAuth().signOut();
-    setUserState(getAuth().currentUser);
+    await supabase.auth.signOut();
+    setUserState(null);
   }
 
   async function login() {
-    if (!getAuth().currentUser) {
-      await gitHubAuthSignIn(setUserState);
-    } else {
-      await gitHubAuthLink(setUserState);
-    }
+    await supabase.auth.signIn({
+      provider: "github",
+    });
   }
 
   const authObject = {

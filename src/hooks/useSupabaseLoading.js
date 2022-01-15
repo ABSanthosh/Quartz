@@ -1,7 +1,7 @@
 import reactDom from "react-dom";
-import FirebaseLoader from "../Components/FirebaseLoader/FirebaseLoader";
+import SupabaseLoader from "../Components/SupabaseLoader/SupabaseLoader";
 
-export function useFirebaseLoading() {
+export function useSupabaseLoading() {
   const startFBLoading = () => {
     if (document.getElementById("loading-dock")) {
       document.getElementById("loading-dock").remove();
@@ -10,7 +10,7 @@ export function useFirebaseLoading() {
       .getElementById("root")
       .insertAdjacentHTML("beforebegin", '<div id="loading-dock"></div>');
     reactDom.render(
-      <FirebaseLoader />,
+      <SupabaseLoader />,
       document.getElementById("loading-dock")
     );
   };
