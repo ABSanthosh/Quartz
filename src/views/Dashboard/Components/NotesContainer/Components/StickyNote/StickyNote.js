@@ -2,18 +2,14 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 import ContextMenu from "../ContextMenu/ContextMenu";
 
-import Bold from "../../../../../../Assets/Img/StickyNotes/Bold.png";
-import List from "../../../../../../Assets/Img/StickyNotes/list.png";
-import Italics from "../../../../../../Assets/Img/StickyNotes/Italic.png";
-import Strike from "../../../../../../Assets/Img/StickyNotes/strikethrough.png";
 import { ReactComponent as Dots } from "../../../../../../Assets/Img/StickyNotes/dots.svg";
-import { ReactComponent as Photo } from "../../../../../../Assets/Img/StickyNotes/photo.svg";
 
 import { useStoreState } from "easy-peasy";
 import { useMediaQuery } from "react-responsive";
 
 import "./StickyNote.scss";
 import ContentEditor from "./ContentEditor";
+import StickyNoteFooter from "../StickyNoteFooter/StickyNoteFooter";
 
 function StickyNote() {
   const [isBold, setIsBold] = useState(false);
@@ -112,65 +108,18 @@ function StickyNote() {
       <article className="StickyNoteWrapper__content">
         <ContentEditor handleCursorElement={handleCursorElement} />
       </article>
-      <footer className="StickyNoteWrapper__toolbar">
-        <div className="StickyNoteWrapper__toolbar--left">
-          <button
-            className={`StickyNoteWrapper__toolbar--left--item ${
-              isBold ? "StickyNoteWrapper__toolbar--left--item--active" : ""
-            }`}
-            onClick={() => {
-              setIsBold(!isBold);
-              document.execCommand("bold", false);
-            }}
-          >
-            <img src={Bold} alt="bold" />
-          </button>
-          <button
-            className={`StickyNoteWrapper__toolbar--left--item ${
-              isItalic ? "StickyNoteWrapper__toolbar--left--item--active" : ""
-            }`}
-            onClick={() => {
-              setIsItalic(!isItalic);
-              document.execCommand("italic", false);
-            }}
-          >
-            <img src={Italics} alt="Italics" />
-          </button>
-          <button
-            className={`StickyNoteWrapper__toolbar--left--item ${
-              isList ? "StickyNoteWrapper__toolbar--left--item--active" : ""
-            }`}
-            onClick={() => {
-              setIsList(!isList);
-              document.execCommand("insertUnorderedList", false);
-            }}
-          >
-            <img src={List} alt="List" />
-          </button>
-          <button
-            className={`StickyNoteWrapper__toolbar--left--item ${
-              isStrike ? "StickyNoteWrapper__toolbar--left--item--active" : ""
-            }`}
-            onClick={() => {
-              setIsStrike(!isStrike);
-              document.execCommand("strikeThrough", false);
-            }}
-          >
-            <img src={Strike} alt="Strike" />
-          </button>
-          <button
-            className={`StickyNoteWrapper__toolbar--left--item ${
-              false ? "StickyNoteWrapper__toolbar--left--item--active" : ""
-            }`}
-          >
-            <Photo />
-          </button>
-        </div>
 
-        <div className="StickyNoteWrapper__toolbar--right">
-          <span>Modified: {data.lastModified}</span>
-        </div>
-      </footer>
+      <StickyNoteFooter
+        data={data}
+        isBold={isBold}
+        setIsBold={setIsBold}
+        isItalic={isItalic}
+        setIsItalic={setIsItalic}
+        isList={isList}
+        setIsList={setIsList}
+        isStrike={isStrike}
+        setIsStrike={setIsStrike}
+      />
     </div>
   );
 }
