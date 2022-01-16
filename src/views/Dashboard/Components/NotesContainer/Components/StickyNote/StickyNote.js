@@ -29,11 +29,13 @@ function StickyNote() {
       .commonAncestorContainer.parentNode;
 
     let elementList = [];
-    while (
-      element.className !== "StickyNoteWrapper__content--editableContent"
-    ) {
-      elementList.push(element.tagName);
-      element = element.parentNode;
+    if (element.className) {
+      while (
+        element.className !== "StickyNoteWrapper__content--editableContent"
+      ) {
+        elementList.push(element.tagName);
+        element = element.parentNode;
+      }
     }
 
     if (elementList.includes("B")) {

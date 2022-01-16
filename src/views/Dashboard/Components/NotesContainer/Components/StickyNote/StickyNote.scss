@@ -57,7 +57,9 @@
 
       user-select: text;
       white-space: pre-wrap;
+      font-family: "Noto Sans", sans-serif;
       overflow-wrap: break-word;
+      color: #686663;
     }
 
     &--editableContainer {
@@ -164,6 +166,16 @@
       &--editableContainer {
         padding: 0 20px;
       }
+    }
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .StickyNoteWrapper {
+    &__toolbar {
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 10px;
     }
   }
 }
