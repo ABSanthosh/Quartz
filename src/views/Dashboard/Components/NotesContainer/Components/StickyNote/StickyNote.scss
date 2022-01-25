@@ -1,7 +1,7 @@
 @import "../../../../../../styles/mixins";
 
 .StickyNoteWrapper {
-  height: 90%;
+  height: 94%;
   width: 755px;
   min-height: 430px;
   // max-width: 750px;
@@ -10,11 +10,21 @@
   @include make-flex($just: flex-start);
   box-shadow: 0px 0px 7px 1px rgb(0 0 0 / 7%);
 
+  &--fullscreen {
+    z-index: 6;
+    transition: all 0.25s ease-in-out;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    height: 100%;
+    width: 100%;
+  }
+
   &__header {
     width: 100%;
     height: 58px;
     &--stripe {
-      //   background-color: #ffee92;
       height: 6px;
       width: 100%;
       border-radius: 8px 8px 0 0;
@@ -33,6 +43,20 @@
         &:active {
           background-color: rgba(0, 0, 0, 0.171);
         }
+      }
+    }
+    &--expand {
+      @include make-flex();
+      height: 37px;
+      width: 37px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 4px;
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.07);
+      }
+      &:active {
+        background-color: rgba(0, 0, 0, 0.171);
       }
     }
   }
@@ -146,7 +170,8 @@
 
 @media only screen and (max-height: 650px) {
   .StickyNoteWrapper {
-    height: 100%;
+    height: 97%;
+    width: 95%;
   }
 }
 
@@ -191,3 +216,5 @@
     }
   }
 }
+
+
