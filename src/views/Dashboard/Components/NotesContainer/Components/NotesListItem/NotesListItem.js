@@ -68,12 +68,9 @@ export default function NotesListItem({
           />
         )}
       </div>
-      <ContentEditable
+      <div
         className="NotesContainerWrapper__listItem--content"
-        html={sanitizeHtml(note.content, {
-          allowedTags: ["b", "i", "div", "strong", "strike", "p", "li"],
-          allowedAttributes: { a: ["href"] },
-        })}
+        dangerouslySetInnerHTML={{ __html: sanitizeHtml(note.content) }}
         disabled={true}
       />
     </div>
