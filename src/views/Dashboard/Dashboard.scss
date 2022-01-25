@@ -2,11 +2,11 @@
 
 .DashboardWrapper {
   width: 100%;
-  height: calc(100% - 30px);
-  transform: translateY(30px);
+  height: calc(100% - 28px);
+  transform: translateY(28px);
   @include make-flex($dir: row, $just: unset, $align: unset);
   &__subHeader {
-    max-width: calc(100% - 30px);
+    max-width: calc(100% - 28px);
     padding: 5px 15px;
     height: 50px;
     @include make-flex($just: space-between, $dir: row);
@@ -190,7 +190,7 @@
     background-image: url(../../Assets/Img/paperEffect.png);
 
     &--open {
-      width: calc(100% - 244px);
+      width: calc(100% - 240px);
     }
   }
 
