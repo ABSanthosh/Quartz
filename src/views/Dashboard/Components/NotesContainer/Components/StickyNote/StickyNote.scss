@@ -1,10 +1,9 @@
 @import "../../../../../../styles/mixins";
 
 .StickyNoteWrapper {
-  height: 94%;
+  height: 100%;
   width: 755px;
   min-height: 430px;
-  // max-width: 750px;
   border-radius: 8px;
   transition: all 0.1s ease-in-out;
   @include make-flex($just: flex-start);
@@ -13,7 +12,7 @@
   &--fullscreen {
     z-index: 6;
     transition: all 0.25s ease-in-out;
-    position: absolute;
+    position: fixed;
     top: 50%;
     transform: translate(-50%, -50%);
     left: 50%;
@@ -33,7 +32,8 @@
       height: 52px;
       width: 100%;
       padding: 10px 12px;
-      @include make-flex($dir: row, $just: flex-end);
+      padding-left: 20px;
+      @include make-flex($dir: row, $just: space-between);
       svg {
         border-radius: 4px;
         cursor: pointer;
@@ -45,6 +45,17 @@
         }
       }
     }
+
+    &--right {
+      @include make-flex($dir: row);
+    }
+
+    &--left {
+      span {
+        font-style: italic;
+      }
+    }
+
     &--expand {
       @include make-flex();
       height: 37px;
@@ -58,18 +69,36 @@
       &:active {
         background-color: rgba(0, 0, 0, 0.171);
       }
+
+      &--active {
+        background-color: rgba(0, 0, 0, 0.07);
+      }
     }
   }
   &__content {
     width: 100%;
     display: flex;
-    height: 100%;
-    max-height: 100%;
-    flex-grow: 1;
+    height: calc(100% - 147px);
+    flex: 1 1 auto;
 
-    flex-direction: column;
-    overflow: hidden;
-    overflow-y: auto;
+    &--editableContainer {
+      overflow-y: auto;
+      height: 100%;
+      width: 100%;
+      padding: 0 48px;
+      flex: 1 1 auto;
+
+      li {
+        margin-left: 20px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: #edece900;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+      }
+    }
 
     &--editableContent {
       width: 100%;
@@ -84,23 +113,7 @@
       font-family: "Noto Sans", sans-serif;
       overflow-wrap: break-word;
       color: #686663;
-    }
-
-    &--editableContainer {
-      height: 100%;
-      max-height: 100%;
-      padding: 0 48px;
-      overflow-y: auto;
-      li {
-        margin-left: 20px;
-      }
-
-      &::-webkit-scrollbar-track {
-        background: #edece900;
-      }
-      &::-webkit-scrollbar-thumb {
-        border-radius: 10px;
-      }
+      overflow: hidden;
     }
   }
   &__toolbar {
@@ -161,16 +174,12 @@
 @media only screen and (max-width: 840px) {
   .StickyNoteWrapper {
     width: 100%;
-    height: 100%;
-
-    &__content {
-    }
+    max-height: 100%;
   }
 }
 
 @media only screen and (max-height: 650px) {
   .StickyNoteWrapper {
-    height: 97%;
     width: 95%;
   }
 }
@@ -201,6 +210,11 @@
       flex-direction: column;
       justify-content: flex-start;
       gap: 10px;
+
+      &--left {
+        width: 100%;
+        justify-content: space-around;
+      }
     }
   }
 }
@@ -216,5 +230,3 @@
     }
   }
 }
-
-

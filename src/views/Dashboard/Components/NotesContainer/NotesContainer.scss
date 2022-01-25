@@ -1,9 +1,9 @@
 @import "../../../../styles/mixins";
 
 .NotesContainerWrapper {
-  height: 100%;
+  height: calc(100% - 50px);
   width: 100%;
-  @include make-flex($dir: row);
+  @include make-flex($dir: row, $align: flex-start);
   &__left {
     width: 375px;
     height: 100%;
@@ -17,7 +17,7 @@
       gap: 16px;
       padding: 16px;
       width: 100%;
-      height: auto;
+      height: 100%;
       overflow-y: auto;
 
       &::-webkit-scrollbar-track {
@@ -32,7 +32,7 @@
     width: calc(100% - 375px);
     @include make-flex($just: flex-start);
     height: 100%;
-    padding: 16px;
+    // padding: 16px;
   }
 
   &__listItem {

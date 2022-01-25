@@ -1,7 +1,6 @@
 @import "../../../../../../styles/mixins";
 
 .ContextMenuWrapper {
-  // height: 108px;
   width: 180px;
   background-color: white;
   border-radius: 2px;
@@ -39,7 +38,6 @@
     &__ColorOptionBox {
       position: absolute;
       top: 0;
-      // left: -180.45px;
       width: 180px;
 
       border-radius: 2px;
