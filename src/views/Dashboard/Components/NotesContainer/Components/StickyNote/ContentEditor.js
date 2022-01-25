@@ -66,7 +66,6 @@ function ContentEditor({ handleCursorElement }) {
   );
 }
 
-// prop types
 ContentEditor.propTypes = {
   handleCursorElement: propTypes.func.isRequired,
 };

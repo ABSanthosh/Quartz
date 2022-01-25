@@ -35,7 +35,6 @@ SearchBar.propTypes = {
 };
 
 SearchBar.defaultProps = {
-  // bla: 'test',
 };
 
 export default SearchBar;

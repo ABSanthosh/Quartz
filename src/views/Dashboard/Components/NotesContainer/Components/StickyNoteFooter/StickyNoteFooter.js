@@ -1,4 +1,5 @@
 import React from "react";
+import { useMediaQuery } from "react-responsive";
 import {
   BaseIconsDefinitions,
   ControlIconsDefinitions,
@@ -15,6 +16,9 @@ function StickyNoteFooter({
   setIsStrike,
   data,
 }) {
+  const editedAt = useMediaQuery({
+    query: "(max-width: 450px)",
+  });
   return (
     <footer className="StickyNoteWrapper__toolbar">
       <div className="StickyNoteWrapper__toolbar--left">
@@ -73,9 +77,11 @@ function StickyNoteFooter({
         </button>
       </div>
 
-      <div className="StickyNoteWrapper__toolbar--right">
-        <span>Modified: {data.lastModified}</span>
-      </div>
+      {!editedAt && (
+        <div className="StickyNoteWrapper__toolbar--right">
+          <span>Modified: {data.lastModified}</span>
+        </div>
+      )}
     </footer>
   );
 }

@@ -26,11 +26,14 @@ function StickyNote() {
     query: "(max-width: 840px)",
   });
 
+  const editedAt = useMediaQuery({
+    query: "(max-width: 450px)",
+  });
+
   const handleCursorElement = () => {
     let element = window.getSelection().getRangeAt(0)
       .commonAncestorContainer.parentNode;
 
-    console.log(element);
     let elementList = [];
     if (element) {
       while (
@@ -85,37 +88,44 @@ function StickyNote() {
           style={{ backgroundColor: data.theme.secondary }}
         />
         <div className="StickyNoteWrapper__header--details">
-          <Dots
-            className="StickyNoteWrapper__optionsButton"
-            onClick={() => {
-              setIsContext(!isContext);
-              const optionsButton = document.querySelector(
-                ".StickyNoteWrapper__optionsButton"
-              );
-              var position = optionsButton.getBoundingClientRect();
-              var positionX = position.x;
-              var positionY = position.y;
+          <div className="StickyNoteWrapper__header--left">
+            {editedAt && <span>Modified: {data.lastModified}</span>}
+          </div>
+          <div className="StickyNoteWrapper__header--right">
+            <Dots
+              className="StickyNoteWrapper__optionsButton"
+              onClick={() => {
+                setIsContext(!isContext);
+                const optionsButton = document.querySelector(
+                  ".StickyNoteWrapper__optionsButton"
+                );
+                var position = optionsButton.getBoundingClientRect();
+                var positionX = position.x;
+                var positionY = position.y;
 
-              var contextMenu = document.querySelector(
-                ".StickyNoteWrapper--contextMenu"
-              );
+                var contextMenu = document.querySelector(
+                  ".StickyNoteWrapper--contextMenu"
+                );
 
-              contextMenu.style.left =
-                positionX -
-                (contextMenu.clientWidth - optionsButton.clientWidth) +
-                "px";
+                contextMenu.style.left =
+                  positionX -
+                  (contextMenu.clientWidth - optionsButton.clientWidth) +
+                  "px";
 
-              !contextMenuPositionState
-                ? (contextMenu.style.top = positionY + 8 + "px")
-                : (contextMenu.style.top = 52 + "px");
-            }}
-          />
-          <span
-            onClick={() => setFullscreen(!isFullscreen)}
-            className="StickyNoteWrapper__header--expand controlIcons"
-          >
-            {ControlIconsDefinitions.FullScreen}
-          </span>
+                !contextMenuPositionState
+                  ? (contextMenu.style.top = positionY + 8 + "px")
+                  : (contextMenu.style.top = 52 + "px");
+              }}
+            />
+            <span
+              onClick={() => setFullscreen(!isFullscreen)}
+              className={`StickyNoteWrapper__header--expand ${
+                isFullscreen ? "StickyNoteWrapper__header--expand--active" : ""
+              } controlIcons`}
+            >
+              {ControlIconsDefinitions.FullScreen}
+            </span>
+          </div>
         </div>
       </header>
       <article className="StickyNoteWrapper__content">
