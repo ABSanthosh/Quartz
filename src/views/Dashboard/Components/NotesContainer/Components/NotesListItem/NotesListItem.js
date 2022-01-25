@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import sanitizeHtml from "sanitize-html";
-import ContentEditable from "react-contenteditable";
 import { ReactComponent as Dots } from "../../../../../../Assets/Img/StickyNotes/dots.svg";
 
 export default function NotesListItem({
