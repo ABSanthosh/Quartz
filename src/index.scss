@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Ruda&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 @import url("http://fonts.cdnfonts.com/css/segoe-ui-4");
@@ -41,6 +41,30 @@ body {
   background: rgba(45, 170, 219, 0.3);
 }
 
+@font-face {
+  font-family: controlIcons;
+  src: url("./Assets/Font/controlIcons.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: baseIcons;
+  src: url("./Assets/Font/baseIcons.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.baseIcons {
+  font-family: baseIcons;
+  font-size: 20px;
+}
+
+.controlIcons {
+  font-family: controlIcons;
+  font-size: 20px;
+}
+
 html,
 body,
 #root {
@@ -62,4 +86,8 @@ body,
   backdrop-filter: blur(10px);
   background-image: url(./Assets/Img/noise.png);
   background-color: rgba($color: #d4d4d4, $alpha: 0.5);
+}
+
+#root {
+  background-color: aqua;
 }
