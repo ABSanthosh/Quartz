@@ -5,7 +5,6 @@ import { useAuth } from "../../../../hooks/useAuth";
 
 function NamePlate(props) {
   const { userState } = useAuth();
-  console.log(userState);
 
   return (
     <div className="NamePlateWrapper">

@@ -1,9 +1,8 @@
 import React from "react";
-import Bold from "../../../../../../Assets/Img/StickyNotes/Bold.png";
-import List from "../../../../../../Assets/Img/StickyNotes/list.png";
-import Italics from "../../../../../../Assets/Img/StickyNotes/Italic.png";
-import Strike from "../../../../../../Assets/Img/StickyNotes/strikethrough.png";
-import { ReactComponent as Photo } from "../../../../../../Assets/Img/StickyNotes/photo.svg";
+import {
+  BaseIconsDefinitions,
+  ControlIconsDefinitions,
+} from "../../../../../../Assets/Font/IconMap";
 
 function StickyNoteFooter({
   isBold,
@@ -14,7 +13,7 @@ function StickyNoteFooter({
   setIsList,
   isStrike,
   setIsStrike,
-  data
+  data,
 }) {
   return (
     <footer className="StickyNoteWrapper__toolbar">
@@ -28,7 +27,7 @@ function StickyNoteFooter({
             document.execCommand("bold", false);
           }}
         >
-          <img src={Bold} alt="bold" />
+          <span className="baseIcons">{BaseIconsDefinitions.Bold}</span>
         </button>
         <button
           className={`StickyNoteWrapper__toolbar--left--item ${
@@ -39,7 +38,7 @@ function StickyNoteFooter({
             document.execCommand("italic", false);
           }}
         >
-          <img src={Italics} alt="Italics" />
+          <span className="baseIcons">{BaseIconsDefinitions.Italic}</span>
         </button>
         <button
           className={`StickyNoteWrapper__toolbar--left--item ${
@@ -50,7 +49,7 @@ function StickyNoteFooter({
             document.execCommand("insertUnorderedList", false);
           }}
         >
-          <img src={List} alt="List" />
+          <span className="baseIcons">{BaseIconsDefinitions.BulletedList}</span>
         </button>
         <button
           className={`StickyNoteWrapper__toolbar--left--item ${
@@ -61,14 +60,16 @@ function StickyNoteFooter({
             document.execCommand("strikeThrough", false);
           }}
         >
-          <img src={Strike} alt="Strike" />
+          <span className="baseIcons">
+            {BaseIconsDefinitions.Strikethrough}
+          </span>
         </button>
         <button
           className={`StickyNoteWrapper__toolbar--left--item ${
             false ? "StickyNoteWrapper__toolbar--left--item--active" : ""
           }`}
         >
-          <Photo />
+          <span className="controlIcons">{ControlIconsDefinitions.Photo2}</span>
         </button>
       </div>
 

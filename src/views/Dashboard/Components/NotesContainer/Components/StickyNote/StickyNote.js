@@ -10,6 +10,7 @@ import { useMediaQuery } from "react-responsive";
 import "./StickyNote.scss";
 import ContentEditor from "./ContentEditor";
 import StickyNoteFooter from "../StickyNoteFooter/StickyNoteFooter";
+import { ControlIconsDefinitions } from "../../../../../../Assets/Font/IconMap";
 
 function StickyNote() {
   const [isBold, setIsBold] = useState(false);
@@ -17,6 +18,7 @@ function StickyNote() {
   const [isList, setIsList] = useState(false);
   const [isStrike, setIsStrike] = useState(false);
   const [isContext, setIsContext] = useState(false);
+  const [isFullscreen, setFullscreen] = useState(false);
 
   const data = useStoreState((state) => state.selectedNote);
 
@@ -28,8 +30,9 @@ function StickyNote() {
     let element = window.getSelection().getRangeAt(0)
       .commonAncestorContainer.parentNode;
 
+    console.log(element);
     let elementList = [];
-    if (element.className) {
+    if (element) {
       while (
         element.className !== "StickyNoteWrapper__content--editableContent"
       ) {
@@ -65,7 +68,9 @@ function StickyNote() {
 
   return (
     <div
-      className="StickyNoteWrapper"
+      className={`StickyNoteWrapper ${
+        isFullscreen ? "StickyNoteWrapper--fullscreen" : ""
+      }`}
       style={{ backgroundColor: data.theme.primary }}
     >
       <ContextMenu
@@ -105,6 +110,12 @@ function StickyNote() {
                 : (contextMenu.style.top = 52 + "px");
             }}
           />
+          <span
+            onClick={() => setFullscreen(!isFullscreen)}
+            className="StickyNoteWrapper__header--expand controlIcons"
+          >
+            {ControlIconsDefinitions.FullScreen}
+          </span>
         </div>
       </header>
       <article className="StickyNoteWrapper__content">
