@@ -56,6 +56,12 @@
         0 1.2px 3.6px rgb(0 0 0 / 10%);
     }
 
+    img {
+      border-radius: 4px;
+      max-width: 100%;
+      height: auto;
+    }
+
     user-select: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
