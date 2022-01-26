@@ -33,6 +33,13 @@
     @include make-flex($just: flex-start);
     height: 100%;
     // padding: 16px;
+    &--centerContent {
+      justify-content: center !important;
+    }
+    &--AddNew {
+      @include make-flex($dir: row);
+      gap: 20px;
+    }
   }
 
   &__listItem {

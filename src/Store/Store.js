@@ -1,7 +1,7 @@
 import { createStore, action, computed } from "easy-peasy";
 import { defaultBoards, defaultNotes, themes } from "./defaultValues";
 
-let localNotesList = defaultNotes;
+let localNotesList = [];
 let localBoardsList = defaultBoards;
 
 const Store = createStore({

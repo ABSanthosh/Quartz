@@ -12,8 +12,6 @@ import ContentEditor from "./ContentEditor";
 import StickyNoteFooter from "../StickyNoteFooter/StickyNoteFooter";
 import { ControlIconsDefinitions } from "../../../../../../Assets/Font/IconMap";
 
-// TODO: Drag and drop image and store it as data 
-
 function StickyNote() {
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);

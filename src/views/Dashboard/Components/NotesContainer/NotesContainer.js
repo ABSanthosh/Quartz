@@ -11,10 +11,11 @@ import { ReactComponent as Plus } from "../../../../Assets/Img/plus.svg";
 import SearchBar from "../../../../Components/SearchBar/SearchBar";
 import Fuse from "fuse.js";
 import NotesListItem from "./Components/NotesListItem/NotesListItem";
+import { ControlIconsDefinitions } from "../../../../Assets/Font/IconMap";
 
 function NotesContainer() {
   const notes = useStoreState((state) => state.notes);
-  let selectedNote = useStoreState((state) => state.selectedNote);
+  const selectedNote = useStoreState((state) => state.selectedNote);
   const setSelectedNote = useStoreActions((action) => action.setSelectedNote);
   const addNote = useStoreActions((actions) => actions.addNote);
 
@@ -145,8 +146,21 @@ function NotesContainer() {
             )}
           </div>
         </div>
-        <div className="NotesContainerWrapper__right">
-          <StickyNote data={selectedNote} />
+        <div
+          className={`NotesContainerWrapper__right ${
+            notes.length > 0
+              ? ""
+              : "NotesContainerWrapper__right--centerContent"
+          }`}
+        >
+          {notes.length > 0 ? (
+            <StickyNote data={selectedNote} />
+          ) : (
+            <span className="NotesContainerWrapper__right--AddNew controlIcons">
+              {ControlIconsDefinitions.Add}
+              <p>Add a new note</p>
+            </span>
+          )}
         </div>
       </div>
     </>
