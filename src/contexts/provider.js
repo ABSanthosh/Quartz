@@ -13,7 +13,7 @@ export function AuthProvider({ children }) {
   );
 
   const { stopFBLoading } = useSupabaseLoading();
-  const setUser = useStoreActions((action) => action.setUser);
+  const setUser = useStoreActions((action) => action.setUserState);
   // let history = useHistory();
 
   useEffect(() => {

@@ -34,6 +34,32 @@ const Store = createStore({
     state.selectedNote = state.notes.find((note) => note.id === payload);
   }),
 
+  addImageToSelectedNote: action((state, payload) => {
+    const note = state.selectedNote;
+    note.images.push(payload.image);
+    state.selectedNote = note;
+    // update notes list
+    state.notes = state.notes.map((note) => {
+      if (note.id === payload.id) {
+        return note;
+      }
+      return note;
+    });
+  }),
+
+  updateSelectedNote: action((state, payload) => {
+    // const note = state.notes.find((note) => note.id === payload.id);
+    // note.content = payload.content;
+    // state.selectedNote = note;
+    // // update in notes list
+    // state.notes = state.notes.map((note) => {
+    //   if (note.id === payload) {
+    //     return note;
+    //   }
+    //   return note;
+    // });
+  }),
+
   setLastModified: action((state, payload) => {
     const id = payload.id;
     const lastModified = payload.lastModified;
@@ -93,7 +119,7 @@ const Store = createStore({
       }
     }
   }),
-  
+
   addNote: action((state) => {
     var today = new Date();
     const newNote = {
