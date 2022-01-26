@@ -69,7 +69,13 @@ export default function NotesListItem({
       </div>
       <div
         className="NotesContainerWrapper__listItem--content"
-        dangerouslySetInnerHTML={{ __html: sanitizeHtml(note.content) }}
+        dangerouslySetInnerHTML={{
+          __html: sanitizeHtml(note.content, {
+            allowedTags: ["img", "p", "li", "i", "b", "strike", "br"],
+            allowedSchemes: ["data", "http", "https"],
+            allowedAttributes: { img: ["src"] },
+          }),
+        }}
         disabled={true}
       />
     </div>
