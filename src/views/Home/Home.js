@@ -16,14 +16,15 @@ export default function Home() {
       <div className="Home">
         <Header>
           {userState === null ? (
-            <FancyButton onClick={login}>
+            <FancyButton text="" onClick={login}>
               <img src={GithubIcon} alt="Github Octocat" />
               Sign in
             </FancyButton>
           ) : (
-            <FancyButton onClick={() => history.push("/app/dashboard")}>
-              Open App →
-            </FancyButton>
+            <FancyButton
+              text=" Open App →"
+              onClick={() => history.push("/app/dashboard")}
+            />
           )}
         </Header>
       </div>
