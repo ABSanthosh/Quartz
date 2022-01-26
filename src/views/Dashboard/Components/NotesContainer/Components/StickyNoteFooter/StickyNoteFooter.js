@@ -1,3 +1,4 @@
+import { useStoreActions } from "easy-peasy";
 import React from "react";
 import { useMediaQuery } from "react-responsive";
 import {
@@ -19,6 +20,11 @@ function StickyNoteFooter({
   const editedAt = useMediaQuery({
     query: "(max-width: 450px)",
   });
+
+  const updateSelectedNote = useStoreActions(
+    (action) => action.updateSelectedNote
+  );
+
   return (
     <footer className="StickyNoteWrapper__toolbar">
       <div className="StickyNoteWrapper__toolbar--left">
@@ -68,13 +74,48 @@ function StickyNoteFooter({
             {BaseIconsDefinitions.Strikethrough}
           </span>
         </button>
-        <button
+        <input
+          id="photoUpload"
+          style={{ display: "none", position: "absolute" }}
+          type="file"
+          accept="image/*"
+          onChange={(e) => {
+            var file = document.querySelector("input[type=file]")["files"][0];
+            var reader = new FileReader();
+            var baseString;
+            reader.onloadend = function () {
+              baseString = reader.result;
+
+              var newImage = document.createElement("img");
+              newImage.src = baseString;
+              newImage.alt = "";
+
+              document
+                .querySelector(".StickyNoteWrapper__content--editableContent")
+                .appendChild(newImage);
+
+              // addImageToSelectedNote({
+              //   id: data.id,
+              //   image: baseString,
+              // });
+            };
+            reader.readAsDataURL(file);
+            updateSelectedNote({
+              id: data.id,
+              content: document.querySelector(
+                ".StickyNoteWrapper__content--editableContent"
+              ).innerHTML,
+            });
+          }}
+        />
+        <label
           className={`StickyNoteWrapper__toolbar--left--item ${
             false ? "StickyNoteWrapper__toolbar--left--item--active" : ""
           }`}
+          htmlFor="photoUpload"
         >
           <span className="controlIcons">{ControlIconsDefinitions.Photo2}</span>
-        </button>
+        </label>
       </div>
 
       {!editedAt && (
