@@ -39,7 +39,7 @@ export default function NotesListItem({
       }}
     >
       <div className="NotesContainerWrapper__listItem--time">
-        <span>{note.lastModified}</span>
+        <span>{note.lastModified.today + " " + note.lastModified.time}</span>
         {contextMenuPositionState && (
           <Dots
             className={`NotesContainerWrapper__optionsButton${index}`}

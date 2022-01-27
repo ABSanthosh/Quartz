@@ -90,7 +90,12 @@ function StickyNote() {
         />
         <div className="StickyNoteWrapper__header--details">
           <div className="StickyNoteWrapper__header--left">
-            {editedAt && <span>Modified: {data.lastModified}</span>}
+            {editedAt && (
+              <span>
+                Modified:{" "}
+                {data.lastModified.today + " " + data.lastModified.time}
+              </span>
+            )}
           </div>
           <div className="StickyNoteWrapper__header--right">
             <Dots

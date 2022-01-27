@@ -12,6 +12,7 @@ import SearchBar from "../../../../Components/SearchBar/SearchBar";
 import Fuse from "fuse.js";
 import NotesListItem from "./Components/NotesListItem/NotesListItem";
 import { ControlIconsDefinitions } from "../../../../Assets/Font/IconMap";
+import { sortByLastModified } from "../../../../Utils/sortByLastModified";
 
 function NotesContainer() {
   const notes = useStoreState((state) => state.notes);
@@ -93,7 +94,7 @@ function NotesContainer() {
           />
           <div className="NotesContainerWrapper__left__container">
             {!searchResults &&
-              notes.map((note, index) => (
+              sortByLastModified(notes).map((note, index) => (
                 <NotesListItem
                   contextMenuPositionState={contextMenuPositionState}
                   note={note}
@@ -167,12 +168,8 @@ function NotesContainer() {
   );
 }
 
-NotesContainer.propTypes = {
-  // bla: PropTypes.string,
-};
+NotesContainer.propTypes = {};
 
-NotesContainer.defaultProps = {
-  // bla: 'test',
-};
+NotesContainer.defaultProps = {};
 
 export default NotesContainer;

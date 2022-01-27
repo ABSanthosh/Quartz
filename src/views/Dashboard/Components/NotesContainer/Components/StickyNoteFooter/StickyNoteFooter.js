@@ -123,7 +123,9 @@ function StickyNoteFooter({
 
       {!editedAt && (
         <div className="StickyNoteWrapper__toolbar--right">
-          <span>Modified: {data.lastModified}</span>
+          <span>
+            Modified: {data.lastModified.today + " " + data.lastModified.time}
+          </span>
         </div>
       )}
     </footer>

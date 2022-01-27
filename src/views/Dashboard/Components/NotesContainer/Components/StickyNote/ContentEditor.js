@@ -56,15 +56,6 @@ function ContentEditor({ handleCursorElement }) {
               ).length === 0
           ) {
             handleCursorElement();
-            setSelectedNoteContent({
-              id: data.id,
-              content: document.querySelector(
-                ".StickyNoteWrapper__content--editableContent"
-              ).innerHTML,
-              sanitizedContent: document.querySelector(
-                ".StickyNoteWrapper__content--editableContent"
-              ).innerText,
-            });
           }
         }}
         onKeyUp={() => {
