@@ -14,30 +14,64 @@ import { ReactComponent as StickyNotes } from "../../Assets/Img/notes.svg";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import BoardsContainer from "./Components/BoardsContainer/BoardsContainer";
 import NotesContainer from "./Components/NotesContainer/NotesContainer";
+import supabase from "../../supabase/supabase-config";
 
 function Dashboard(props) {
   // Hooks
   const { logout } = useAuth();
   const [navState, setNavState] = useState(false);
-  // const [syncState, setSyncState] = useState(true);
+  const [syncState, setSyncState] = useState(true);
 
   // Store
   const currentOption = useStoreState((state) => state.currentOption);
   const setCurrentOption = useStoreActions(
     (actions) => actions.setCurrentOption
   );
+  const setNotes = useStoreActions((actions) => actions.setNotes);
 
   const noteCount = useStoreState((state) => state.noteCount);
+
   const boardCount = useStoreState((state) => state.boardCount);
+  const notes = useStoreState((state) => state.notes);
 
   // Media queries
   const defaultNavState = useMediaQuery({
     query: "(max-width: 980px)",
   });
 
-  // const SyncStatusSize = useMediaQuery({
-  //   query: "(max-width: 380px)",
-  // });
+  const SyncStatusSize = useMediaQuery({
+    query: "(max-width: 380px)",
+  });
+
+  const fetchNotes = async () => {
+    // setSyncState(false);
+    let { error, data } = await supabase.from("notes").select();
+    if (error) {
+      console.log(error.message);
+      return;
+    }
+
+    setNotes(data);
+    // setSyncState(true);
+  };
+
+  const updateNotes = async () => {
+    notes.map(async (note) => {
+      if (note.isChanged) {
+        note.isChanged = false;
+        await supabase
+          .from("notes")
+          .upsert(note)
+          .match({ id: note.id })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
+  };
 
   return (
     <div className="DashboardWrapper">
@@ -118,10 +152,10 @@ function Dashboard(props) {
             <p>{currentOption}</p>
           </div>
           <div className="DashboardWrapper__subHeader--right">
-            {/* <div
+            <div
               className="DashboardWrapper__subHeader__sync"
-              onClick={() => {
-                setSyncState(false);
+              onClick={async () => {
+                updateNotes();
               }}
             >
               {!syncState ? (
@@ -139,7 +173,15 @@ function Dashboard(props) {
                   {!SyncStatusSize ? "Synced" : ""}
                 </>
               )}
-            </div> */}
+            </div>
+            <span
+              className="DashboardWrapper__subHeader__sync"
+              onClick={async () => {
+                fetchNotes();
+              }}
+            >
+              Fetch Notes
+            </span>
           </div>
         </div>
         <div className="DashboardWrapper__contentContainer">

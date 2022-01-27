@@ -6,7 +6,8 @@
   transform: translateY(28px);
   @include make-flex($dir: row, $just: unset, $align: unset);
   &__subHeader {
-    max-width: calc(100% - 28px);
+    // max-width: calc(100% - 28px);
+    width: 100%;
     padding: 5px 15px;
     height: 50px;
     @include make-flex($just: space-between, $dir: row);
