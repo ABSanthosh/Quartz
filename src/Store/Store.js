@@ -1,4 +1,6 @@
 import { createStore, action, computed } from "easy-peasy";
+import { lastModified } from "../Utils/lastModified";
+import { sortByLastModified } from "../Utils/sortByLastModified";
 import { defaultBoards, themes } from "./defaultValues";
 
 let localNotesList = [];
@@ -17,7 +19,7 @@ const Store = createStore({
 
   setNotes: action((state, notes) => {
     state.notes = notes;
-    state.selectedNote = notes[0];
+    state.selectedNote = sortByLastModified(notes)[0];
   }),
 
   setSelectedNoteColor: action((state, payload) => {
@@ -26,6 +28,7 @@ const Store = createStore({
     const note = state.notes.find((note) => note.id === id);
     note.theme = color;
     note.isChanged = true;
+    note.lastModified = lastModified();
 
     state.notes = state.notes.map((note) => {
       if (note.id === id) {
@@ -42,6 +45,7 @@ const Store = createStore({
       }
       return note;
     });
+    state.notes = sortByLastModified(state.notes);
   }),
 
   setSelectedNote: action((state, payload) => {
@@ -54,12 +58,15 @@ const Store = createStore({
     note.sanitizedContent = payload.sanitizedContent;
     state.selectedNote = note;
     note.isChanged = true;
+    note.lastModified = lastModified();
     state.notes = state.notes.map((oldNote) => {
       if (oldNote.id === payload.id) {
         return note;
       }
       return oldNote;
     });
+
+    state.notes = sortByLastModified(state.notes);
   }),
 
   setLastModified: action((state, payload) => {
@@ -68,6 +75,7 @@ const Store = createStore({
     const note = state.notes.find((note) => note.id === id);
     note.lastModified = lastModified;
     note.isChanged = true;
+    note.lastModified = lastModified();
 
     state.notes = state.notes.map((note) => {
       if (note.id === id) {
@@ -76,6 +84,7 @@ const Store = createStore({
       return note;
     });
     // set selected note
+    state.notes = sortByLastModified(state.notes);
     state.selectedNote = state.notes.find((note) => note.id === id);
   }),
 
@@ -86,6 +95,7 @@ const Store = createStore({
     const note = state.notes.find((note) => note.id === id);
     note.content = content;
     note.isChanged = true;
+    note.lastModified = lastModified();
     note.sanitizedContent = sanitizedContent;
 
     state.notes = state.notes.map((note) => {
@@ -95,6 +105,7 @@ const Store = createStore({
       return note;
     });
     // set selected note
+    // state.notes = sortByLastModified(state.notes);
     state.selectedNote = state.notes.find((note) => note.id === id);
   }),
 
@@ -126,15 +137,15 @@ const Store = createStore({
   }),
 
   addNote: action((state) => {
-    var today = new Date();
     const newNote = {
       id: new Date().getTime(),
       title: "New note",
       content: "New note, this is",
       theme: themes.yellow,
-      lastModified: today.getHours() + ":" + today.getMinutes(),
+      lastModified: lastModified(),
     };
     state.notes.push(newNote);
+    state.notes = sortByLastModified(state.notes);
     state.selectedNote = newNote;
   }),
 });
