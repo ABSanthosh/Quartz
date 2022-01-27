@@ -13,6 +13,7 @@ import Fuse from "fuse.js";
 import NotesListItem from "./Components/NotesListItem/NotesListItem";
 import { ControlIconsDefinitions } from "../../../../Assets/Font/IconMap";
 import { sortByLastModified } from "../../../../Utils/sortByLastModified";
+import supabase from "../../../../supabase/supabase-config";
 
 function NotesContainer() {
   const notes = useStoreState((state) => state.notes);
@@ -138,7 +139,7 @@ function NotesContainer() {
               <div
                 className="NotesContainerWrapper__listItem--AddNote"
                 onClick={() => {
-                  addNote();
+                  addNote(supabase.auth.user().id);
                 }}
               >
                 <Plus />

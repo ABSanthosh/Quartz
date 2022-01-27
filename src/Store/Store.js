@@ -136,11 +136,13 @@ const Store = createStore({
     }
   }),
 
-  addNote: action((state) => {
+  addNote: action((state,uid) => {
     const newNote = {
       id: new Date().getTime(),
+      user_id: uid,
       title: "New note",
       content: "New note, this is",
+      isChanged: true,
       theme: themes.yellow,
       lastModified: lastModified(),
     };
