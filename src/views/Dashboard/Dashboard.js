@@ -15,12 +15,14 @@ import { useStoreState, useStoreActions } from "easy-peasy";
 import BoardsContainer from "./Components/BoardsContainer/BoardsContainer";
 import NotesContainer from "./Components/NotesContainer/NotesContainer";
 import supabase from "../../supabase/supabase-config";
+import { ControlIconsDefinitions } from "../../Assets/Font/IconMap";
 
 function Dashboard(props) {
   // Hooks
   const { logout } = useAuth();
   const [navState, setNavState] = useState(false);
-  const [syncState, setSyncState] = useState(true);
+  const [isSyncing, setSyncing] = useState(false);
+  const [syncError, setSyncError] = useState("");
 
   // Store
   const currentOption = useStoreState((state) => state.currentOption);
@@ -44,7 +46,6 @@ function Dashboard(props) {
   });
 
   const fetchNotes = async () => {
-    // setSyncState(false);
     let { error, data } = await supabase.from("notes").select();
     if (error) {
       console.log(error.message);
@@ -52,10 +53,10 @@ function Dashboard(props) {
     }
 
     setNotes(data);
-    // setSyncState(true);
   };
 
   const updateNotes = async () => {
+    setSyncing(true);
     notes.map(async (note) => {
       if (note.isChanged) {
         note.isChanged = false;
@@ -65,10 +66,16 @@ function Dashboard(props) {
           .match({ id: note.id })
           .then((res) => {
             console.log(res);
+            setSyncing(false);
+            setSyncError("");
           })
           .catch((err) => {
             console.log(err);
+            setSyncError(err.message);
           });
+      } else {
+        setSyncing(false);
+        setSyncError("");
       }
     });
   };
@@ -158,19 +165,31 @@ function Dashboard(props) {
                 updateNotes();
               }}
             >
-              {!syncState ? (
+              {syncError === "" && (
                 <>
-                  <svg viewBox="0 0 30 30" className="syncIcon">
-                    <path d="M3,3 L5,3 L5,6.701 C7.384,3.83 10.977,2 15,2 C22.18,2 28,7.82 28,15 C28,22.18 22.18,28 15,28 C7.82,28 2,22.18 2,15 L4,15 C4,21.075 8.925,26 15,26 C21.075,26 26,21.075 26,15 C26,8.925 21.075,4 15,4 C11.142,4 7.76,5.994 5.798,9 L11,9 L11,11 L3,11 L3,3 Z"></path>
-                  </svg>
-                  {!SyncStatusSize ? "Syncing" : ""}
+                  {isSyncing ? (
+                    <>
+                      <svg viewBox="0 0 30 30" className="syncIcon">
+                        <path d="M3,3 L5,3 L5,6.701 C7.384,3.83 10.977,2 15,2 C22.18,2 28,7.82 28,15 C28,22.18 22.18,28 15,28 C7.82,28 2,22.18 2,15 L4,15 C4,21.075 8.925,26 15,26 C21.075,26 26,21.075 26,15 C26,8.925 21.075,4 15,4 C11.142,4 7.76,5.994 5.798,9 L11,9 L11,11 L3,11 L3,3 Z"></path>
+                      </svg>
+                      {!SyncStatusSize ? "Syncing" : ""}
+                    </>
+                  ) : (
+                    <>
+                      <span className="controlIcons">
+                        {ControlIconsDefinitions.CheckMark}
+                      </span>
+                      {!SyncStatusSize ? "Synced" : ""}
+                    </>
+                  )}
                 </>
-              ) : (
+              )}
+              {syncError !== "" && (
                 <>
-                  <svg viewBox="0 0 14 14" className="check">
-                    <polygon points="5.5 11.9993304 14 3.49933039 12.5 2 5.5 8.99933039 1.5 4.9968652 0 6.49933039"></polygon>
-                  </svg>
-                  {!SyncStatusSize ? "Synced" : ""}
+                  <span className="controlIcons">
+                    {ControlIconsDefinitions.Error}
+                  </span>
+                  Error
                 </>
               )}
             </div>
