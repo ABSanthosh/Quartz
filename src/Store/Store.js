@@ -1,5 +1,5 @@
 import { createStore, action, computed } from "easy-peasy";
-import { defaultBoards, defaultNotes, themes } from "./defaultValues";
+import { defaultBoards, themes } from "./defaultValues";
 
 let localNotesList = [];
 let localBoardsList = defaultBoards;
@@ -9,16 +9,23 @@ const Store = createStore({
   boards: localBoardsList,
   currentOption: "Notes",
   userState: null,
+  user_id: null,
 
   selectedNote: localNotesList[0],
   noteCount: computed(({ notes }) => notes.length),
   boardsCount: computed(({ boards }) => boards.length),
+
+  setNotes: action((state, notes) => {
+    state.notes = notes;
+    state.selectedNote = notes[0];
+  }),
 
   setSelectedNoteColor: action((state, payload) => {
     const id = payload.id;
     const color = payload.theme;
     const note = state.notes.find((note) => note.id === id);
     note.theme = color;
+    note.isChanged = true;
 
     state.notes = state.notes.map((note) => {
       if (note.id === id) {
@@ -28,36 +35,31 @@ const Store = createStore({
     });
     // set selected note
     state.selectedNote = state.notes.find((note) => note.id === id);
-  }),
-
-  setSelectedNote: action((state, payload) => {
-    state.selectedNote = state.notes.find((note) => note.id === payload);
-  }),
-
-  addImageToSelectedNote: action((state, payload) => {
-    const note = state.selectedNote;
-    note.images.push(payload.image);
-    state.selectedNote = note;
-    // update notes list
+    // update in state.notes
     state.notes = state.notes.map((note) => {
-      if (note.id === payload.id) {
+      if (note.id === id) {
         return note;
       }
       return note;
     });
   }),
 
+  setSelectedNote: action((state, payload) => {
+    state.selectedNote = state.notes.find((note) => note.id === payload);
+  }),
+
   updateSelectedNote: action((state, payload) => {
-    // const note = state.notes.find((note) => note.id === payload.id);
-    // note.content = payload.content;
-    // state.selectedNote = note;
-    // // update in notes list
-    // state.notes = state.notes.map((note) => {
-    //   if (note.id === payload) {
-    //     return note;
-    //   }
-    //   return note;
-    // });
+    const note = state.notes.find((note) => note.id === payload.id);
+    note.content = payload.content;
+    note.sanitizedContent = payload.sanitizedContent;
+    state.selectedNote = note;
+    note.isChanged = true;
+    state.notes = state.notes.map((oldNote) => {
+      if (oldNote.id === payload.id) {
+        return note;
+      }
+      return oldNote;
+    });
   }),
 
   setLastModified: action((state, payload) => {
@@ -65,6 +67,7 @@ const Store = createStore({
     const lastModified = payload.lastModified;
     const note = state.notes.find((note) => note.id === id);
     note.lastModified = lastModified;
+    note.isChanged = true;
 
     state.notes = state.notes.map((note) => {
       if (note.id === id) {
@@ -82,6 +85,7 @@ const Store = createStore({
     const sanitizedContent = payload.sanitizedContent;
     const note = state.notes.find((note) => note.id === id);
     note.content = content;
+    note.isChanged = true;
     note.sanitizedContent = sanitizedContent;
 
     state.notes = state.notes.map((note) => {
@@ -100,6 +104,7 @@ const Store = createStore({
 
   setUserState: action((state, payload) => {
     state.userState = payload;
+    state.user_id = payload.id;
   }),
 
   deleteNote: action((state, payload) => {
