@@ -105,6 +105,9 @@ function StickyNoteFooter({
               content: document.querySelector(
                 ".StickyNoteWrapper__content--editableContent"
               ).innerHTML,
+              sanitizedContent: document.querySelector(
+                ".StickyNoteWrapper__content--editableContent"
+              ).innerText,
             });
           }}
         />

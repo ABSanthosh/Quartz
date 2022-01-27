@@ -41,6 +41,9 @@ function ContentEditor({ handleCursorElement }) {
             content: document.querySelector(
               ".StickyNoteWrapper__content--editableContent"
             ).innerHTML,
+            sanitizedContent: document.querySelector(
+              ".StickyNoteWrapper__content--editableContent"
+            ).innerText,
           });
         }}
         onClick={() => {
@@ -79,6 +82,9 @@ function ContentEditor({ handleCursorElement }) {
               content: document.querySelector(
                 ".StickyNoteWrapper__content--editableContent"
               ).innerHTML,
+              sanitizedContent: document.querySelector(
+                ".StickyNoteWrapper__content--editableContent"
+              ).innerText,
             });
           }
         }}
@@ -105,6 +111,9 @@ function ContentEditor({ handleCursorElement }) {
               content: document.querySelector(
                 ".StickyNoteWrapper__content--editableContent"
               ).innerHTML,
+              sanitizedContent: document.querySelector(
+                ".StickyNoteWrapper__content--editableContent"
+              ).innerText,
             });
           }
           stopFBLoading();
@@ -136,6 +145,9 @@ function ContentEditor({ handleCursorElement }) {
               content: document.querySelector(
                 ".StickyNoteWrapper__content--editableContent"
               ).innerHTML,
+              sanitizedContent: document.querySelector(
+                ".StickyNoteWrapper__content--editableContent"
+              ).innerText,
             });
           } catch (err) {
             var pastedData = e.clipboardData.getData("text/html");
@@ -156,6 +168,9 @@ function ContentEditor({ handleCursorElement }) {
               content: document.querySelector(
                 ".StickyNoteWrapper__content--editableContent"
               ).innerHTML,
+              sanitizedContent: document.querySelector(
+                ".StickyNoteWrapper__content--editableContent"
+              ).innerText,
             });
           }
           stopFBLoading();
