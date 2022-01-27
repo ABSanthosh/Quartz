@@ -21,8 +21,8 @@ function StickyNoteFooter({
     query: "(max-width: 450px)",
   });
 
-  const updateSelectedNote = useStoreActions(
-    (action) => action.updateSelectedNote
+  const setSelectedNoteContent = useStoreActions(
+    (action) => action.setSelectedNoteContent
   );
 
   return (
@@ -98,17 +98,17 @@ function StickyNoteFooter({
               //   id: data.id,
               //   image: baseString,
               // });
+              setSelectedNoteContent({
+                id: data.id,
+                content: document.querySelector(
+                  ".StickyNoteWrapper__content--editableContent"
+                ).innerHTML,
+                sanitizedContent: document.querySelector(
+                  ".StickyNoteWrapper__content--editableContent"
+                ).innerText,
+              });
             };
             reader.readAsDataURL(file);
-            updateSelectedNote({
-              id: data.id,
-              content: document.querySelector(
-                ".StickyNoteWrapper__content--editableContent"
-              ).innerHTML,
-              sanitizedContent: document.querySelector(
-                ".StickyNoteWrapper__content--editableContent"
-              ).innerText,
-            });
           }}
         />
         <label

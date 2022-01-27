@@ -43,6 +43,7 @@ export function AuthProvider({ children }) {
   async function checkUser() {
     const supaUser = supabase.auth.user();
     setUserState(supaUser);
+    setUser(supaUser);
     if (supaUser) {
       setStatus("ready");
     }

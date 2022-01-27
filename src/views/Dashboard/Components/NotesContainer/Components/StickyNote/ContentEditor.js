@@ -11,9 +11,6 @@ function ContentEditor({ handleCursorElement }) {
     (action) => action.setSelectedNoteContent
   );
 
-  const updateSelectedNote = useStoreActions(
-    (action) => action.updateSelectedNote
-  );
 
   const { startFBLoading, stopFBLoading } = useSupabaseLoading();
 
@@ -84,7 +81,7 @@ function ContentEditor({ handleCursorElement }) {
               pasteHtmlAtCaret(newImage.outerHTML);
             };
             reader.readAsDataURL(e.dataTransfer.files[0]);
-            updateSelectedNote({
+            setSelectedNoteContent({
               id: data.id,
               content: document.querySelector(
                 ".StickyNoteWrapper__content--editableContent"
@@ -118,7 +115,7 @@ function ContentEditor({ handleCursorElement }) {
               pasteHtmlAtCaret(newImage.outerHTML);
             };
             reader.readAsDataURL(e.dataTransfer.files[0]);
-            updateSelectedNote({
+            setSelectedNoteContent({
               id: data.id,
               content: document.querySelector(
                 ".StickyNoteWrapper__content--editableContent"
@@ -141,7 +138,7 @@ function ContentEditor({ handleCursorElement }) {
             }else{
               pasteHtmlAtCaret(pastedData);
             }
-            updateSelectedNote({
+            setSelectedNoteContent({
               id: data.id,
               content: document.querySelector(
                 ".StickyNoteWrapper__content--editableContent"
