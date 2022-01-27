@@ -46,17 +46,21 @@ function Dashboard(props) {
   });
 
   const fetchNotes = async () => {
-    let { error, data } = await supabase.from("notes").select();
-    if (error) {
-      console.log(error.message);
-      return;
-    }
-
-    setNotes(data);
+    await supabase
+      .from("notes")
+      .select()
+      .then((res) => {
+        // console.log(res);
+        setNotes(res.data);
+      })
+      .catch((err) => {
+        // console.log(err);
+      });
   };
 
   const updateNotes = async () => {
     setSyncing(true);
+
     notes.map(async (note) => {
       if (note.isChanged) {
         note.isChanged = false;
@@ -65,13 +69,14 @@ function Dashboard(props) {
           .upsert(note)
           .match({ id: note.id })
           .then((res) => {
-            console.log(res);
+            // console.log(res);
             setSyncing(false);
             setSyncError("");
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
             setSyncError(err.message);
+            setSyncing(false);
           });
       } else {
         setSyncing(false);

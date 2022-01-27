@@ -19,19 +19,6 @@ function ContentEditor({ handleCursorElement }) {
 
   return (
     <div className="StickyNoteWrapper__content--editableContainer">
-      {/* <div className="StickyNoteWrapper__content--imagePreview">
-        {data.images.map((image, index) => {
-          console.log(image);
-          return (
-            <img
-              src={image}
-              alt="uploadedImg"
-              className="StickyNoteWrapper__content--editableContainer--image"
-              key={index}
-            />
-          );
-        })}
-      </div> */}
       <ContentEditable
         className="StickyNoteWrapper__content--editableContent"
         html={data.content}

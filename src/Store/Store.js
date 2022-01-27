@@ -124,7 +124,6 @@ const Store = createStore({
     );
     state.notes = state.notes.filter((note) => note.id !== payload);
     const notesLength = state.notes.length;
-    console.log(payloadNoteIndex);
     if (notesLength !== 0) {
       if (payloadNoteIndex === 0) {
         state.selectedNote = state.notes[0];
