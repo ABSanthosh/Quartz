@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { ReactComponent as RightArrow } from "../../../../../../Assets/Img/StickyNotes/right.svg";
 import { themes } from "../../../../../../Store/defaultValues";
 import "./ContextMenu.scss";
+import supabase from "../../../../../../supabase/supabase-config";
+import deleteSupabaseNote from "../../../../../../Utils/deleteSupabaseNote";
 
 function ContextMenu({ data, isContext, setIsContext, className, direction }) {
   const [isColorOption, setIsColorOption] = useState(false);
@@ -118,6 +120,7 @@ function ContextMenu({ data, isContext, setIsContext, className, direction }) {
       <button
         className="ContextMenuWrapper--item"
         onClick={() => {
+          deleteSupabaseNote(data.id);
           deleteNote(data.id);
           setIsContext(false);
         }}
@@ -127,7 +130,7 @@ function ContextMenu({ data, isContext, setIsContext, className, direction }) {
       <button
         className="ContextMenuWrapper--item"
         onClick={() => {
-          addNote();
+          addNote(supabase.auth.user().id);
           setIsContext(false);
         }}
       >
