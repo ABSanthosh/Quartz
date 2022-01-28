@@ -4,7 +4,6 @@ import { useSupabaseLoading } from "../hooks/useSupabaseLoading";
 import { AuthContext } from "./context";
 import { useStoreActions } from "easy-peasy";
 import supabase from "../supabase/supabase-config";
-// import { useHistory } from "react-router-dom";
 
 export function AuthProvider({ children }) {
   const [userState, setUserState] = useState(supabase.auth.user());
@@ -12,9 +11,10 @@ export function AuthProvider({ children }) {
     supabase.auth.user() !== null ? "loading" : "ready"
   );
 
+  const [session, setSession] = useState(supabase.auth.session());
+
   const { stopFBLoading } = useSupabaseLoading();
   const setUser = useStoreActions((action) => action.setUserState);
-  // let history = useHistory();
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((event) => {
@@ -23,10 +23,8 @@ export function AuthProvider({ children }) {
         setUserState(supaUser);
         setStatus("ready");
         setUser(supaUser);
+        setSession(supabase.auth.session());
 
-        // if (event === "SIGNED_IN") {
-        //   history.push("/app/dashboard");
-        // }
       } else {
         stopFBLoading();
       }
@@ -42,6 +40,7 @@ export function AuthProvider({ children }) {
 
   async function checkUser() {
     const supaUser = supabase.auth.user();
+    setSession(supabase.auth.session());
     setUserState(supaUser);
     setUser(supaUser);
     if (supaUser) {
@@ -65,6 +64,7 @@ export function AuthProvider({ children }) {
     logout,
     userState,
     status,
+    session
   };
 
   return (
