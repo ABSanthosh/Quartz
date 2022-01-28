@@ -1,0 +1,58 @@
+@import "../../../../../../styles/mixins";
+
+.ImageContextMenuWrapper {
+  width: 180px;
+  background-color: white;
+  border-radius: 2px;
+  font-size: 14px;
+  position: absolute;
+  box-shadow: rgb(0 0 0 / 13%) 0px 3.2px 7.2px 0px,
+    rgb(0 0 0 / 11%) 0px 0.6px 1.8px 0px;
+  outline: transparent;
+  z-index: 3;
+  &__Item {
+    user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+
+    width: 100%;
+    height: 50px;
+    padding: 0 15px;
+    background-color: white;
+    @include make-flex($align: flex-start);
+    gap: 7px;
+    border: none;
+    cursor: pointer;
+
+    &--hover {
+      height: 45px;
+      margin-top: 10px;
+      &:hover {
+        background-color: #edebe9;
+      }
+    }
+    &--active {
+      background-color: #d8d8d8;
+    }
+
+    &--subItem {
+      gap: 15px;
+      @include make-flex($dir: row, $just: flex-start);
+      width: 100%;
+      height: 100%;
+    }
+
+    // &--subItem {
+    //   // height: 38px;
+    //   width: 100%;
+    //   // border-radius: 5px;
+    //   @include make-flex($dir: row, $just: space-evenly);
+    //   &:hover {
+    //     background-color: #edebe9;
+    //   }
+
+    // }
+  }
+}
