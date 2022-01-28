@@ -11,7 +11,6 @@ const Store = createStore({
   boards: localBoardsList,
   currentOption: "notes",
   userState: null,
-  user_id: null,
 
   selectedNote: null,
   noteCount: computed(({ notes }) => notes.length),
@@ -76,7 +75,6 @@ const Store = createStore({
 
   setUserState: action((state, payload) => {
     state.userState = payload;
-    state.user_id = payload.id;
   }),
 
   deleteNote: action((state, payload) => {
