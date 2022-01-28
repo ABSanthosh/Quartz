@@ -77,12 +77,12 @@ function Dashboard() {
           .upsert(note)
           .match({ id: note.id })
           .then((res) => {
-            console.log(res);
+            // console.log(res);
             setSyncing(false);
             setSyncError("");
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
             setSyncError(err.message);
             setSyncing(false);
           });
@@ -105,6 +105,14 @@ function Dashboard() {
     fetchNotes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
+
+  if (notes.some((element) => element.isChanged === true)) {
+    window.onbeforeunload = () => {
+      return "Some notes have not been saved. Are you sure you want to leave?";
+    };
+  } else {
+    window.onbeforeunload = null;
+  }
 
   return (
     <div className="DashboardWrapper">

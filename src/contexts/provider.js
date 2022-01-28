@@ -24,7 +24,6 @@ export function AuthProvider({ children }) {
         setStatus("ready");
         setUser(supaUser);
         setSession(supabase.auth.session());
-
       } else {
         stopFBLoading();
       }
@@ -64,7 +63,7 @@ export function AuthProvider({ children }) {
     logout,
     userState,
     status,
-    session
+    session,
   };
 
   return (
