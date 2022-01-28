@@ -12,7 +12,7 @@ export default function Home() {
   let history = useHistory();
 
   return (
-    <ProtectedPage>
+    // <ProtectedPage>
       <div className="Home">
         <Header>
           {userState === null ? (
@@ -28,6 +28,6 @@ export default function Home() {
           )}
         </Header>
       </div>
-    </ProtectedPage>
+    // </ProtectedPage>
   );
 }

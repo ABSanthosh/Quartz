@@ -73,7 +73,9 @@ export default function NotesListItem({
           __html: sanitizeHtml(note.content, {
             allowedTags: ["img", "p", "li", "i", "b", "strike", "br"],
             allowedSchemes: ["data", "http", "https"],
-            allowedAttributes: { img: ["src"] },
+            allowedAttributes: {
+              img: ["src", "default-height", "default-width", "style"],
+            },
           }),
         }}
         disabled={true}
