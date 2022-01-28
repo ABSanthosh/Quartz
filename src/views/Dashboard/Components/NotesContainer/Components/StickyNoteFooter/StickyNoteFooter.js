@@ -86,27 +86,28 @@ function StickyNoteFooter({
             reader.onloadend = function () {
               baseString = reader.result;
 
-              var newImage = document.createElement("img");
-              newImage.src = baseString;
-              newImage.alt = "";
+              var hiddenImage = new Image();
+              hiddenImage.onload = () => {
+                document.execCommand(
+                  "insertHTML",
+                  false,
+                  `<img src="${baseString}" alt="" default-height=${hiddenImage.height} default-width=${hiddenImage.width} >`
+                );
 
-              document
-                .querySelector(".StickyNoteWrapper__content--editableContent")
-                .appendChild(newImage);
-
-              // addImageToSelectedNote({
-              //   id: data.id,
-              //   image: baseString,
-              // });
-              setSelectedNoteContent({
-                id: data.id,
-                content: document.querySelector(
-                  ".StickyNoteWrapper__content--editableContent"
-                ).innerHTML,
-                sanitizedContent: document.querySelector(
-                  ".StickyNoteWrapper__content--editableContent"
-                ).innerText,
-              });
+                // console.log(`<img src="${baseString}" alt="" default-height=${hiddenImage.height} default-width=${hiddenImage.width} >`)
+                setSelectedNoteContent({
+                  id: data.id,
+                  content:
+                    document.querySelector(
+                      ".StickyNoteWrapper__content--editableContent"
+                    ).innerHTML +
+                    `<img src="${baseString}" alt="" default-height=${hiddenImage.height} default-width=${hiddenImage.width} >`,
+                  sanitizedContent: document.querySelector(
+                    ".StickyNoteWrapper__content--editableContent"
+                  ).innerText,
+                });
+              };
+              hiddenImage.src = baseString;
             };
             reader.readAsDataURL(file);
           }}
