@@ -44,6 +44,20 @@
         flex-shrink: 0;
         backface-visibility: hidden;
       }
+
+      &--warning {
+        background-color: rgb(255, 162, 162) !important;
+        @include make-flex($dir: row);
+        border-radius: 4px;
+
+        height: 30px;
+        padding: 0px 6px;
+        width: auto;
+        cursor: pointer;
+        span {
+          font-size: 17px !important;
+        }
+      }
     }
     &--title {
       margin: unset;

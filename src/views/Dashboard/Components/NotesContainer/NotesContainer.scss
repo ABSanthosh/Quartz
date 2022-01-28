@@ -1,7 +1,8 @@
 @import "../../../../styles/mixins";
 
 .NotesContainerWrapper {
-  height: calc(100% - 50px);
+  // height: calc(100% - 50px);
+  height: 100%;
   width: 100%;
   @include make-flex($dir: row, $align: flex-start);
   &__left {
@@ -31,7 +32,7 @@
   &__right {
     width: calc(100% - 375px);
     @include make-flex($just: flex-start);
-    height: 100%;
+    height: calc(100% - 50px);
     // padding: 16px;
     &--centerContent {
       justify-content: center !important;
@@ -168,6 +169,7 @@
 
 @media only screen and (max-width: 840px) {
   .NotesContainerWrapper {
+    height: calc(100% - 50px);
     position: relative;
     &__left {
       position: absolute;

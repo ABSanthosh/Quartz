@@ -3,17 +3,17 @@ import { lastModified } from "../Utils/lastModified";
 import { sortByLastModified } from "../Utils/sortByLastModified";
 import { defaultBoards, themes } from "./defaultValues";
 
-let localNotesList = [];
+// let localNotesList = defaultNotes;
 let localBoardsList = defaultBoards;
 
 const Store = createStore({
-  notes: localNotesList,
+  notes: [],
   boards: localBoardsList,
-  currentOption: "Notes",
+  currentOption: "notes",
   userState: null,
   user_id: null,
 
-  selectedNote: localNotesList[0],
+  selectedNote: null,
   noteCount: computed(({ notes }) => notes.length),
   boardsCount: computed(({ boards }) => boards.length),
 
