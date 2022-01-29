@@ -12,7 +12,7 @@ export default function Router() {
           path="/app/dashboard/:mode"
           component={views.Dashboard}
         />
-        <Redirect to="/app/dashboard/notes/" />
+        <Redirect to="/app/dashboard/boards" />
         <Route exact path="*" component={views.Home} />
       </Switch>
     </BrowserRouter>

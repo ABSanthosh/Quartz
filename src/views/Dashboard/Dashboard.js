@@ -18,6 +18,7 @@ import supabase from "../../supabase/supabase-config";
 import { ControlIconsDefinitions } from "../../Assets/Font/IconMap";
 import { useSupabaseLoading } from "../../hooks/useSupabaseLoading";
 import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function Dashboard() {
   // Hooks
@@ -26,6 +27,7 @@ function Dashboard() {
   const [navState, setNavState] = useState(false);
   const [isSyncing, setSyncing] = useState(false);
   const [syncError, setSyncError] = useState("");
+  let history = useHistory();
 
   const { mode } = useParams();
 
@@ -127,7 +129,10 @@ function Dashboard() {
           <div className="DashboardWrapper__sideBar--top__boards">
             <SideBarItem
               text="Boards"
-              onClick={() => setCurrentOption("boards")}
+              onClick={() => {
+                setCurrentOption("boards");
+                history.push("/app/dashboard/boards");
+              }}
               isActive={currentOption === "boards"}
               count={boardCount}
             >
@@ -135,7 +140,10 @@ function Dashboard() {
             </SideBarItem>
             <SideBarItem
               text="Notes"
-              onClick={() => setCurrentOption("notes")}
+              onClick={() => {
+                setCurrentOption("notes");
+                history.push("/app/dashboard/notes");
+              }}
               isActive={currentOption === "notes"}
               count={noteCount}
             >
@@ -190,7 +198,9 @@ function Dashboard() {
                 </label>
               </div>
             </div>
-            <p>{currentOption}</p>
+            <p>
+              {currentOption.charAt(0).toUpperCase() + currentOption.slice(1)}
+            </p>
           </div>
           <div className="DashboardWrapper__subHeader--right">
             {currentOption === "notes" && (

@@ -9,7 +9,7 @@ let localBoardsList = defaultBoards;
 const Store = createStore({
   notes: [],
   boards: localBoardsList,
-  currentOption: "notes",
+  currentOption: "boards",
   userState: null,
 
   selectedNote: null,

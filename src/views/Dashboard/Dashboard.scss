@@ -162,12 +162,12 @@
   }
 
   &__sideBar {
-    width: 240px; /* add the padding here*/
+    width: 244px;
     background-color: #f3efe9;
     height: 100%;
     border-right: 4px solid #cc8296;
     transition: all 0.3s ease-in-out;
-    margin-left: -240px; /*and here*/
+    margin-left: -240px;
     z-index: 5;
 
     &--open {
@@ -205,7 +205,7 @@
     background-image: url(../../Assets/Img/paperEffect.png);
 
     &--open {
-      width: calc(100% - 240px);
+      width: calc(100% - 244px);
     }
   }
 
