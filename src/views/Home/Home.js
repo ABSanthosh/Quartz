@@ -3,7 +3,7 @@ import "../../Components/FancyButton/FancyButton.scss";
 import "./Home.scss";
 import GithubIcon from "../../Assets/Img/Github.png";
 import { useAuth } from "../../hooks/useAuth";
-import ProtectedPage from "./Components/ProtectedPage/ProtectedPage";
+// import ProtectedPage from "./Components/ProtectedPage/ProtectedPage";
 import { useHistory } from "react-router-dom";
 import FancyButton from "../../Components/FancyButton/FancyButton";
 
