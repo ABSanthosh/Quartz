@@ -158,7 +158,7 @@ function ContentEditor({ handleCursorElement }) {
                   .split("; ")
                   .map((item) => {
                     if (item.includes("width:")) {
-                      return item.match(/(?<!.)width:(.*)px/);
+                      return item.match(/^(!?width:)(.*)px/)[1];
                     } else {
                       return null;
                     }
