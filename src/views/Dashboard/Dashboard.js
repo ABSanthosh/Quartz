@@ -41,9 +41,9 @@ function Dashboard() {
     (actions) => actions.setCurrentOption
   );
 
-  console.log(mode);
   useEffect(() => {
     if (mode !== currentOption) {
+      console.log(mode);
       setCurrentOption(mode);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
