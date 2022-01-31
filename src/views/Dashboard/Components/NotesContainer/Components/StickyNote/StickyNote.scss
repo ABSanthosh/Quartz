@@ -140,7 +140,7 @@
     @include make-flex($dir: row, $just: space-between);
     flex-wrap: nowrap;
     &--left {
-      width: 275px;
+      width: 200px;
       @include make-flex($dir: row, $just: space-around);
       &--item {
         cursor: pointer;

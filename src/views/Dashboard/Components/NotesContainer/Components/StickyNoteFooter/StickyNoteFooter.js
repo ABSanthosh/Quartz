@@ -1,9 +1,7 @@
-import { useStoreActions } from "easy-peasy";
 import React from "react";
 import { useMediaQuery } from "react-responsive";
 import {
   BaseIconsDefinitions,
-  ControlIconsDefinitions,
 } from "../../../../../../Assets/Font/IconMap";
 
 function StickyNoteFooter({
@@ -21,9 +19,6 @@ function StickyNoteFooter({
     query: "(max-width: 450px)",
   });
 
-  const setSelectedNoteContent = useStoreActions(
-    (action) => action.setSelectedNoteContent
-  );
 
   return (
     <footer className="StickyNoteWrapper__toolbar">
@@ -74,52 +69,6 @@ function StickyNoteFooter({
             {BaseIconsDefinitions.Strikethrough}
           </span>
         </button>
-        <input
-          id="photoUpload"
-          style={{ display: "none", position: "absolute" }}
-          type="file"
-          accept="image/*"
-          onChange={(e) => {
-            var file = document.querySelector("input[type=file]")["files"][0];
-            var reader = new FileReader();
-            var baseString;
-            reader.onloadend = function () {
-              baseString = reader.result;
-
-              var hiddenImage = new Image();
-              hiddenImage.onload = () => {
-                document.execCommand(
-                  "insertHTML",
-                  false,
-                  `<img src="${baseString}" alt="" default-height=${hiddenImage.height} default-width=${hiddenImage.width} >`
-                );
-
-                // console.log(`<img src="${baseString}" alt="" default-height=${hiddenImage.height} default-width=${hiddenImage.width} >`)
-                setSelectedNoteContent({
-                  id: data.id,
-                  content:
-                    document.querySelector(
-                      ".StickyNoteWrapper__content--editableContent"
-                    ).innerHTML +
-                    `<img src="${baseString}" alt="" default-height=${hiddenImage.height} default-width=${hiddenImage.width} >`,
-                  sanitizedContent: document.querySelector(
-                    ".StickyNoteWrapper__content--editableContent"
-                  ).innerText,
-                });
-              };
-              hiddenImage.src = baseString;
-            };
-            reader.readAsDataURL(file);
-          }}
-        />
-        <label
-          className={`StickyNoteWrapper__toolbar--left--item ${
-            false ? "StickyNoteWrapper__toolbar--left--item--active" : ""
-          }`}
-          htmlFor="photoUpload"
-        >
-          <span className="controlIcons">{ControlIconsDefinitions.Photo2}</span>
-        </label>
       </div>
 
       {!editedAt && (

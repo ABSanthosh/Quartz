@@ -17,7 +17,7 @@ import NotesContainer from "./Components/NotesContainer/NotesContainer";
 import supabase from "../../supabase/supabase-config";
 import { ControlIconsDefinitions } from "../../Assets/Font/IconMap";
 import { useSupabaseLoading } from "../../hooks/useSupabaseLoading";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function Dashboard() {
@@ -29,7 +29,7 @@ function Dashboard() {
   const [syncError, setSyncError] = useState("");
   let history = useHistory();
 
-  const { mode } = useParams();
+  // const { mode } = useParams();
 
   // Store
   const currentOption = useStoreState((state) => state.currentOption);
@@ -41,9 +41,9 @@ function Dashboard() {
     (actions) => actions.setCurrentOption
   );
 
-  useEffect(() => {
-    setCurrentOption(mode);
-  }, [mode, setCurrentOption]);
+  // useEffect(() => {
+  //   setCurrentOption(mode);
+  // }, [mode, setCurrentOption]);
 
   // Media queries
   const defaultNavState = useMediaQuery({
