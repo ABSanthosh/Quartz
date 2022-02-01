@@ -16,7 +16,6 @@ export default function NotesListItem({
 }) {
   let history = useHistory();
 
-
   return (
     <div
       className="NotesContainerWrapper__listItem"
@@ -75,9 +74,13 @@ export default function NotesListItem({
       <div
         className="NotesContainerWrapper__listItem--content"
         dangerouslySetInnerHTML={{
-          __html: DOMPurify.sanitize(note.content)
+          __html:
+            note.content !== "" ? (
+              DOMPurify.sanitize(note.content)
+            ) : (
+              <i>Type something...</i>
+            ),
         }}
-        disabled={true}
       />
     </div>
   );

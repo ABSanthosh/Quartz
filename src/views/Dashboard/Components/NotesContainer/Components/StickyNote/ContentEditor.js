@@ -23,6 +23,15 @@ function ContentEditor({ handleCursorElement }) {
 
   return (
     <div className="StickyNoteWrapper__content--editableContainer">
+      <i
+        style={{
+          position: "absolute",
+          color: "#999",
+          visibility: data.content === "" ? "visible" : "hidden",
+        }}
+      >
+        Type something...
+      </i>
       <ContentEditable
         className="StickyNoteWrapper__content--editableContent"
         html={data.content}
