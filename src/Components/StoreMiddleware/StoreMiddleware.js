@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
-function StoreNotesMiddleware(props) {
+function StoreMiddleware(props) {
   let history = useHistory();
   const setSelectedNote = useStoreActions((actions) => actions.setSelectedNote);
   const selectedNote = useStoreState((state) => state.selectedNote);
@@ -40,10 +40,12 @@ function StoreNotesMiddleware(props) {
       ) {
         history.push(`/app/dashboard/notes/${selectedNote.id}`);
       }
+    } else if (currentOption === "boards") {
+      setCurrentOption("boards");
     }
   });
 
   return <ProtectedRoute {...props} />;
 }
 
-export default StoreNotesMiddleware;
+export default StoreMiddleware;
