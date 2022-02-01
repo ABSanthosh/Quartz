@@ -52,7 +52,11 @@ const Store = createStore(
     }),
 
     setSelectedNote: action((state, payload) => {
-      state.selectedNote = state.notes.find((note) => note.id === payload);
+      if (state.notes.find((note) => note.id === payload)) {
+        state.selectedNote = state.notes.find((note) => note.id === payload);
+      } else {
+        state.selectedNote = sortByLastModified(state.notes)[0];
+      }
     }),
 
     setSelectedNoteContent: action((state, payload) => {

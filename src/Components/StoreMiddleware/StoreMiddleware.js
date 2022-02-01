@@ -12,6 +12,8 @@ function StoreMiddleware(props) {
   );
   const currentOption = useStoreState((state) => state.currentOption);
 
+  console.log(props.computedMatch.params.modeId);
+
   useEffect(() => {
     // check url params for mode
     if (props.computedMatch.params.mode === "notes") {
@@ -27,6 +29,13 @@ function StoreMiddleware(props) {
         if (selectedNote) {
           history.push(`/app/dashboard/notes/${selectedNote.id}`);
         }
+      }
+
+      if (
+        selectedNote &&
+        props.computedMatch.params.modeId !== `${selectedNote.id}`
+      ) {
+        history.push(`/app/dashboard/notes/${selectedNote.id}`);
       }
     } else if (props.computedMatch.params.mode === "boards") {
       if (currentOption !== "boards") {
