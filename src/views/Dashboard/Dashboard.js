@@ -37,7 +37,7 @@ function Dashboard() {
 
   // Media queries
   const defaultNavState = useMediaQuery({
-    query: "(max-width: 980px)",
+    query: "(max-width: 1064px)",
   });
 
   const SyncStatusSize = useMediaQuery({
@@ -96,9 +96,9 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    if (notes.length === 0) {
-      fetchNotes();
-    }
+    // if (notes.length === 0) {
+    fetchNotes();
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
 
@@ -243,7 +243,7 @@ function Dashboard() {
                   </div>
                 )}
 
-                <div
+                {/* <div
                   className="DashboardWrapper__subHeader__sync"
                   onClick={() => {
                     fetchNotes();
@@ -253,7 +253,7 @@ function Dashboard() {
                     {ControlIconsDefinitions.Download}
                   </span>
                   Fetch Notes
-                </div>
+                </div> */}
               </>
             )}
           </div>
