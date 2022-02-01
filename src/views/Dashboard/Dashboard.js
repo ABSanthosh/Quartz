@@ -29,7 +29,7 @@ function Dashboard() {
   const [syncError, setSyncError] = useState("");
   let history = useHistory();
 
-  const { mode } = useParams();
+  const { mode, modeId } = useParams();
 
   // Store
   const currentOption = useStoreState((state) => state.currentOption);
@@ -40,14 +40,24 @@ function Dashboard() {
   const setCurrentOption = useStoreActions(
     (actions) => actions.setCurrentOption
   );
+  const setSelectedNote = useStoreActions((action) => action.setSelectedNote);
 
+  const selectedNote = useStoreState((state) => state.selectedNote);
+  // TODO: Fix the routing problems and try to add id based doc routing
   useEffect(() => {
     if (mode !== currentOption) {
-      console.log(mode);
       setCurrentOption(mode);
+      // console.log(mode);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   });
+
+  useEffect(() => {
+    if (modeId && selectedNote && modeId !== selectedNote.id) {
+      console.log(modeId);
+      setSelectedNote(parseInt(modeId));
+      // history.push(`/app/dashboard/notes/${modeId}`);
+    }
+  }, [modeId, selectedNote, history, setSelectedNote]);
 
   // Media queries
   const defaultNavState = useMediaQuery({
@@ -63,8 +73,9 @@ function Dashboard() {
       .from("notes")
       .select()
       .then((res) => {
-        // console.log(res);
-        setNotes(res.data);
+        if (notes !== res.data) {
+          setNotes(res.data);
+        }
         stopFBLoading();
       })
       .catch((err) => {

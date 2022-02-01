@@ -9,7 +9,7 @@ export default function Router() {
       <Switch>
         <Route exact path="/" component={views.Home} />
         <ProtectedRoute
-          path="/app/dashboard/:mode"
+          path="/app/dashboard/:mode/:modeId?"
           component={views.Dashboard}
         />
         <Redirect to="/app/dashboard/boards" />

@@ -69,7 +69,7 @@ function StickyNote() {
       setIsStrike(false);
     }
   };
-
+  // console.log(data);
   return (
     <div
       className={`StickyNoteWrapper ${

@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import sanitizeHtml from "sanitize-html";
 import { ReactComponent as Dots } from "../../../../../../Assets/Img/StickyNotes/dots.svg";
+import { useHistory } from "react-router-dom";
+import DOMPurify from "dompurify";
 
 export default function NotesListItem({
   index,
@@ -13,6 +14,9 @@ export default function NotesListItem({
   onClick,
   contextMenuPositionState,
 }) {
+  let history = useHistory();
+
+
   return (
     <div
       className="NotesContainerWrapper__listItem"
@@ -26,6 +30,7 @@ export default function NotesListItem({
           setSelectedNote(note.id);
         }
         onClick();
+        history.push(`/app/dashboard/notes/${note.id}`);
       }}
       onContextMenu={(e) => {
         e.preventDefault();
@@ -70,13 +75,7 @@ export default function NotesListItem({
       <div
         className="NotesContainerWrapper__listItem--content"
         dangerouslySetInnerHTML={{
-          __html: sanitizeHtml(note.content, {
-            allowedTags: ["img", "p", "li", "i", "b", "strike", "br"],
-            allowedSchemes: ["data", "http", "https"],
-            allowedAttributes: {
-              img: ["src", "default-height", "default-width", "style"],
-            },
-          }),
+          __html: DOMPurify.sanitize(note.content)
         }}
         disabled={true}
       />
