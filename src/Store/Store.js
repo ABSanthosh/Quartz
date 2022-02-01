@@ -52,6 +52,14 @@ const Store = createStore(
     }),
 
     setSelectedNote: action((state, payload) => {
+      // iterate state.note and remove note from state.notes if the non-selected note.content is empty
+      state.notes = state.notes.filter((note) => {
+        if (note.content === "" && note.id !== payload) {
+          return false;
+        }
+        return true;
+      });
+
       if (state.notes.find((note) => note.id === payload)) {
         state.selectedNote = state.notes.find((note) => note.id === payload);
       } else {
@@ -102,12 +110,12 @@ const Store = createStore(
       }
     }),
 
-    addNote: action((state, uid) => {
+    addNote: action((state, payload) => {
       const newNote = {
-        id: new Date().getTime(),
-        user_id: uid,
-        title: "New note",
-        content: "New note, this is",
+        id: payload.id ? payload.id : new Date().getTime(),
+        user_id: payload.uid,
+        content: "",
+        sanitizedContent: "",
         isChanged: true,
         theme: themes.yellow,
         lastModified: lastModified(),

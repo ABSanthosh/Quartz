@@ -1,4 +1,4 @@
-import { useStoreActions } from "easy-peasy";
+import { useStoreActions, useStoreState } from "easy-peasy";
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { ReactComponent as RightArrow } from "../../../../../../Assets/Img/StickyNotes/right.svg";
@@ -6,16 +6,19 @@ import { themes } from "../../../../../../Store/defaultValues";
 import "./ContextMenu.scss";
 import supabase from "../../../../../../supabase/supabase-config";
 import deleteSupabaseNote from "../../../../../../Utils/deleteSupabaseNote";
+import { useHistory } from "react-router-dom";
 
 function ContextMenu({ data, isContext, setIsContext, className, direction }) {
   const [isColorOption, setIsColorOption] = useState(false);
   const setSelectedNoteColor = useStoreActions(
     (actions) => actions.setSelectedNoteColor
   );
+  const selectedNote = useStoreState((state) => state.selectedNote);
 
-  // const data = useStoreState((state) => state.selectedNote);
   const deleteNote = useStoreActions((actions) => actions.deleteNote);
   const addNote = useStoreActions((actions) => actions.addNote);
+
+  let history = useHistory();
 
   const isDescendant = function (child) {
     let parent = document.querySelector(".ContextMenuWrapper");
@@ -130,7 +133,17 @@ function ContextMenu({ data, isContext, setIsContext, className, direction }) {
       <button
         className="ContextMenuWrapper--item"
         onClick={() => {
-          addNote(supabase.auth.user().id);
+          if (selectedNote) {
+            if (selectedNote.content !== "") {
+              const newNoteId = new Date().getTime();
+              addNote({ uid: supabase.auth.user().id, id: newNoteId });
+              history.push(`/app/dashboard/notes/${newNoteId}`);
+            }
+          } else {
+            const newNoteId = new Date().getTime();
+            addNote({ uid: supabase.auth.user().id, id: newNoteId });
+            history.push(`/app/dashboard/notes/${newNoteId}`);
+          }
           setIsContext(false);
         }}
       >

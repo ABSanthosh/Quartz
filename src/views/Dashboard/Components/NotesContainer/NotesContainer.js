@@ -14,6 +14,7 @@ import NotesListItem from "./Components/NotesListItem/NotesListItem";
 import { ControlIconsDefinitions } from "../../../../Assets/Font/IconMap";
 import { sortByLastModified } from "../../../../Utils/sortByLastModified";
 import supabase from "../../../../supabase/supabase-config";
+import { useHistory } from "react-router-dom";
 
 function NotesContainer() {
   const notes = useStoreState((state) => state.notes);
@@ -26,6 +27,7 @@ function NotesContainer() {
   const [contextData, setContextData] = useState({});
   const [notesDropdownState, setNotesDropdownState] = useState(false);
 
+  let history = useHistory();
   const fuse = new Fuse(notes, {
     keys: ["sanitizedContent"],
   });
@@ -139,7 +141,17 @@ function NotesContainer() {
               <div
                 className="NotesContainerWrapper__listItem--AddNote"
                 onClick={() => {
-                  addNote(supabase.auth.user().id);
+                  if (selectedNote) {
+                    if (selectedNote.content !== "") {
+                      const newNoteId = new Date().getTime();
+                      addNote(supabase.auth.user().id);
+                      history.push(`/app/dashboard/notes/${newNoteId}`);
+                    }
+                  } else {
+                    const newNoteId = new Date().getTime();
+                    addNote({ uid: supabase.auth.user().id, id: newNoteId });
+                    history.push(`/app/dashboard/notes/${newNoteId}`);
+                  }
                 }}
               >
                 <Plus />
