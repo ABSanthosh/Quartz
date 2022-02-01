@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Dashboard.scss";
 import { useAuth } from "../../hooks/useAuth";
 import { useMediaQuery } from "react-responsive";
@@ -34,6 +34,8 @@ function Dashboard() {
   const setCurrentOption = useStoreActions(
     (actions) => actions.setCurrentOption
   );
+
+  const sideBarRef = useRef();
 
   // Media queries
   const defaultNavState = useMediaQuery({
@@ -110,10 +112,31 @@ function Dashboard() {
     window.onbeforeunload = null;
   }
 
+  function handleClick({ target }) {
+    if (
+      (!sideBarRef.current.contains(target) ||
+        !sideBarRef.current === target) &&
+      defaultNavState
+    ) {
+      setNavState(false);
+      if (document.getElementById("NavBarInput").checked) {
+        document.getElementById("NavBarInput").checked = false;
+      }
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClick);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  });
+
   return (
     <div className="DashboardWrapper">
       <DashboardHeader />
       <nav
+        ref={sideBarRef}
         className={`DashboardWrapper__sideBar ${
           navState ? "DashboardWrapper__sideBar--open" : ""
         }`}

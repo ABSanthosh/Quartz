@@ -48,6 +48,7 @@
 
     &--right {
       @include make-flex($dir: row);
+      gap: 10px;
     }
 
     &--left {
