@@ -71,15 +71,24 @@ export default function NotesListItem({
           />
         )}
       </div>
+
+      {note.content === "" && (
+        <i
+          style={{
+            width: "100%",
+            padding: "0 20px",
+            fontSize: "16px",
+            color: "rgb(153, 153, 153)",
+          }}
+        >
+          Type something...
+        </i>
+      )}
+
       <div
         className="NotesContainerWrapper__listItem--content"
         dangerouslySetInnerHTML={{
-          __html:
-            note.content !== "" ? (
-              DOMPurify.sanitize(note.content)
-            ) : (
-              <i>Type something...</i>
-            ),
+          __html: DOMPurify.sanitize(note.content),
         }}
       />
     </div>
