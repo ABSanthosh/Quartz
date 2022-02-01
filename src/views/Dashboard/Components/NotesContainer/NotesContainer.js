@@ -36,10 +36,6 @@ function NotesContainer() {
     query: "(max-width: 840px)",
   });
 
-  const defaultNavState = useMediaQuery({
-    query: "(max-width: 1064px)",
-  });
-
   const contextMenuPositionState = useMediaQuery({
     query: "(max-width: 840px)",
   });
