@@ -14,8 +14,13 @@ const Store = createStore(
     userState: null,
 
     selectedNote: null,
-    noteCount: computed(({ notes }) => notes.length),
-    boardsCount: computed(({ boards }) => boards.length),
+    noteCount: computed((state) => {
+      if (state.notes.length === 0) {
+        state.selectedNote = null;
+      }
+      return state.notes.length;
+    }),
+    boardsCount: computed((state) => state.boards.length),
 
     setNotes: action((state, notes) => {
       state.notes = notes;
