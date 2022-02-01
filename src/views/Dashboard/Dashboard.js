@@ -15,7 +15,6 @@ import BoardsContainer from "./Components/BoardsContainer/BoardsContainer";
 import NotesContainer from "./Components/NotesContainer/NotesContainer";
 import supabase from "../../supabase/supabase-config";
 import { ControlIconsDefinitions } from "../../Assets/Font/IconMap";
-import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function Dashboard() {
@@ -25,8 +24,6 @@ function Dashboard() {
   const [isSyncing, setSyncing] = useState(false);
   const [syncError, setSyncError] = useState("");
   let history = useHistory();
-
-  const { mode } = useParams();
 
   // Store
   const currentOption = useStoreState((state) => state.currentOption);
@@ -38,8 +35,6 @@ function Dashboard() {
     (actions) => actions.setCurrentOption
   );
 
-  // TODO: Fix the routing problems and try to add id based doc routing
-
   // Media queries
   const defaultNavState = useMediaQuery({
     query: "(max-width: 980px)",
@@ -49,6 +44,9 @@ function Dashboard() {
     query: "(max-width: 380px)",
   });
 
+  // TODO: Multiple loads occurring on page load
+  // console.log("Fref")
+
   const fetchNotes = async () => {
     await supabase
       .from("notes")
@@ -57,9 +55,10 @@ function Dashboard() {
         if (JSON.stringify(res.data) !== JSON.stringify(notes)) {
           setNotes(res.data);
         }
+        // console.log(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -97,7 +96,7 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    if (mode === "notes") {
+    if (notes.length === 0) {
       fetchNotes();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -243,6 +242,18 @@ function Dashboard() {
                     )}
                   </div>
                 )}
+
+                <div
+                  className="DashboardWrapper__subHeader__sync"
+                  onClick={() => {
+                    fetchNotes();
+                  }}
+                >
+                  <span className="controlIcons" style={{ fontSize: "16px" }}>
+                    {ControlIconsDefinitions.Download}
+                  </span>
+                  Fetch Notes
+                </div>
               </>
             )}
           </div>
