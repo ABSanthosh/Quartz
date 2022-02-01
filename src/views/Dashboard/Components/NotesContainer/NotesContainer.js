@@ -36,6 +36,10 @@ function NotesContainer() {
     query: "(max-width: 840px)",
   });
 
+  const defaultNavState = useMediaQuery({
+    query: "(max-width: 1064px)",
+  });
+
   const contextMenuPositionState = useMediaQuery({
     query: "(max-width: 840px)",
   });
@@ -167,13 +171,40 @@ function NotesContainer() {
               : "NotesContainerWrapper__right--centerContent"
           }`}
         >
-          {notes.length > 0 ? (
-            <StickyNote data={selectedNote} />
+          {!dropdown ? (
+            <>
+              {notes.length > 0 ? (
+                <StickyNote data={selectedNote} />
+              ) : (
+                <span className="NotesContainerWrapper__right--AddNew controlIcons">
+                  {ControlIconsDefinitions.Add}
+                  <p>Add a new note</p>
+                </span>
+              )}
+            </>
           ) : (
-            <span className="NotesContainerWrapper__right--AddNew controlIcons">
-              {ControlIconsDefinitions.Add}
-              <p>Add a new note</p>
-            </span>
+            <>
+              <div
+                className="NotesContainerWrapper__listItem--AddNote"
+                style={{ width: "60%" }}
+                onClick={() => {
+                  if (selectedNote) {
+                    if (selectedNote.content !== "") {
+                      const newNoteId = new Date().getTime();
+                      addNote(supabase.auth.user().id);
+                      history.push(`/app/dashboard/notes/${newNoteId}`);
+                    }
+                  } else {
+                    const newNoteId = new Date().getTime();
+                    addNote({ uid: supabase.auth.user().id, id: newNoteId });
+                    history.push(`/app/dashboard/notes/${newNoteId}`);
+                  }
+                }}
+              >
+                <Plus />
+                <p>Add note</p>
+              </div>
+            </>
           )}
         </div>
       </div>

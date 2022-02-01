@@ -111,12 +111,9 @@
       overflow: hidden;
       min-height: 20px;
     }
-
-    &--AddNote {
-      cursor: pointer;
-    }
     &--NoItemsFound,
     &--AddNote {
+      cursor: pointer;
       width: 100%;
       @include make-flex($dir: row);
       gap: 10px;
@@ -131,6 +128,10 @@
         height: 100%;
         @include make-flex();
         font-size: 17px;
+      }
+
+      &:hover {
+        background-color: #fefefe;
       }
     }
   }
