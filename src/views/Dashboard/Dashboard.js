@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import PropTypes from 'prop-types';
 import "./Dashboard.scss";
 import { useAuth } from "../../hooks/useAuth";
 import { useMediaQuery } from "react-responsive";
@@ -16,20 +15,18 @@ import BoardsContainer from "./Components/BoardsContainer/BoardsContainer";
 import NotesContainer from "./Components/NotesContainer/NotesContainer";
 import supabase from "../../supabase/supabase-config";
 import { ControlIconsDefinitions } from "../../Assets/Font/IconMap";
-import { useSupabaseLoading } from "../../hooks/useSupabaseLoading";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function Dashboard() {
   // Hooks
   const { logout, session } = useAuth();
-  const { startFBLoading, stopFBLoading } = useSupabaseLoading();
   const [navState, setNavState] = useState(false);
   const [isSyncing, setSyncing] = useState(false);
   const [syncError, setSyncError] = useState("");
   let history = useHistory();
 
-  const { mode, modeId } = useParams();
+  const { mode } = useParams();
 
   // Store
   const currentOption = useStoreState((state) => state.currentOption);
@@ -40,24 +37,8 @@ function Dashboard() {
   const setCurrentOption = useStoreActions(
     (actions) => actions.setCurrentOption
   );
-  const setSelectedNote = useStoreActions((action) => action.setSelectedNote);
 
-  const selectedNote = useStoreState((state) => state.selectedNote);
   // TODO: Fix the routing problems and try to add id based doc routing
-  useEffect(() => {
-    if (mode !== currentOption) {
-      setCurrentOption(mode);
-      // console.log(mode);
-    }
-  });
-
-  useEffect(() => {
-    if (modeId && selectedNote && modeId !== selectedNote.id) {
-      console.log(modeId);
-      setSelectedNote(parseInt(modeId));
-      // history.push(`/app/dashboard/notes/${modeId}`);
-    }
-  }, [modeId, selectedNote, history, setSelectedNote]);
 
   // Media queries
   const defaultNavState = useMediaQuery({
@@ -73,14 +54,12 @@ function Dashboard() {
       .from("notes")
       .select()
       .then((res) => {
-        if (notes !== res.data) {
+        if (JSON.stringify(res.data) !== JSON.stringify(notes)) {
           setNotes(res.data);
         }
-        stopFBLoading();
       })
       .catch((err) => {
-        // console.log(err);
-        stopFBLoading();
+        console.log(err);
       });
   };
 
@@ -118,8 +97,9 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    startFBLoading();
-    fetchNotes();
+    if (mode === "notes") {
+      fetchNotes();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
 
