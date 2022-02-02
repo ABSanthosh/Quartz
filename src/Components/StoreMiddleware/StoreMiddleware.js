@@ -34,6 +34,10 @@ function StoreMiddleware(props) {
         history.push(`/app/dashboard/notes/${selectedNote.id}`);
       }
 
+      if (props.computedMatch.params.modeId && selectedNote === null) {
+        setSelectedNote(parseInt(props.computedMatch.params.modeId));
+      }
+
       if (
         selectedNote &&
         props.computedMatch.params.modeId !== `${selectedNote.id}`
