@@ -129,7 +129,7 @@ function NotesContainer({ navState }) {
                 ? "DashboardWrapper__subHeader--left--ellipsis"
                 : ""
             }`}
-            html={selectedNote.title}
+            html={selectedNote ? selectedNote.title : ""}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
