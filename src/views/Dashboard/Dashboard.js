@@ -12,10 +12,10 @@ import { ReactComponent as StickyNotes } from "../../Assets/Img/notes.svg";
 
 import { useStoreState, useStoreActions } from "easy-peasy";
 import BoardsContainer from "./Components/BoardsContainer/BoardsContainer";
-import NotesContainer from "./Components/NotesContainer/NotesContainer";
 import supabase from "../../supabase/supabase-config";
 import { ControlIconsDefinitions } from "../../Assets/Font/IconMap";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import NotesContainer from "../NotesContainer/NotesContainer";
 
 function Dashboard() {
   // Hooks

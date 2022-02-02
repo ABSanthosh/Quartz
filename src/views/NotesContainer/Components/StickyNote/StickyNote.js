@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 import ContextMenu from "../ContextMenu/ContextMenu";
 
-import { ReactComponent as Dots } from "../../../../../../Assets/Img/StickyNotes/dots.svg";
+import { ReactComponent as Dots } from "../../../../Assets/Img/StickyNotes/dots.svg";
 
 import { useStoreState } from "easy-peasy";
 import { useMediaQuery } from "react-responsive";
@@ -10,7 +10,7 @@ import { useMediaQuery } from "react-responsive";
 import "./StickyNote.scss";
 import ContentEditor from "./ContentEditor";
 import StickyNoteFooter from "../StickyNoteFooter/StickyNoteFooter";
-import { ControlIconsDefinitions } from "../../../../../../Assets/Font/IconMap";
+import { ControlIconsDefinitions } from "../../../../Assets/Font/IconMap";
 
 function StickyNote() {
   const [isBold, setIsBold] = useState(false);

@@ -2,7 +2,7 @@ import React from "react";
 import { useMediaQuery } from "react-responsive";
 import {
   BaseIconsDefinitions,
-} from "../../../../../../Assets/Font/IconMap";
+} from "../../../../Assets/Font/IconMap";
 
 function StickyNoteFooter({
   isBold,
