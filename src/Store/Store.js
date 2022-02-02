@@ -23,7 +23,7 @@ const Store = createStore(
     // Boards related states and actions
     boards: localBoardsList,
     selectedBoard: null,
-    boardsCount: computed((state) => state.boards.length),
+    boardCount: computed((state) => state.boards.length),
 
     addBoard: action((state, payload) => {
       const newBoardId = new Date().getTime();
