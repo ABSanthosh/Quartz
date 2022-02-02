@@ -11,11 +11,11 @@ import { ReactComponent as DashboardIcon } from "../../Assets/Img/dashboard.svg"
 import { ReactComponent as StickyNotes } from "../../Assets/Img/notes.svg";
 
 import { useStoreState, useStoreActions } from "easy-peasy";
-import BoardsContainer from "./Components/BoardsContainer/BoardsContainer";
 import supabase from "../../supabase/supabase-config";
 import { ControlIconsDefinitions } from "../../Assets/Font/IconMap";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import NotesContainer from "../NotesContainer/NotesContainer";
+import NotesContainer from "../Containers/NotesContainer/NotesContainer";
+import BoardsContainer from "../Containers/BoardsContainer/BoardsContainer";
 
 function Dashboard() {
   // Hooks

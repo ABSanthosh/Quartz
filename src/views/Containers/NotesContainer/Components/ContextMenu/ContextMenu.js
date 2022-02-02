@@ -1,11 +1,11 @@
 import { useStoreActions, useStoreState } from "easy-peasy";
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { ReactComponent as RightArrow } from "../../../../Assets/Img/StickyNotes/right.svg";
-import { themes } from "../../../../Store/defaultValues";
+import { ReactComponent as RightArrow } from "../../../../../Assets/Img/StickyNotes/right.svg";
+import { themes } from "../../../../../Store/defaultValues";
 import "./ContextMenu.scss";
-import supabase from "../../../../supabase/supabase-config";
-import deleteSupabaseNote from "../../../../Utils/deleteSupabaseNote";
+import supabase from "../../../../../supabase/supabase-config";
+import deleteSupabaseNote from "../../../../../Utils/deleteSupabaseNote";
 import { useHistory } from "react-router-dom";
 
 function ContextMenu({ data, isContext, setIsContext, className, direction }) {

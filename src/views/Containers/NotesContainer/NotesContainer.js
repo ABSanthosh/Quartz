@@ -2,18 +2,18 @@ import React, { useEffect, useState } from "react";
 import "./NotesContainer.scss";
 import { useMediaQuery } from "react-responsive";
 import { useStoreActions, useStoreState } from "easy-peasy";
-import { ReactComponent as DropdownIcon } from "../../Assets/Img/dropdownIcon.svg";
+import { ReactComponent as DropdownIcon } from "../../../Assets/Img/dropdownIcon.svg";
 import StickyNote from "./Components/StickyNote/StickyNote";
 import ContextMenu from "./Components/ContextMenu/ContextMenu";
-import { ReactComponent as Sad } from "../../Assets/Img/sad.svg";
-import { ReactComponent as Plus } from "../../Assets/Img/plus.svg";
+import { ReactComponent as Sad } from "../../../Assets/Img/sad.svg";
+import { ReactComponent as Plus } from "../../../Assets/Img/plus.svg";
 
-import SearchBar from "../../Components/SearchBar/SearchBar";
+import SearchBar from "../../../Components/SearchBar/SearchBar";
 import Fuse from "fuse.js";
 import NotesListItem from "./Components/NotesListItem/NotesListItem";
-import { ControlIconsDefinitions } from "../../Assets/Font/IconMap";
-import { sortByLastModified } from "../../Utils/sortByLastModified";
-import supabase from "../../supabase/supabase-config";
+import { ControlIconsDefinitions } from "../../../Assets/Font/IconMap";
+import { sortByLastModified } from "../../../Utils/sortByLastModified";
+import supabase from "../../../supabase/supabase-config";
 import { useHistory } from "react-router-dom";
 
 function NotesContainer() {

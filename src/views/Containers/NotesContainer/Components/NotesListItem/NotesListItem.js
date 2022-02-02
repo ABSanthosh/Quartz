@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ReactComponent as Dots } from "../../../../Assets/Img/StickyNotes/dots.svg";
+import { ReactComponent as Dots } from "../../../../../Assets/Img/StickyNotes/dots.svg";
 import { useHistory } from "react-router-dom";
 import DOMPurify from "dompurify";
 
