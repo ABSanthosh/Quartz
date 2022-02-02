@@ -24,6 +24,11 @@ function ContentEditor({ handleCursorElement }) {
   return (
     <div className="StickyNoteWrapper__content--editableContainer">
       <i
+        onClick={() => {
+          document
+            .querySelector(".StickyNoteWrapper__content--editableContent")
+            .focus();
+        }}
         style={{
           position: "absolute",
           color: "#999",
