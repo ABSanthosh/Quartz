@@ -15,6 +15,7 @@ import { ControlIconsDefinitions } from "../../../Assets/Font/IconMap";
 import { sortByLastModified } from "../../../Utils/sortByLastModified";
 import supabase from "../../../supabase/supabase-config";
 import { useHistory } from "react-router-dom";
+import ContentEditable from "react-contenteditable";
 
 function NotesContainer({ navState }) {
   const notes = useStoreState((state) => state.notes);
@@ -26,6 +27,7 @@ function NotesContainer({ navState }) {
   const [searchResults, setSearchResults] = useState(null);
   const [contextData, setContextData] = useState({});
   const [notesDropdownState, setNotesDropdownState] = useState(false);
+  const [isEllipsisable, setIsEllipsisable] = useState(true);
 
   let history = useHistory();
   const fuse = new Fuse(notes, {
@@ -36,6 +38,10 @@ function NotesContainer({ navState }) {
     query: "(max-width: 840px)",
   });
 
+  const subHeaderTextTransform = useMediaQuery({
+    query: "(max-width: 1065px)",
+  });
+
   const contextMenuPositionState = useMediaQuery({
     query: "(max-width: 840px)",
   });
@@ -44,6 +50,9 @@ function NotesContainer({ navState }) {
     query: "(max-width: 380px)",
   });
   const setNotes = useStoreActions((actions) => actions.setNotes);
+  const setSelectedNoteTitle = useStoreActions(
+    (actions) => actions.setSelectedNoteTitle
+  );
   const [isSyncing, setSyncing] = useState(false);
   const [syncError, setSyncError] = useState("");
 
@@ -98,10 +107,65 @@ function NotesContainer({ navState }) {
       <div className="DashboardWrapper__subHeader">
         <div
           className={`DashboardWrapper__subHeader--left ${
-            navState ? "DashboardWrapper__subHeader--left--open" : ""
+            navState && !subHeaderTextTransform
+              ? "DashboardWrapper__subHeader--left--open"
+              : ""
           }`}
         >
           <p>Notes</p>
+          <span
+            style={{
+              fontSize: "10px",
+              fontWeight: "bolder",
+              margin: "0 4px 0 6px",
+            }}
+            className="controlIcons"
+          >
+            {ControlIconsDefinitions.ChevronRight}
+          </span>
+          <ContentEditable
+            className={`DashboardWrapper__subHeader--left--title ${
+              isEllipsisable
+                ? "DashboardWrapper__subHeader--left--ellipsis"
+                : ""
+            }`}
+            html={selectedNote.title}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+              }
+              if (
+                e.target.innerText.length >= 40 &&
+                e.key !== "Backspace" &&
+                e.key !== "Delete"
+              ) {
+                e.preventDefault();
+              }
+            }}
+            onBlur={(e) => {
+              e.target.scrollTo(0, 0);
+              setIsEllipsisable(true);
+            }}
+            onFocus={(e) => {
+              e.target.scrollTo(e.target.scrollWidth, 0);
+              setIsEllipsisable(false);
+            }}
+            onChange={(e) => {
+              setSelectedNoteTitle({
+                id: selectedNote.id,
+                title: e.target.value,
+              });
+            }}
+            spellCheck="false"
+          />
+          {isEllipsisable && (
+            <span
+              style={{ fontSize: "15px", color: "#a5a5a5" }}
+              className="controlIcons"
+            >
+              {ControlIconsDefinitions.Edit}
+            </span>
+          )}
         </div>
         <div className="DashboardWrapper__subHeader--right">
           <>
