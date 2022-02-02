@@ -327,7 +327,28 @@
     }
   }
 }
-
+@media only screen and (max-width: 615px) {
+  .DashboardWrapper {
+    &__subHeader {
+      &__sync {
+        &--warning {
+          position: absolute;
+          right: 10px;
+          z-index: 2;
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 515px) {
+  .DashboardWrapper {
+    &__subHeader {
+      &--left {
+        max-width: calc(100% - 145px);
+      }
+    }
+  }
+}
 @keyframes SpinAround {
   to {
     transform: rotate(-360deg);

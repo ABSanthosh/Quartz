@@ -29,7 +29,7 @@ function Dashboard() {
 
   // Boards related
   const boardCount = useStoreState((state) => state.boardCount);
-  // const setNotes = useStoreActions((actions) => actions.setNotes);
+  const setNotes = useStoreActions((actions) => actions.setNotes);
   // Notes related
 
   const currentOption = useStoreState((state) => state.currentOption);
