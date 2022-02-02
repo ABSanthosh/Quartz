@@ -1,8 +1,10 @@
 @import "../../../styles/mixins";
 
 .BoardsContainerWrapper {
-  height: 100%;
-  width: 1095px;
+  height: calc(100% - 50px);
+  overflow-x: auto;
+  width: 100%;
+  padding: 40px 20px;
 
   &__top {
     width: 100%;
@@ -10,7 +12,6 @@
   }
   &__bottom {
     width: 100%;
-    height: calc(100% - 100px);
     @include make-flex($dir: row, $align: flex-start);
     gap: 30px;
     flex-wrap: wrap;
@@ -27,11 +28,8 @@
   }
 }
 
-@media only screen and (max-width: 1345px) {
+@media only screen and (max-width: 840px) {
   .BoardsContainerWrapper {
-    width: 100%;
-    height: unset;
-
-    padding-bottom: 60px;
+    height: calc(100% - 50px);
   }
 }
