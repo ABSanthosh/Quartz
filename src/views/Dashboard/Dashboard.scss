@@ -5,6 +5,12 @@
   height: calc(100% - 28px);
   transform: translateY(28px);
   @include make-flex($dir: row, $just: unset, $align: unset);
+  a {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
   &__subHeader {
     // max-width: calc(100% - 28px);
     width: 100%;
@@ -250,11 +256,8 @@
 
   &__contentContainer {
     transition: all 0.3s ease-in-out;
-
     max-height: 100%;
-    // height: calc(100% - 50px);
     height: 100%;
-
     width: 100%;
     @include make-flex($just: flex-start);
     overflow: auto;

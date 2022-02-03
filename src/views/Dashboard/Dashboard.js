@@ -11,8 +11,7 @@ import { ReactComponent as DashboardIcon } from "../../Assets/Img/dashboard.svg"
 import { ReactComponent as StickyNotes } from "../../Assets/Img/notes.svg";
 
 import { useStoreState, useStoreActions } from "easy-peasy";
-import supabase from "../../supabase/supabase-config";
-// import { ControlIconsDefinitions } from "../../Assets/Font/IconMap";
+// import supabase from "../../supabase/supabase-config";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import NotesContainer from "../Containers/NotesContainer/NotesContainer";
 import BoardsContainer from "../Containers/BoardsContainer/BoardsContainer";
@@ -29,7 +28,7 @@ function Dashboard() {
 
   // Boards related
   const boardCount = useStoreState((state) => state.boardCount);
-  const setNotes = useStoreActions((actions) => actions.setNotes);
+  // const setNotes = useStoreActions((actions) => actions.setNotes);
   // Notes related
 
   const currentOption = useStoreState((state) => state.currentOption);
