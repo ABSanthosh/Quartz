@@ -11,6 +11,10 @@ function StoreMiddleware(props) {
     (actions) => actions.setCurrentOption
   );
   const currentOption = useStoreState((state) => state.currentOption);
+  const selectedBoard = useStoreState((state) => state.selectedBoard);
+  const setSelectedBoard = useStoreActions(
+    (actions) => actions.setSelectedBoard
+  );
 
   useEffect(() => {
     // if url param is notes and current option is not notes, set current option to notes
@@ -40,8 +44,19 @@ function StoreMiddleware(props) {
       ) {
         history.push(`/app/dashboard/notes/${selectedNote.id}`);
       }
-    } else if (currentOption === "boards") {
+    } else if (props.computedMatch.params.mode === "boards") {
       setCurrentOption("boards");
+      if (props.computedMatch.params.modeId && selectedBoard === null) {
+        setSelectedBoard(parseInt(props.computedMatch.params.modeId));
+      }
+
+      if (
+        props.computedMatch.params.modeId &&
+        selectedBoard &&
+        selectedBoard.id !== props.computedMatch.params.modeId
+      ) {
+        setSelectedBoard(parseInt(props.computedMatch.params.modeId));
+      }
     }
   });
 
