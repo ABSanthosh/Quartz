@@ -74,6 +74,7 @@ const defaultBoards = [
         panelItems: [
           {
             content: "Item 1.1",
+            lastModified: "",
             position: 0,
             id: "gxCedR1LMd",
           },
@@ -86,7 +87,8 @@ const defaultBoards = [
         panelItems: [
           {
             content: "Item 2.1",
-            position: 0,
+            lastModified: "",
+            position: 1,
             id: "gxCedR3LMd",
           },
         ],
@@ -107,6 +109,7 @@ const defaultBoards = [
         panelItems: [
           {
             content: "Item 1.1",
+            lastModified: "",
             position: 0,
             id: "TA60KQD5WT",
           },
@@ -128,6 +131,7 @@ const defaultBoards = [
         panelItems: [
           {
             content: "Item 1.1",
+            lastModified: "",
             position: 0,
             id: "YWlyH31NH",
           },
@@ -149,6 +153,7 @@ const defaultBoards = [
         panelItems: [
           {
             content: "Item 1.1",
+            lastModified: "",
             position: 0,
             id: "TPAnh5qFwQ",
           },
@@ -170,6 +175,7 @@ const defaultBoards = [
         panelItems: [
           {
             content: "Item 1.1",
+            lastModified: "",
             position: 0,
             id: "LVYZ2bUbwO",
           },
@@ -191,6 +197,7 @@ const defaultBoards = [
         panelItems: [
           {
             content: "Item 1.1",
+            lastModified: "",
             position: 0,
             id: "2vTWH5pgyf",
           },
@@ -212,6 +219,7 @@ const defaultBoards = [
         panelItems: [
           {
             content: "Item 1.1",
+            lastModified: "",
             position: 0,
             id: "NFTfVeqZuP",
           },
@@ -233,6 +241,7 @@ const defaultBoards = [
         panelItems: [
           {
             content: "Item 1.1",
+            lastModified: "",
             position: 0,
             id: "sWiB4Fh0Py",
           },
