@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "./BoardEditor.scss";
 import { ControlIconsDefinitions } from "../../../../../Assets/Font/IconMap";
-import ContentEditable from "react-contenteditable";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import { Link } from "react-router-dom";
+import SmallContentEditable from "../../../../../Components/SmallContentEditable/SmallContentEditable";
 
 function BoardEditor({ navState }) {
   const [isEllipsisable, setIsEllipsisable] = useState(true);
@@ -13,6 +13,11 @@ function BoardEditor({ navState }) {
   const setSelectedBoardTitle = useStoreActions(
     (action) => action.setSelectedBoardTitle
   );
+  const setBoardPanelTitle = useStoreActions(
+    (action) => action.setBoardPanelTitle
+  );
+
+  const addPanelItem = useStoreActions((action) => action.addPanelItem);
 
   useEffect(() => {
     document.querySelector(
@@ -48,40 +53,15 @@ function BoardEditor({ navState }) {
           >
             {ControlIconsDefinitions.ChevronRight}
           </span>
-          <ContentEditable
-            className={`DashboardWrapper__subHeader--left--title ${
-              isEllipsisable
-                ? "DashboardWrapper__subHeader--left--ellipsis"
-                : ""
-            }`}
-            html={selectedBoard ? selectedBoard.title : ""}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-              }
-              if (
-                e.target.innerText.length >= 40 &&
-                e.key !== "Backspace" &&
-                e.key !== "Delete"
-              ) {
-                e.preventDefault();
-              }
-            }}
-            onBlur={(e) => {
-              e.target.scrollTo(0, 0);
-              setIsEllipsisable(true);
-            }}
-            onFocus={(e) => {
-              e.target.scrollTo(e.target.scrollWidth, 0);
-              setIsEllipsisable(false);
-            }}
-            onChange={(e) => {
+          <SmallContentEditable
+            html={selectedBoard.title}
+            setOptionalEllipsis={setIsEllipsisable}
+            setNewValue={(newValue) => {
               setSelectedBoardTitle({
                 id: selectedBoard.id,
-                title: e.target.value,
+                title: newValue,
               });
             }}
-            spellCheck="false"
           />
           {isEllipsisable && (
             <span
@@ -101,7 +81,15 @@ function BoardEditor({ navState }) {
               <div className="BoardEditorWrapper__panel" key={index}>
                 <div className="BoardEditorWrapper__panel--title">
                   <div className="BoardEditorWrapper__panel--title--left">
-                    {panel.title}
+                    <SmallContentEditable
+                      html={panel.title}
+                      setNewValue={(newValue) => {
+                        setBoardPanelTitle({
+                          id: panel.id,
+                          title: newValue,
+                        });
+                      }}
+                    />
                   </div>
                   <div className="BoardEditorWrapper__panel--title--right">
                     <span className="controlIcons" style={{ cursor: "grab" }}>
@@ -110,6 +98,11 @@ function BoardEditor({ navState }) {
                     <span
                       className="controlIcons"
                       style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        addPanelItem({
+                          id: panel.id,
+                        });
+                      }}
                     >
                       {ControlIconsDefinitions.Add}
                     </span>

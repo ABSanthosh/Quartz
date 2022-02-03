@@ -15,8 +15,8 @@ import { ControlIconsDefinitions } from "../../../Assets/Font/IconMap";
 import { sortByLastModified } from "../../../Utils/sortByLastModified";
 import supabase from "../../../supabase/supabase-config";
 import { useHistory } from "react-router-dom";
-import ContentEditable from "react-contenteditable";
-
+// import ContentEditable from "react-contenteditable";
+import SmallContentEditable from "../../../Components/SmallContentEditable/SmallContentEditable";
 function NotesContainer({ navState }) {
   const notes = useStoreState((state) => state.notes);
   const selectedNote = useStoreState((state) => state.selectedNote);
@@ -123,40 +123,15 @@ function NotesContainer({ navState }) {
           >
             {ControlIconsDefinitions.ChevronRight}
           </span>
-          <ContentEditable
-            className={`DashboardWrapper__subHeader--left--title ${
-              isEllipsisable
-                ? "DashboardWrapper__subHeader--left--ellipsis"
-                : ""
-            }`}
-            html={selectedNote ? selectedNote.title : ""}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-              }
-              if (
-                e.target.innerText.length >= 40 &&
-                e.key !== "Backspace" &&
-                e.key !== "Delete"
-              ) {
-                e.preventDefault();
-              }
-            }}
-            onBlur={(e) => {
-              e.target.scrollTo(0, 0);
-              setIsEllipsisable(true);
-            }}
-            onFocus={(e) => {
-              e.target.scrollTo(e.target.scrollWidth, 0);
-              setIsEllipsisable(false);
-            }}
-            onChange={(e) => {
+          <SmallContentEditable
+            setNewValue={(newValue) => {
               setSelectedNoteTitle({
                 id: selectedNote.id,
-                title: e.target.value,
+                title: newValue,
               });
             }}
-            spellCheck="false"
+            setOptionalEllipsis={setIsEllipsisable}
+            html={selectedNote ? selectedNote.title : ""}
           />
           {isEllipsisable && (
             <span
