@@ -1,4 +1,4 @@
-import { createStore, action, computed, persist } from "easy-peasy";
+import { createStore, action, computed, persist, debug } from "easy-peasy";
 import getRandomImage from "../Assets/Img/unsplashImages";
 import { lastModified } from "../Utils/lastModified";
 import { sortByLastModified } from "../Utils/sortByLastModified";
@@ -72,6 +72,58 @@ const Store = createStore(
       const index = state.boards.findIndex((board) => board.id === id);
       state.boards[index] = board;
       state.selectedBoard = board;
+    }),
+
+    setBoardPanelTitle: action((state, payload) => {
+      const title = payload.title;
+      const id = payload.id;
+      const panel = state.selectedBoard.boardPanels.find(
+        (panel) => panel.id === id
+      );
+      panel.title = title;
+      panel.lastModified = lastModified();
+      const index = state.selectedBoard.boardPanels.findIndex(
+        (panel) => panel.id === id
+      );
+      const tempBoard = state.selectedBoard;
+      tempBoard.boardPanels[index] = panel;
+      state.selectedBoard = tempBoard;
+
+      state.boards = state.boards.map((board) => {
+        if (board.id === state.selectedBoard.id) {
+          board = tempBoard;
+        }
+        return board;
+      });
+    }),
+
+    addPanelItem: action((state, payload) => {
+      const panelId = payload.id;
+
+      const newPanelItem = {
+        content: "tempItem",
+        id: shortid.generate(),
+        lastModified: lastModified(),
+        position: payload.position ? payload.position : 0,
+      };
+
+      // select board based on panelId
+      const board = state.boards.find((board) => {
+        return board.boardPanels.find((panel) => panel.id === panelId);
+      });
+
+      // add new panel item to selected board panel by panelId
+      const panel = board.boardPanels.find((panel) => panel.id === panelId);
+      panel.panelItems.push(newPanelItem);
+
+      state.selectedBoard = board;
+
+      state.boards = state.boards.map((board) => {
+        if (board.id === state.selectedBoard.id) {
+          return state.selectedBoard;
+        }
+        return board;
+      });
     }),
 
     /* #region Notes */
