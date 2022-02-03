@@ -2,7 +2,8 @@
 
 .StickyNoteWrapper {
   height: 100%;
-  width: 755px;
+  max-width: 755px;
+  width: 90%;
   min-height: 430px;
   border-radius: 8px;
   transition: all 0.1s ease-in-out;
