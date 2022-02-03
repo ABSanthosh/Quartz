@@ -65,17 +65,29 @@ const defaultBoards = [
     title: "Board 1",
     uid: "3b0e9363-f7ad-471b-8bb2-889fedca4221",
     backgroundImage:
-      "https://images.unsplash.com/photo-1490118121063-d12f8c4464ce",
+      "https://images.unsplash.com/photo-1643304842006-44079673c553",
     boardPanels: [
       {
         id: "estsh8Yx2",
-        title: "item 1",
+        title: "Item 1",
         position: 0,
         panelItems: [
           {
-            content: "item 1.1",
+            content: "Item 1.1",
             position: 0,
             id: "gxCedR1LMd",
+          },
+        ],
+      },
+      {
+        id: "estsh8Yx3",
+        title: "Item 2",
+        position: 1,
+        panelItems: [
+          {
+            content: "Item 2.1",
+            position: 0,
+            id: "gxCedR3LMd",
           },
         ],
       },
@@ -90,11 +102,11 @@ const defaultBoards = [
     boardPanels: [
       {
         id: "efzqP8vYm0",
-        title: "item 1",
+        title: "Item 1",
         position: 0,
         panelItems: [
           {
-            content: "item 1.1",
+            content: "Item 1.1",
             position: 0,
             id: "TA60KQD5WT",
           },
@@ -111,11 +123,11 @@ const defaultBoards = [
     boardPanels: [
       {
         id: "fSXtbcYbbW",
-        title: "item 1",
+        title: "Item 1",
         position: 0,
         panelItems: [
           {
-            content: "item 1.1",
+            content: "Item 1.1",
             position: 0,
             id: "YWlyH31NH",
           },
@@ -132,11 +144,11 @@ const defaultBoards = [
     boardPanels: [
       {
         id: "KVNSw5x4od",
-        title: "item 1",
+        title: "Item 1",
         position: 0,
         panelItems: [
           {
-            content: "item 1.1",
+            content: "Item 1.1",
             position: 0,
             id: "TPAnh5qFwQ",
           },
@@ -153,11 +165,11 @@ const defaultBoards = [
     boardPanels: [
       {
         id: "tUuDoCkZaD",
-        title: "item 1",
+        title: "Item 1",
         position: 0,
         panelItems: [
           {
-            content: "item 1.1",
+            content: "Item 1.1",
             position: 0,
             id: "LVYZ2bUbwO",
           },
@@ -174,11 +186,11 @@ const defaultBoards = [
     boardPanels: [
       {
         id: "vWhxXgDYOX",
-        title: "item 1",
+        title: "Item 1",
         position: 0,
         panelItems: [
           {
-            content: "item 1.1",
+            content: "Item 1.1",
             position: 0,
             id: "2vTWH5pgyf",
           },
@@ -195,11 +207,11 @@ const defaultBoards = [
     boardPanels: [
       {
         id: "esofgZ7nk1",
-        title: "item 1",
+        title: "Item 1",
         position: 0,
         panelItems: [
           {
-            content: "item 1.1",
+            content: "Item 1.1",
             position: 0,
             id: "NFTfVeqZuP",
           },
@@ -216,11 +228,11 @@ const defaultBoards = [
     boardPanels: [
       {
         id: "PICvn5QevV",
-        title: "item 1",
+        title: "Item 1",
         position: 0,
         panelItems: [
           {
-            content: "item 1.1",
+            content: "Item 1.1",
             position: 0,
             id: "sWiB4Fh0Py",
           },
