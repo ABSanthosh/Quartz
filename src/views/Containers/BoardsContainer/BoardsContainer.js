@@ -1,35 +1,16 @@
 import React from "react";
-// import PropTypes from "prop-types";
+import { useParams } from "react-router-dom";
 import "./BoardsContainer.scss";
-
-import { useStoreState } from "easy-peasy";
+import BoardEditor from "./Components/BoardEditor/BoardEditor";
+import BoardsHome from "./Components/BoardsHome/BoardsHome";
 
 function BoardsContainer({ navState }) {
-  const boards = useStoreState((state) => state.boards);
+  const { mode, modeId } = useParams();
+
   return (
     <>
-      <div className="DashboardWrapper__subHeader">
-        <div
-          className={`DashboardWrapper__subHeader--left ${
-            navState ? "DashboardWrapper__subHeader--left--open" : ""
-          }`}
-        >
-          <p>Boards</p>
-        </div>
-        <div className="DashboardWrapper__subHeader--right"></div>
-      </div>
-      <div className="BoardsContainerWrapper">
-        <div className="BoardsContainerWrapper__top"></div>
-        <div className="BoardsContainerWrapper__bottom">
-          {boards.map((board, index) => (
-            <div className="BoardsContainerWrapper__item" key={index}>
-              <div className="BoardsContainerWrapper__item__title">
-                {board.title}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      {modeId === undefined && <BoardsHome navState={navState} />}
+      {modeId && <BoardEditor navState={navState} />}
     </>
   );
 }
