@@ -51,10 +51,14 @@
       width: 100%;
       height: calc(100% - 55px);
       border-radius: 6px;
-      padding: 16px;
+      padding: 16px 2px 16px 16px;
 
       background: rgba(255, 255, 255, 0.17);
       backdrop-filter: blur(60px);
+      @include make-flex($just: flex-start);
+      overflow-y: scroll;
+      gap: 16px;
+      transform: translateZ(0);
 
       &--card {
         width: 100%;
@@ -63,6 +67,26 @@
         border-radius: 6px;
         box-shadow: 0 0 15px 0 rgb(0 0 0 / 3%);
         @include make-flex();
+      }
+
+      &::-webkit-scrollbar {
+        height: 8px;
+        width: 8px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: #edece900;
+      }
+
+      &::-webkit-scrollbar {
+        width: 14px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        border: 4px solid rgba(0, 0, 0, 0);
+        background-clip: padding-box;
+        border-radius: 9999px;
+        background-color: #e7e7e7;
       }
     }
   }

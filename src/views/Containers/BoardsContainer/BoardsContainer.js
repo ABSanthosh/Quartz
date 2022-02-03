@@ -5,7 +5,7 @@ import BoardEditor from "./Components/BoardEditor/BoardEditor";
 import BoardsHome from "./Components/BoardsHome/BoardsHome";
 
 function BoardsContainer({ navState }) {
-  const { mode, modeId } = useParams();
+  const { modeId } = useParams();
 
   return (
     <>
