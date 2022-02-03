@@ -1,11 +1,14 @@
-import { createStore, action, computed, persist, debug } from "easy-peasy";
+import { createStore, action, computed, persist } from "easy-peasy";
 import getRandomImage from "../Assets/Img/unsplashImages";
 import { lastModified } from "../Utils/lastModified";
 import { sortByLastModified } from "../Utils/sortByLastModified";
 import { defaultBoards, themes } from "./defaultValues";
+import shortid from "shortid";
 
 // let localNotesList = defaultNotes;
 let localBoardsList = defaultBoards;
+
+// TODO: add a backup state to reset to if reloaded without saving
 
 const Store = createStore(
   persist({
@@ -28,19 +31,47 @@ const Store = createStore(
     addBoard: action((state, payload) => {
       const newBoardId = new Date().getTime();
 
+      // temp item
+      const panelItem = {
+        content: "tempItem",
+        id: shortid.generate(),
+        position: payload.position ? payload.position : 0,
+      };
+      const boardPanelsItem = {
+        id: shortid.generate(),
+        title: "",
+        position: payload.position ? payload.position : 0,
+        panelItems: [panelItem],
+      };
+
       const newBoard = {
         id: payload.id ? payload.id : newBoardId,
         title: "",
         uid: payload.uid ? payload.uid : state.userState.id,
-        data: {
-          lists: [],
-        },
+        boardPanels: [boardPanelsItem],
         backgroundImage: getRandomImage(),
         lastModified: lastModified(),
       };
       state.boards.push(newBoard);
       state.boards = sortByLastModified(state.boards);
       state.selectedBoard = newBoard;
+    }),
+
+    setSelectedBoard: action((state, payload) => {
+      const id = payload;
+      const board = state.boards.find((board) => board.id === id);
+      state.selectedBoard = board;
+    }),
+
+    setSelectedBoardTitle: action((state, payload) => {
+      const title = payload.title;
+      const id = payload.id;
+      const board = state.boards.find((board) => board.id === id);
+      board.title = title;
+      board.lastModified = lastModified();
+      const index = state.boards.findIndex((board) => board.id === id);
+      state.boards[index] = board;
+      state.selectedBoard = board;
     }),
 
     /* #region Notes */
