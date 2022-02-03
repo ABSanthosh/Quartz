@@ -61,93 +61,172 @@ const defaultNotes = [
 
 const defaultBoards = [
   {
-    id: 1,
+    id: 1643890604335,
     title: "Board 1",
-    lists: [
+    uid: "3b0e9363-f7ad-471b-8bb2-889fedca4221",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1490118121063-d12f8c4464ce",
+    boardPanels: [
       {
-        id: 1,
-        title: "List 1",
-        notes: [1, 2, 3],
+        id: "estsh8Yx2",
+        title: "item 1",
+        position: 0,
+        panelItems: [
+          {
+            content: "item 1.1",
+            position: 0,
+            id: "gxCedR1LMd",
+          },
+        ],
       },
     ],
   },
   {
-    id: 2,
+    id: 1643890612041,
     title: "Board 2",
-    lists: [
+    uid: "3b0e9363-f7ad-471b-8bb2-889fedca4221",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1494935362342-566c6d6e75b5",
+    boardPanels: [
       {
-        id: 1,
-        title: "List 1",
-        notes: [1, 2, 3],
+        id: "efzqP8vYm0",
+        title: "item 1",
+        position: 0,
+        panelItems: [
+          {
+            content: "item 1.1",
+            position: 0,
+            id: "TA60KQD5WT",
+          },
+        ],
       },
     ],
   },
   {
-    id: 3,
+    id: 1643890619345,
     title: "Board 3",
-    lists: [
+    uid: "3b0e9363-f7ad-471b-8bb2-889fedca4221",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1489914023688-f41499faec3f",
+    boardPanels: [
       {
-        id: 1,
-        title: "List 1",
-        notes: [1, 2, 3],
+        id: "fSXtbcYbbW",
+        title: "item 1",
+        position: 0,
+        panelItems: [
+          {
+            content: "item 1.1",
+            position: 0,
+            id: "YWlyH31NH",
+          },
+        ],
       },
     ],
   },
   {
-    id: 4,
+    id: 1643890629457,
     title: "Board 4",
-    lists: [
+    uid: "3b0e9363-f7ad-471b-8bb2-889fedca4221",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1515587749518-60a43ef2f892",
+    boardPanels: [
       {
-        id: 1,
-        title: "List 1",
-        notes: [1, 2, 3],
+        id: "KVNSw5x4od",
+        title: "item 1",
+        position: 0,
+        panelItems: [
+          {
+            content: "item 1.1",
+            position: 0,
+            id: "TPAnh5qFwQ",
+          },
+        ],
       },
     ],
   },
   {
-    id: 1,
-    title: "Board 1",
-    lists: [
+    id: 1643890635985,
+    title: "Board 5",
+    uid: "3b0e9363-f7ad-471b-8bb2-889fedca4221",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1515514555726-139d17f71d33",
+    boardPanels: [
       {
-        id: 1,
-        title: "List 1",
-        notes: [1, 2, 3],
+        id: "tUuDoCkZaD",
+        title: "item 1",
+        position: 0,
+        panelItems: [
+          {
+            content: "item 1.1",
+            position: 0,
+            id: "LVYZ2bUbwO",
+          },
+        ],
       },
     ],
   },
   {
-    id: 2,
-    title: "Board 2",
-    lists: [
+    id: 1643890645784,
+    title: "Board 6",
+    uid: "3b0e9363-f7ad-471b-8bb2-889fedca4221",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1528702089051-073df03e151b",
+    boardPanels: [
       {
-        id: 1,
-        title: "List 1",
-        notes: [1, 2, 3],
+        id: "vWhxXgDYOX",
+        title: "item 1",
+        position: 0,
+        panelItems: [
+          {
+            content: "item 1.1",
+            position: 0,
+            id: "2vTWH5pgyf",
+          },
+        ],
       },
     ],
   },
   {
-    id: 3,
-    title: "Board 3",
-    lists: [
+    id: 1643890656994,
+    title: "Board 7",
+    uid: "3b0e9363-f7ad-471b-8bb2-889fedca4221",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1550668180-3205f7bb6a9e",
+    boardPanels: [
       {
-        id: 1,
-        title: "List 1",
-        notes: [1, 2, 3],
+        id: "esofgZ7nk1",
+        title: "item 1",
+        position: 0,
+        panelItems: [
+          {
+            content: "item 1.1",
+            position: 0,
+            id: "NFTfVeqZuP",
+          },
+        ],
       },
     ],
   },
   {
-    id: 4,
-    title: "Board 4",
-    lists: [
+    id: 1643890665962,
+    title: "Board 8",
+    uid: "3b0e9363-f7ad-471b-8bb2-889fedca4221",
+    backgroundImage:
+      "https://images.unsplash.com/photo-1611748663584-15bb3cd33166",
+    boardPanels: [
       {
-        id: 1,
-        title: "List 1",
-        notes: [1, 2, 3],
+        id: "PICvn5QevV",
+        title: "item 1",
+        position: 0,
+        panelItems: [
+          {
+            content: "item 1.1",
+            position: 0,
+            id: "sWiB4Fh0Py",
+          },
+        ],
       },
     ],
   },
 ];
-
 export { defaultNotes, defaultBoards, themes };
