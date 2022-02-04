@@ -27,8 +27,6 @@
       &--open {
         transform: translateX(0px);
       }
-
-     
     }
     &--right {
       column-gap: 10px;
@@ -228,6 +226,9 @@
     width: 100%;
     transition: all 0.3s ease-in-out;
     background-image: url(../../Assets/Img/paperEffect.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50%;
 
     &--open {
       width: calc(100% - 244px);
