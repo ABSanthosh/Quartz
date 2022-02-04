@@ -25,13 +25,47 @@
     border-radius: 9999px;
     background-color: #e7e7e7;
   }
-
+  
   &__contentContainer {
     height: 100%;
     width: fit-content;
     padding: 0 20px 35px 58px;
     gap: 34px;
-    @include make-flex($dir: row, $just: flex-start);
+    @include make-flex($dir: row, $just: flex-start, $align: flex-start);
+
+    &--addPanel {
+      width: 300px;
+      height: calc(100% - 55px);
+      margin-top: 55px;
+      max-height: calc(100% - 55px);
+      background: rgba(255, 255, 255, 0.685);
+      backdrop-filter: blur(60px);
+      border-radius: 6px;
+      @include make-flex($dir: row);
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    &::-webkit-scrollbar {
+      height: 8px;
+      width: 8px;
+      appearance: none;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #edece900;
+    }
+
+    &::-webkit-scrollbar {
+      width: 14px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border: 4px solid rgba(0, 0, 0, 0);
+      // background-clip: padding-box;
+      border-radius: 9999px;
+      background-color: #e7e7e7;
+    }
   }
 
   &__panel {
@@ -79,9 +113,10 @@
       @include make-flex($just: flex-start);
       overflow-y: scroll;
       gap: 16px;
-      transform: translateZ(0);
+      // transform: translateZ(0);
 
-      &--card {
+      &--card,
+      &--placeholderCard {
         width: 100%;
         min-height: 100px;
         background-color: white;
@@ -90,6 +125,13 @@
         @include make-flex();
       }
 
+      &--placeholderCard {
+        min-height: unset;
+        height: 45px;
+        @include make-flex($dir: row);
+        gap: 10px;
+        cursor: pointer;
+      }
       &::-webkit-scrollbar {
         height: 8px;
         width: 8px;
@@ -116,14 +158,29 @@
 
 @media only screen and (max-width: 425px) {
   .BoardEditorWrapper {
-    width: 100%;
-    overflow-x: auto;
+    overflow-x: hidden;
     &__contentContainer {
       padding: 0 20px 20px 20px;
     }
 
     &__panel {
-      width: 90vw;
+      // width: 90vw;
+      width: 100%;
+      scroll-snap-align: center;
+      flex: none;
+    }
+    &__contentContainer {
+      width: 100%;
+      scroll-snap-type: x mandatory;
+      flex-flow: row nowrap;
+      overflow-x: auto;
+
+      &--addPanel {
+        width: 100%;
+
+        flex: none;
+        scroll-snap-align: center;
+      }
     }
   }
 }

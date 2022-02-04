@@ -18,21 +18,22 @@ function BoardEditor({ navState }) {
   );
 
   const addPanelItem = useStoreActions((action) => action.addPanelItem);
-
+  const addPanel = useStoreActions((action) => action.addPanel);
   useEffect(() => {
     document.querySelector(
       ".DashboardWrapper__frame "
     ).style.backgroundImage = `url(${selectedBoard.backgroundImage})`;
-    // document.querySelector(".DashboardWrapper__frame ").style.backgroundSize =
-    //   "cover";
+    document.querySelector(".DashboardWrapper__frame ").style.backgroundSize =
+      "cover";
 
-    // document.querySelector(
-    //   ".DashboardWrapper__frame "
-    // ).style.backgroundPosition = "50%";
+    document.querySelector(
+      ".DashboardWrapper__frame "
+    ).style.backgroundPosition = "50%";
 
-    // document.querySelector(".DashboardWrapper__frame ").style.backgroundRepeat =
-    //   "no-repeat";
-  });
+    document.querySelector(".DashboardWrapper__frame ").style.backgroundRepeat =
+      "no-repeat";
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -119,10 +120,37 @@ function BoardEditor({ navState }) {
                       </div>
                     );
                   })}
+                  {panel.panelItems.length === 0 && (
+                    <div
+                      className="BoardEditorWrapper__panel--content--placeholderCard"
+                      onClick={() => {
+                        addPanelItem({
+                          id: panel.id,
+                        });
+                      }}
+                    >
+                      <span
+                        className="controlIcons"
+                        style={{ fontSize: "15px" }}
+                      >
+                        {ControlIconsDefinitions.Add}
+                      </span>
+                      Add Item
+                    </div>
+                  )}
                 </div>
               </div>
             );
           })}
+          <div
+            className="BoardEditorWrapper__contentContainer--addPanel"
+            onClick={() => {
+              addPanel({});
+            }}
+          >
+            <span className="controlIcons">{ControlIconsDefinitions.Add}</span>
+            Add Panel
+          </div>
         </div>
       </div>
     </>
