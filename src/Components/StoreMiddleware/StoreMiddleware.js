@@ -15,6 +15,7 @@ function StoreMiddleware(props) {
   const setSelectedBoard = useStoreActions(
     (actions) => actions.setSelectedBoard
   );
+  // const boards = useStoreState((state) => state.boards);
 
   useEffect(() => {
     // if url param is notes and current option is not notes, set current option to notes
@@ -59,6 +60,8 @@ function StoreMiddleware(props) {
       }
     }
   });
+
+
 
   return <ProtectedRoute {...props} />;
 }
