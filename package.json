@@ -10,6 +10,7 @@
     "dompurify": "^2.3.5",
     "easy-peasy": "^5.0.4",
     "fuse.js": "^6.5.3",
+    "preload-all": "^1.0.6",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-contenteditable": "^3.3.6",
