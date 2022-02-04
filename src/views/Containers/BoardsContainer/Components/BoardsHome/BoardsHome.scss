@@ -22,8 +22,22 @@
     width: 245px;
     border-radius: 8px;
     background-color: white;
-    padding: 20px;
     box-shadow: 0px 0px 29px rgba(0, 0, 0, 0.07);
     cursor: pointer;
+
+    &--pseudo {
+      padding: 20px;
+      height: 100%;
+      width: 100%;
+      border-radius: 8px;
+      background-color: #00000036;
+    }
+    &__title {
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      
+      text-overflow: ellipsis;
+    }
   }
 }
