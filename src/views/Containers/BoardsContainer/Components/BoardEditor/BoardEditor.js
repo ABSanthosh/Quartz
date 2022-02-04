@@ -23,15 +23,15 @@ function BoardEditor({ navState }) {
     document.querySelector(
       ".DashboardWrapper__frame "
     ).style.backgroundImage = `url(${selectedBoard.backgroundImage})`;
-    document.querySelector(".DashboardWrapper__frame ").style.backgroundSize =
-      "cover";
+    // document.querySelector(".DashboardWrapper__frame ").style.backgroundSize =
+    //   "cover";
 
-    document.querySelector(
-      ".DashboardWrapper__frame "
-    ).style.backgroundPosition = "50%";
+    // document.querySelector(
+    //   ".DashboardWrapper__frame "
+    // ).style.backgroundPosition = "50%";
 
-    document.querySelector(".DashboardWrapper__frame ").style.backgroundRepeat =
-      "no-repeat";
+    // document.querySelector(".DashboardWrapper__frame ").style.backgroundRepeat =
+    //   "no-repeat";
   });
 
   return (
