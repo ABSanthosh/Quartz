@@ -4,21 +4,14 @@
   width: 100%;
   height: calc(100% - 28px);
   transform: translateY(28px);
+
   @include make-flex($dir: row, $just: unset, $align: unset);
-  // a {
-  //   text-decoration: none;
-  //   &:hover {
-  //     text-decoration: underline;
-  //   }
-  // }
   &__subHeader {
-    // max-width: calc(100% - 28px);
     width: 100%;
     padding: 5px 15px;
     height: 50px;
     @include make-flex($just: space-between, $dir: row);
     &--left {
-      // gap: 6px;
       height: 100%;
       @include make-flex($dir: row);
 
@@ -41,10 +34,7 @@
       background-color: rgb(255, 255, 255);
       border: 1px solid rgb(214, 214, 214);
       border-radius: 4px;
-      // cursor: pointer;
-      // &:hover {
-      //   background-color: rgb(245, 245, 245);
-      // }
+
       @include make-flex($dir: row);
       column-gap: 4px;
       .syncIcon {
@@ -129,9 +119,6 @@
     }
 
     &--top {
-      // gap: 25px;
-      // margin-top: 50px;
-
       &__burgerMenu {
         width: 100%;
         height: 50px;
@@ -226,9 +213,9 @@
     width: 100%;
     transition: all 0.3s ease-in-out;
     background-image: url(../../Assets/Img/paperEffect.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 50%;
+    // background-repeat: no-repeat;
+    // background-size: cover;
+    // background-position: 50%;
 
     &--open {
       width: calc(100% - 244px);
