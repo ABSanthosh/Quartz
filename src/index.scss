@@ -3,14 +3,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Ruda&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu&display=swap");
 @import url("http://fonts.cdnfonts.com/css/segoe-ui-4");
 @import "./styles/mixins";
 
 body {
   margin: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif -apple-system,
-    BlinkMacSystemFont;
+  font-family: Roboto;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -21,8 +20,8 @@ body {
   padding: 0;
   box-sizing: border-box;
 
-  font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI",
-    -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+  font-family: "Roboto" -apple-system, BlinkMacSystemFont, Roboto,
+    "Helvetica Neue", sans-serif;
   color: #3a3a3a;
 }
 ::-webkit-scrollbar {
