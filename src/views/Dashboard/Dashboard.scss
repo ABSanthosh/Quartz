@@ -1,9 +1,11 @@
 @import "../../styles/mixins";
 
+
 .DashboardWrapper {
   width: 100%;
   height: calc(100% - 28px);
   transform: translateY(28px);
+  // margin-top: 28px;
 
   @include make-flex($dir: row, $just: unset, $align: unset);
   &__subHeader {
@@ -214,11 +216,12 @@
   &__frame {
     height: 100%;
     width: 100%;
+    background-position: center;
     // transition: all 0.3s ease-in-out;
     // background-image: url(../../Assets/Img/paperEffect.png);
 
     // &--open {
-      // width: calc(100% - 244px);
+    // width: calc(100% - 244px);
     // }
   }
 
