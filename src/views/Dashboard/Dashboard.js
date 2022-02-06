@@ -9,12 +9,18 @@ import SideBarItem from "./Components/SideBarItem/SideBarItem";
 
 import { ReactComponent as DashboardIcon } from "../../Assets/Img/dashboard.svg";
 import { ReactComponent as StickyNotes } from "../../Assets/Img/notes.svg";
-
 import { useStoreState, useStoreActions } from "easy-peasy";
 // import supabase from "../../supabase/supabase-config";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import NotesContainer from "../Containers/NotesContainer/NotesContainer";
-import BoardsContainer from "../Containers/BoardsContainer/BoardsContainer";
+import { useHistory } from "react-router-dom";
+
+import loadable from "@loadable/component";
+const BoardsContainer = loadable(() =>
+  import("../Containers/BoardsContainer/BoardsContainer")
+);
+
+const NotesContainer = loadable(() =>
+  import("../Containers/NotesContainer/NotesContainer")
+);
 
 function Dashboard() {
   // Global States and functions

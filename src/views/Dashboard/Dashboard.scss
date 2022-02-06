@@ -17,9 +17,9 @@
 
       transform: translateX(40px);
       transition: transform 0.3s ease-in-out;
-      &--open {
-        transform: translateX(0px);
-      }
+      // &--open {
+      //   transform: translateX(0px);
+      // }
     }
     &--right {
       column-gap: 10px;
@@ -106,11 +106,14 @@
     height: 100%;
     border-right: 4px solid #cc8296;
     transition: all 0.3s ease-in-out;
-    margin-left: -240px;
+    // margin-left: -240px;
+    position: fixed;
+    transform: translateX(-240px);
     z-index: 5;
 
     &--open {
-      margin-left: 0px !important;
+      // margin-left: 0px !important;
+      transform: translateX(0px);
     }
     &--top,
     &--bottom {
@@ -213,13 +216,10 @@
     width: 100%;
     transition: all 0.3s ease-in-out;
     background-image: url(../../Assets/Img/paperEffect.png);
-    // background-repeat: no-repeat;
-    // background-size: cover;
-    // background-position: 50%;
 
-    &--open {
-      width: calc(100% - 244px);
-    }
+    // &--open {
+      // width: calc(100% - 244px);
+    // }
   }
 
   &__contentContainer {
