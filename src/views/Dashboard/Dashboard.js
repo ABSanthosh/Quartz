@@ -11,7 +11,8 @@ import { ReactComponent as DashboardIcon } from "../../Assets/Img/dashboard.svg"
 import { ReactComponent as StickyNotes } from "../../Assets/Img/notes.svg";
 import { useStoreState, useStoreActions } from "easy-peasy";
 // import supabase from "../../supabase/supabase-config";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import paperEffect from "../../Assets/Img/paperEffect.png";
 
 import loadable from "@loadable/component";
 const BoardsContainer = loadable(() =>
@@ -32,6 +33,8 @@ function Dashboard() {
     query: "(max-width: 1064px)",
   });
 
+  const { mode, modeId } = useParams();
+
   // Boards related
   const boardCount = useStoreState((state) => state.boardCount);
   // const setNotes = useStoreActions((actions) => actions.setNotes);
@@ -44,6 +47,7 @@ function Dashboard() {
   const setCurrentOption = useStoreActions(
     (actions) => actions.setCurrentOption
   );
+  const selectedBoard = useStoreState((state) => state.selectedBoard);
 
   const fetchNotes = async () => {
     // await supabase
@@ -59,8 +63,6 @@ function Dashboard() {
     //     // console.log(err);
     //   });
   };
-
-  useEffect(() => {});
 
   useEffect(() => {
     // if (notes.length === 0) {
@@ -96,6 +98,24 @@ function Dashboard() {
       document.removeEventListener("mousedown", handleClick);
     };
   });
+
+  const isBoardEditor = mode === "boards" && modeId;
+
+  // mode === "notes"
+  // ? `url(${paperEffect})`
+  // : mode === "boards"
+  // ? modeId
+  //   ? `url(${selectedBoard.backgroundImage}?auto=format})`
+  //   : `url(${paperEffect})`
+  // : `url(${paperEffect})`,
+
+  const frameStyle = {
+    backgroundImage: isBoardEditor
+      ? `url(${selectedBoard.backgroundImage}?auto=format)`
+      : `url(${paperEffect})`,
+
+    backgroundSize: isBoardEditor ? "cover" : "",
+  };
 
   return (
     <div className="DashboardWrapper">
@@ -179,6 +199,7 @@ function Dashboard() {
         className={`DashboardWrapper__frame ${
           navState ? "DashboardWrapper__frame--open" : ""
         }`}
+        style={frameStyle}
       >
         <div className="DashboardWrapper__contentContainer">
           {currentOption === "boards" && (

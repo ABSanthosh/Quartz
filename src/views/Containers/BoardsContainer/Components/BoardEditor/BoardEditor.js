@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "./BoardEditor.scss";
 import { ControlIconsDefinitions } from "../../../../../Assets/Font/IconMap";
@@ -19,21 +19,7 @@ function BoardEditor({ navState }) {
 
   const addPanelItem = useStoreActions((action) => action.addPanelItem);
   const addPanel = useStoreActions((action) => action.addPanel);
-  // useEffect(() => {
-  //   document.querySelector(
-  //     ".DashboardWrapper__frame "
-  //   ).style.backgroundImage = `url(${selectedBoard.backgroundImage})`;
-  //   document.querySelector(".DashboardWrapper__frame ").style.backgroundSize =
-  //     "cover";
 
-  //   document.querySelector(
-  //     ".DashboardWrapper__frame "
-  //   ).style.backgroundPosition = "50%";
-
-  //   document.querySelector(".DashboardWrapper__frame ").style.backgroundRepeat =
-  //     "no-repeat";
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   return (
     <>

@@ -1,61 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import "./BoardsHome.scss";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import { useHistory } from "react-router-dom";
-// import paperEffect from "../../../../../Assets/Img/paperEffect.png";
-// import { preloadAll } from "preload-all";
+import paperEffect from "../../../../../Assets/Img/paperEffect.png";
 
 function BoardsHome({ navState }) {
   const boards = useStoreState((state) => state.boards);
   let history = useHistory();
   const setSelectedBoard = useStoreActions((action) => action.setSelectedBoard);
+  const cacheImages = async (imageArray) => {
+    const imagePromises = imageArray.map((image) => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.src = image;
+        img.onload = resolve;
+      });
+    });
+    await Promise.all(imagePromises);
+  };
 
-  // useEffect(() => {
-  //   document.querySelector(
-  //     ".DashboardWrapper__frame "
-  //   ).style.backgroundImage = `url(${paperEffect})`;
-
-  //   document.querySelector(".DashboardWrapper__frame ").style.backgroundSize =
-  //     "unset";
-
-  //   document.querySelector(
-  //     ".DashboardWrapper__frame "
-  //   ).style.backgroundPosition = "unset";
-
-  //   document.querySelector(".DashboardWrapper__frame ").style.backgroundRepeat =
-  //     "unset";
-  // }, []);
-
-  // const cacheImages = async (imageArray) => {
-  //   // preload images from imageArray
-  //   const imagePromises = imageArray.map((image) => {
-  //     return new Promise((resolve) => {
-  //       const img = new Image();
-  //       img.src = image;
-  //       img.onload = resolve;
-  //     });
-  //   });
-  //   await Promise.all(imagePromises);
-  // };
-  // useEffect(() => {
-  //   const imageArray = boards.map((board) => board.backgroundImage);
-  //   // console.log(imageArray);
-
-  //   preloadAll({
-  //     links: imageArray,
-  //     type: "image",
-  //   })
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-
-  //   // cacheImages(imageArray);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  useEffect(() => {
+    const imageArray = boards.map(
+      (board) => board.backgroundImage + "?auto=format"
+    );
+    imageArray.push(paperEffect);
+    cacheImages(imageArray);
+  });
 
   return (
     <>
@@ -80,10 +51,10 @@ function BoardsHome({ navState }) {
                 setSelectedBoard(parseInt(board.id));
                 history.push(`/app/dashboard/boards/${board.id}`);
               }}
-              // style={{
-              //   backgroundImage: `url(${board.backgroundImage})`,
-              //   backgroundSize: "cover",
-              // }}
+              style={{
+                backgroundImage: `url(${board.backgroundImage}?w=245&h=285&auto=format)`,
+                backgroundSize: "cover",
+              }}
             >
               <div className="BoardsHomeWrapper__item--pseudo">
                 <div className="BoardsHomeWrapper__item__title">
