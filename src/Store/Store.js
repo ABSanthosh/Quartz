@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import { createStore, action, computed, persist,debug } from "easy-peasy";
+import { createStore, action, computed, persist, debug } from "easy-peasy";
 import getRandomImage from "../Assets/Img/unsplashImages";
 import { lastModified } from "../Utils/lastModified";
 import { sortByLastModified } from "../Utils/sortByLastModified";
@@ -106,7 +106,7 @@ const Store = createStore(
         panelItems: [],
       };
 
-      const tempBoard = state.selectedBoard
+      const tempBoard = state.selectedBoard;
       tempBoard.boardPanels.push(newPanel);
 
       state.selectedBoard = tempBoard;
@@ -139,6 +139,17 @@ const Store = createStore(
 
       state.selectedBoard = board;
 
+      state.boards = state.boards.map((board) => {
+        if (board.id === state.selectedBoard.id) {
+          return state.selectedBoard;
+        }
+        return board;
+      });
+    }),
+
+    setBoardPanelItemOrder: action((state, payload) => {
+      const boardPanels = payload;
+      state.selectedBoard.boardPanels = boardPanels;
       state.boards = state.boards.map((board) => {
         if (board.id === state.selectedBoard.id) {
           return state.selectedBoard;
