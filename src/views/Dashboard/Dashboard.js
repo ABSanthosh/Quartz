@@ -10,7 +10,7 @@ import SideBarItem from "./Components/SideBarItem/SideBarItem";
 import { ReactComponent as DashboardIcon } from "../../Assets/Img/dashboard.svg";
 import { ReactComponent as StickyNotes } from "../../Assets/Img/notes.svg";
 import { useStoreState, useStoreActions } from "easy-peasy";
-// import supabase from "../../supabase/supabase-config";
+import supabase from "../../supabase/supabase-config";
 import { useHistory, useParams } from "react-router-dom";
 import paperEffect from "../../Assets/Img/paperEffect.png";
 
@@ -37,7 +37,7 @@ function Dashboard() {
 
   // Boards related
   const boardCount = useStoreState((state) => state.boardCount);
-  // const setNotes = useStoreActions((actions) => actions.setNotes);
+  const setNotes = useStoreActions((actions) => actions.setNotes);
   // Notes related
 
   const currentOption = useStoreState((state) => state.currentOption);
@@ -50,18 +50,18 @@ function Dashboard() {
   const selectedBoard = useStoreState((state) => state.selectedBoard);
 
   const fetchNotes = async () => {
-    // await supabase
-    //   .from("notes")
-    //   .select()
-    //   .then((res) => {
-    //     if (JSON.stringify(res.data) !== JSON.stringify(notes)) {
-    //       setNotes(res.data);
-    //     }
-    //     // console.log(res.data);
-    //   })
-    //   .catch((err) => {
-    //     // console.log(err);
-    //   });
+    await supabase
+      .from("notes")
+      .select()
+      .then((res) => {
+        if (JSON.stringify(res.data) !== JSON.stringify(notes)) {
+          setNotes(res.data);
+        }
+        // console.log(res.data);
+      })
+      .catch((err) => {
+        // console.log(err);
+      });
   };
 
   useEffect(() => {
