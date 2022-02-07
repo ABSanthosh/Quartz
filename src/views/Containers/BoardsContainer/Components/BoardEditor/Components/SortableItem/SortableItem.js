@@ -8,6 +8,7 @@ export default function SortableItem({ id, children }) {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+    color: "black",
   };
 
   return (

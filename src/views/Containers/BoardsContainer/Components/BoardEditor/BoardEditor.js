@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "./BoardEditor.scss";
 import { ControlIconsDefinitions } from "../../../../../Assets/Font/IconMap";
@@ -16,38 +16,9 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 
-import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
+import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import SortablePanel from "./Components/SortablePanel/SortablePanel";
 import SortableItem from "./Components/SortableItem/SortableItem";
-
-const defaultAnnouncements = {
-  onDragStart(id) {
-    console.log(`Picked up draggable item ${id}.`);
-  },
-  onDragOver(id, overId) {
-    if (overId) {
-      console.log(
-        `Draggable item ${id} was moved over droppable area ${overId}.`
-      );
-      return;
-    }
-
-    console.log(`Draggable item ${id} is no longer over a droppable area.`);
-  },
-  onDragEnd(id, overId) {
-    if (overId) {
-      console.log(
-        `Draggable item ${id} was dropped over droppable area ${overId}`
-      );
-      return;
-    }
-
-    console.log(`Draggable item ${id} was dropped.`);
-  },
-  onDragCancel(id) {
-    console.log(`Dragging was cancelled. Draggable item ${id} was dropped.`);
-  },
-};
 
 function BoardEditor({ navState }) {
   const [isEllipsisable, setIsEllipsisable] = useState(true);
@@ -56,12 +27,18 @@ function BoardEditor({ navState }) {
   const setSelectedBoardTitle = useStoreActions(
     (action) => action.setSelectedBoardTitle
   );
-  const setBoardPanelTitle = useStoreActions(
-    (action) => action.setBoardPanelTitle
+  const setBoardPanelItemOrder = useStoreActions(
+    (action) => action.setBoardPanelItemOrder
   );
 
-  const addPanelItem = useStoreActions((action) => action.addPanelItem);
   const addPanel = useStoreActions((action) => action.addPanel);
+
+  const [items, setItems] = useState(selectedBoard.boardPanels);
+  const [activeId, setActiveId] = useState();
+
+  useEffect(() => {
+    setBoardPanelItemOrder(items);
+  }, [activeId]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -69,117 +46,6 @@ function BoardEditor({ navState }) {
       coordinateGetter: sortableKeyboardCoordinates,
     })
   );
-
-  const [items, setItems] = useState({
-    root: ["1", "2", "3"],
-    container1: ["4", "5", "6"],
-    container2: ["7", "8", "9"],
-    container3: [],
-  });
-  const [activeId, setActiveId] = useState();
-
-  function findContainer(id) {
-    if (id in items) {
-      return id;
-    }
-
-    return Object.keys(items).find((key) => items[key].includes(id));
-  }
-
-  function handleDragStart(event) {
-    const { active } = event;
-    const { id } = active;
-
-    setActiveId(id);
-  }
-
-  function handleDragOver(event) {
-    const { active, over, draggingRect } = event;
-    const { id } = active;
-    const { id: overId } = over;
-
-    // Find the containers
-    const activeContainer = findContainer(id);
-    const overContainer = findContainer(overId);
-
-    if (
-      !activeContainer ||
-      !overContainer ||
-      activeContainer === overContainer
-    ) {
-      return;
-    }
-
-    setItems((prev) => {
-      const activeItems = prev[activeContainer];
-      const overItems = prev[overContainer];
-
-      // Find the indexes for the items
-      const activeIndex = activeItems.indexOf(id);
-      const overIndex = overItems.indexOf(overId);
-
-      let newIndex;
-      if (overId in prev) {
-        // We're at the root droppable of a container
-        newIndex = overItems.length + 1;
-      } else {
-        const isBelowLastItem =
-          over &&
-          overIndex === overItems.length - 1 &&
-          draggingRect &&
-          draggingRect.offsetTop > over.rect.offsetTop + over.rect.height;
-
-        const modifier = isBelowLastItem ? 1 : 0;
-
-        newIndex = overIndex >= 0 ? overIndex + modifier : overItems.length + 1;
-      }
-
-      return {
-        ...prev,
-        [activeContainer]: [
-          ...prev[activeContainer].filter((item) => item !== active.id),
-        ],
-        [overContainer]: [
-          ...prev[overContainer].slice(0, newIndex),
-          items[activeContainer][activeIndex],
-          ...prev[overContainer].slice(newIndex, prev[overContainer].length),
-        ],
-      };
-    });
-  }
-
-  function handleDragEnd(event) {
-    const { active, over } = event;
-    const { id } = active;
-    const { id: overId } = over;
-
-    const activeContainer = findContainer(id);
-    const overContainer = findContainer(overId);
-
-    if (
-      !activeContainer ||
-      !overContainer ||
-      activeContainer !== overContainer
-    ) {
-      return;
-    }
-
-    const activeIndex = items[activeContainer].indexOf(active.id);
-    const overIndex = items[overContainer].indexOf(overId);
-
-    if (activeIndex !== overIndex) {
-      setItems((items) => ({
-        ...items,
-        [overContainer]: arrayMove(
-          items[overContainer],
-          activeIndex,
-          overIndex
-        ),
-      }));
-    }
-
-    setActiveId(null);
-  }
 
   return (
     <>
@@ -224,14 +90,44 @@ function BoardEditor({ navState }) {
       <div className="BoardEditorWrapper">
         <div className="BoardEditorWrapper__contentContainer">
           <DndContext
-            announcements={defaultAnnouncements}
             sensors={sensors}
             collisionDetection={closestCorners}
             onDragStart={handleDragStart}
             onDragOver={handleDragOver}
             onDragEnd={handleDragEnd}
           >
-            {selectedBoard.boardPanels.map((panel, index) => (
+            {selectedBoard.boardPanels.map((panel, index) => {
+              return (
+                <SortablePanel
+                  id={panel.id}
+                  key={index}
+                  panel={panel}
+                  items={panel.panelItems}
+                />
+              );
+            })}
+            <div
+              className="BoardEditorWrapper__contentContainer--addPanel"
+              onClick={() => {
+                addPanel({});
+              }}
+            >
+              <span className="controlIcons">
+                {ControlIconsDefinitions.Add}
+              </span>
+              Add Panel
+            </div>
+
+            <DragOverlay>
+              {activeId ? <SortableItem id={activeId} /> : null}
+            </DragOverlay>
+          </DndContext>
+        </div>
+      </div>
+    </>
+  );
+  /*
+   {selectedBoard.boardPanels.map((panel, index) => (
               <SortablePanel
                 key={index}
                 id={panel.id}
@@ -239,22 +135,8 @@ function BoardEditor({ navState }) {
                 panel={panel}
               />
             ))}
-            <SortablePanel
-              id="root"
-              items={[{ title: "THis title bs", id: "root" }]}
-              panel={{ title: "THis title bs", id: "root" }}
-            />
-            <SortablePanel
-              id="root"
-              items={[{ title: "THis title bs2", id: "root2" }]}
-              panel={{ title: "THis title bs2", id: "root2" }}
-            />
 
-            <DragOverlay>
-              {activeId ? <SortableItem id={activeId} /> : null}
-            </DragOverlay>
-          </DndContext>
-          <div
+             <div
             className="BoardEditorWrapper__contentContainer--addPanel"
             onClick={() => {
               addPanel({});
@@ -263,10 +145,139 @@ function BoardEditor({ navState }) {
             <span className="controlIcons">{ControlIconsDefinitions.Add}</span>
             Add Panel
           </div>
-        </div>
-      </div>
-    </>
-  );
+  */
+
+  function findContainer(id) {
+    const preResult = selectedBoard.boardPanels.find((panel) => {
+      return panel.panelItems.find((item) => {
+        return item.id === id;
+      });
+    });
+
+    if (preResult) {
+      return preResult;
+    } else {
+      return selectedBoard.boardPanels.find((panel) => {
+        return panel.id === id;
+      });
+    }
+  }
+
+  function isPanelId(id) {
+    return selectedBoard.boardPanels.find((panel) => {
+      return panel.id === id;
+    });
+  }
+
+  function handleDragStart(event) {
+    setActiveId(event.active.id);
+  }
+
+  function handleDragOver(event) {
+    const { active, over } = event;
+    const { id } = active;
+    const { id: overId } = over;
+
+    // Find the containers
+    const activeContainer = findContainer(id);
+    const overContainer = findContainer(overId);
+
+    if (
+      !activeContainer ||
+      !overContainer ||
+      activeContainer === overContainer
+    ) {
+      return;
+    }
+
+    setItems((prev) => {
+      const activeItems = prev.find((item) => {
+        return item.id === activeContainer.id;
+      });
+
+      const overItems = prev.find((item) => {
+        return item.id === overContainer.id;
+      });
+
+      const activeIndex = activeItems.panelItems.findIndex((item) => {
+        return item.id === id;
+      });
+      const overIndex = overItems.panelItems.findIndex((item) => {
+        return item.id === overId;
+      });
+
+      let newIndex;
+      if (isPanelId(overId)) {
+        newIndex = overItems.length + 1;
+      } else {
+        const isBelowLastItem =
+          over &&
+          overIndex === overItems.panelItems.length - 1 &&
+          active.rect.current.translated.top +
+            active.rect.current.translated.height >
+            over.rect.top + over.rect.height;
+
+        const modifier = isBelowLastItem ? 1 : 0;
+
+        newIndex = overIndex >= 0 ? overIndex + modifier : overItems.length + 1;
+      }
+
+      const draggedCard = activeItems.panelItems.find((item) => {
+        return item.id === activeId;
+      });
+
+      overItems.panelItems.splice(newIndex, 0, draggedCard);
+      activeItems.panelItems.splice(activeIndex, 1);
+
+      return prev;
+    });
+  }
+
+  function handleDragEnd(event) {
+    const { active, over } = event;
+    const { id } = active;
+    const { id: overId } = over;
+
+    const activeContainer = findContainer(id);
+    const overContainer = findContainer(overId);
+
+    if (
+      !activeContainer ||
+      !overContainer ||
+      activeContainer !== overContainer
+    ) {
+      return;
+    }
+
+    const activeIndex = activeContainer.panelItems.findIndex((item) => {
+      return item.id === id;
+    });
+    const overIndex = overContainer.panelItems.findIndex((item) => {
+      return item.id === overId;
+    });
+
+    const draggedCard = activeContainer.panelItems.find((item) => {
+      return item.id === activeId;
+    });
+
+    if (activeIndex !== overIndex) {
+      setItems((prev) => {
+        const activeItems = prev.find((item) => {
+          return item.id === activeContainer.id;
+        });
+
+        const overItems = prev.find((item) => {
+          return item.id === overContainer.id;
+        });
+
+        activeItems.panelItems.splice(activeIndex, 1);
+        overItems.panelItems.splice(overIndex, 0, draggedCard);
+
+        return prev;
+      });
+    }
+    setActiveId(null);
+  }
 }
 
 BoardEditor.propTypes = {
