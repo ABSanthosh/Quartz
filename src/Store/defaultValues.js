@@ -64,6 +64,7 @@ const defaultBoards = [
     id: 1643890604335,
     title: "Board 1",
     uid: "3b0e9363-f7ad-471b-8bb2-889fedca4221",
+    isStarred: false,
     backgroundImage:
       "https://images.unsplash.com/photo-1643304842006-44079673c553",
     boardPanels: [
@@ -99,6 +100,7 @@ const defaultBoards = [
     id: 1643890612041,
     title: "Board 2",
     uid: "3b0e9363-f7ad-471b-8bb2-889fedca4221",
+    isStarred: false,
     backgroundImage:
       "https://images.unsplash.com/photo-1494935362342-566c6d6e75b5",
     boardPanels: [
@@ -121,6 +123,7 @@ const defaultBoards = [
     id: 1643890619345,
     title: "Board 3",
     uid: "3b0e9363-f7ad-471b-8bb2-889fedca4221",
+    isStarred: false,
     backgroundImage:
       "https://images.unsplash.com/photo-1489914023688-f41499faec3f",
     boardPanels: [
@@ -143,6 +146,7 @@ const defaultBoards = [
     id: 1643890629457,
     title: "Board 4",
     uid: "3b0e9363-f7ad-471b-8bb2-889fedca4221",
+    isStarred: false,
     backgroundImage:
       "https://images.unsplash.com/photo-1515587749518-60a43ef2f892",
     boardPanels: [
@@ -165,6 +169,7 @@ const defaultBoards = [
     id: 1643890635985,
     title: "Board 5",
     uid: "3b0e9363-f7ad-471b-8bb2-889fedca4221",
+    isStarred: false,
     backgroundImage:
       "https://images.unsplash.com/photo-1515514555726-139d17f71d33",
     boardPanels: [
@@ -187,6 +192,7 @@ const defaultBoards = [
     id: 1643890645784,
     title: "Board 6",
     uid: "3b0e9363-f7ad-471b-8bb2-889fedca4221",
+    isStarred: false,
     backgroundImage:
       "https://images.unsplash.com/photo-1528702089051-073df03e151b",
     boardPanels: [
@@ -209,6 +215,7 @@ const defaultBoards = [
     id: 1643890656994,
     title: "Board 7",
     uid: "3b0e9363-f7ad-471b-8bb2-889fedca4221",
+    isStarred: false,
     backgroundImage:
       "https://images.unsplash.com/photo-1550668180-3205f7bb6a9e",
     boardPanels: [
@@ -231,6 +238,7 @@ const defaultBoards = [
     id: 1643890665962,
     title: "Board 8",
     uid: "3b0e9363-f7ad-471b-8bb2-889fedca4221",
+    isStarred: false,
     backgroundImage:
       "https://images.unsplash.com/photo-1611748663584-15bb3cd33166",
     boardPanels: [
