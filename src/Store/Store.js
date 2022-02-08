@@ -158,6 +158,19 @@ const Store = createStore(
       });
     }),
 
+    setBoardStarState: action((state, payload) => {
+      const { id, starState } = payload;
+      const newBoard = state.boards.find((board) => board.id === id);
+
+      newBoard.isStarred = starState;
+      state.boards = state.boards.map((board) => {
+        if (board.id === id) {
+          return newBoard;
+        }
+        return board;
+      });
+    }),
+
     /* #region Notes */
     // Notes related states and actions
     notes: [],
