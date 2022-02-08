@@ -134,11 +134,17 @@ function Dashboard() {
                   ? "DashboardWrapper__sideBar--hamburger--open"
                   : ""
               }
-            ${
-              navState && defaultNavState
-                ? "DashboardWrapper__sideBar--hamburger--mobileOpen"
-                : ""
-            }`}
+              ${
+                navState && defaultNavState
+                  ? "DashboardWrapper__sideBar--hamburger--mobileOpen"
+                  : ""
+              }`}
+              style={{
+                transform:
+                  mode === "boards" && modeId && !navState
+                    ? "translateX(68px)"
+                    : "",
+              }}
             >
               <input
                 type="checkbox"

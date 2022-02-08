@@ -20,6 +20,14 @@ function BoardEditor({ navState }) {
     (action) => action.setBoardPanelTitle
   );
 
+  const closeStyle = {
+    backgroundColor: "rgba(255, 255, 255, 0.685)",
+    backdropFilter: "blur(60px)",
+    borderRadius: "4px",
+    padding: navState ? "2px 10px 2px 10px" : "2px 10px 2px 40px",
+    transform: "translateX(8px)",
+  };
+
   return (
     <>
       <div className="DashboardWrapper__subHeader">
@@ -27,6 +35,7 @@ function BoardEditor({ navState }) {
           className={`DashboardWrapper__subHeader--left ${
             navState ? "DashboardWrapper__subHeader--left--open" : ""
           }`}
+          style={closeStyle}
         >
           <Link to="/app/dashboard/boards">Boards</Link>
           <span
@@ -51,7 +60,7 @@ function BoardEditor({ navState }) {
           />
           {isEllipsisable && (
             <span
-              style={{ fontSize: "15px", color: "#a5a5a5" }}
+              style={{ fontSize: "15px", color: "#a5a5a5", marginLeft: "10px" }}
               className="controlIcons"
             >
               {ControlIconsDefinitions.Edit}
