@@ -33,29 +33,43 @@ const Store = createStore(
       const newBoardId = new Date().getTime();
 
       // temp item
-      const panelItem = {
-        content: "tempItem",
-        id: shortid.generate(),
-        position: payload.position ? payload.position : 0,
-      };
-      const boardPanelsItem = {
-        id: shortid.generate(),
-        title: "",
-        position: payload.position ? payload.position : 0,
-        panelItems: [panelItem],
-      };
+      // const panelItem = {
+      //   content: "tempItem",
+      //   id: shortid.generate(),
+      //   position: payload.position ? payload.position : 0,
+      // };
+      // const boardPanelsItem = {
+      //   id: shortid.generate(),
+      //   title: "",
+      //   position: payload.position ? payload.position : 0,
+      //   panelItems: [panelItem],
+      // };
 
       const newBoard = {
         id: payload.id ? payload.id : newBoardId,
-        title: "",
+        title: "Untitled",
         uid: payload.uid ? payload.uid : state.userState.id,
-        boardPanels: [boardPanelsItem],
-        backgroundImage: getRandomImage(),
+        isStarred: false,
+        boardPanels: [],
+        backgroundImage: getRandomImage(
+          state.boards.map(
+            (board) =>
+              board.backgroundImage.split(
+                "https://images.unsplash.com/photo-"
+              )[1]
+          )
+        ),
         lastModified: lastModified(),
       };
       state.boards.push(newBoard);
-      state.boards = sortByLastModified(state.boards);
-      state.selectedBoard = newBoard;
+
+      // Temp comment. Uncomment when all boards have lastModified
+      // state.boards = sortByLastModified(state.boards);
+      // state.selectedBoard = newBoard;
+    }),
+
+    deleteBoard: action((state, payload) => {
+      state.boards = state.boards.filter((board) => board.id !== payload);
     }),
 
     setSelectedBoard: action((state, payload) => {
