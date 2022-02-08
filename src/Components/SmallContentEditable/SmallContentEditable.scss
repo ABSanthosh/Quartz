@@ -6,6 +6,7 @@
     max-width: 238px;
   }
   &--title {
+    cursor: text;
     overflow-x: auto;
     outline: 0px solid transparent;
     padding: 3.5px 8.5px;
@@ -15,7 +16,8 @@
     &:active,
     &:focus,
     &:hover {
-      border: 1px solid #8e8e8e;
+      border: 1px solid;
+      border-color: attr(data-bordercolor, #8e8e8e);
       border-radius: 4px;
     }
 

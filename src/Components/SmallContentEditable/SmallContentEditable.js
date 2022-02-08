@@ -3,17 +3,28 @@ import PropTypes from "prop-types";
 import "./SmallContentEditable.scss";
 import ContentEditable from "react-contenteditable";
 
-function SmallContentEditable({ html, setNewValue, setOptionalEllipsis }) {
+function SmallContentEditable({
+  html,
+  setNewValue,
+  setOptionalEllipsis,
+  ...props
+}) {
   const [isEllipsisable, setIsEllipsisable] = useState(true);
 
   return (
     <ContentEditable
+      {...props}
       className={`SmallContentEditableWrapper--title ${
         isEllipsisable ? "SmallContentEditableWrapper--ellipsis" : ""
       }`}
       html={html}
+      onSubmit={(e) => {
+        e.target.blur();
+        e.preventDefault();
+      }}
       onKeyDown={(e) => {
         if (e.key === "Enter") {
+          e.target.blur();
           e.preventDefault();
         }
         if (
