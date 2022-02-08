@@ -65,9 +65,9 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    // if (notes.length === 0) {
-    fetchNotes();
-    // }
+    if (mode === "notes") {
+      fetchNotes();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
 
