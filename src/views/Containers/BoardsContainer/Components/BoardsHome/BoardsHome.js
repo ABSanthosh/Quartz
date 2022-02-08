@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import "./BoardsHome.scss";
-import { useStoreState } from "easy-peasy";
+import { useStoreActions, useStoreState } from "easy-peasy";
 import paperEffect from "../../../../../Assets/Img/paperEffect.png";
 import HomeBoardItem from "./Components/HomeBoardItem/HomeBoardItem";
 
 function BoardsHome({ navState }) {
   const boards = useStoreState((state) => state.boards);
+  const addBoard = useStoreActions((actions) => actions.addBoard);
 
   const cacheImages = async (imageArray) => {
     const imagePromises = imageArray.map((image) => {
@@ -76,6 +77,14 @@ function BoardsHome({ navState }) {
                   return null;
                 }
               })}
+              <div
+                className="BoardsHomeWrapper__item BoardsHomeWrapper__item--addBoard"
+                onClick={() => {
+                  addBoard({});
+                }}
+              >
+                Create new board
+              </div>
             </div>
           </div>
         </div>
