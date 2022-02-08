@@ -24,8 +24,12 @@
     position: relative;
     flex-grow: 1;
 
+    &--addBoard {
+      @include make-flex();
+    }
+
     &--pseudo {
-      padding: 20px;
+      padding: 12px;
       height: 100%;
       width: 100%;
       border-radius: 5px;
@@ -53,14 +57,16 @@
       position: absolute;
       width: 100%;
       padding: 10px;
-      @include make-flex($align: flex-end);
+      @include make-flex($dir: row, $just: flex-end);
 
-      &--star {
+      &--star,
+      &--bin {
         opacity: 0;
         right: 0;
         top: 0;
         color: white;
         -webkit-transform: translateZ(0);
+        transform: translateZ(0);
         transition-duration: 0.15s;
 
         &:hover {
@@ -68,12 +74,19 @@
         }
       }
 
+      &--bin {
+        color: rgb(255, 140, 140);
+        // transition: margin 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+      }
+
       &--starActive {
         right: 0;
         top: 0;
         color: white;
         -webkit-transform: translateZ(0);
+        transform: translateZ(0);
         transition-duration: 0.15s;
+        margin-right: 6px;
 
         &:hover {
           transform: scale(1.2);
@@ -82,9 +95,13 @@
     }
 
     &:hover {
-      .BoardsHomeWrapper__item__subContainer--star {
+      .BoardsHomeWrapper__item__subContainer--star,
+      .BoardsHomeWrapper__item__subContainer--bin {
         opacity: 1;
         margin-right: 6px;
+      }
+      .BoardsHomeWrapper__item__subContainer--bin--translate {
+        margin-right: -2px !important;
       }
     }
   }
@@ -130,5 +147,23 @@
 
   &:hover {
     content: "\e966";
+  }
+}
+
+@media (hover: none) {
+  .BoardsHomeWrapper {
+    &__item {
+      &__subContainer {
+        &--star,
+        &--bin {
+          opacity: 1;
+          margin-right: 6px;
+
+          &--translate {
+            margin-right: 1px !important;
+          }
+        }
+      }
+    }
   }
 }
