@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import "./BoardsHome.scss";
-import { useStoreActions, useStoreState } from "easy-peasy";
-import { useHistory } from "react-router-dom";
+import { useStoreState } from "easy-peasy";
 import paperEffect from "../../../../../Assets/Img/paperEffect.png";
+import HomeBoardItem from "./Components/HomeBoardItem/HomeBoardItem";
 
 function BoardsHome({ navState }) {
   const boards = useStoreState((state) => state.boards);
-  let history = useHistory();
-  const setSelectedBoard = useStoreActions((action) => action.setSelectedBoard);
+
   const cacheImages = async (imageArray) => {
     const imagePromises = imageArray.map((image) => {
       return new Promise((resolve) => {
@@ -41,30 +40,44 @@ function BoardsHome({ navState }) {
         <div className="DashboardWrapper__subHeader--right"></div>
       </div>
       <div className="BoardsHomeWrapper">
-        <div className="BoardsHomeWrapper__top"></div>
+        {/* <div className="BoardsHomeWrapper__top"></div> */}
         <div className="BoardsHomeWrapper__bottom">
-          {boards.map((board, index) => (
-            <div
-              className="BoardsHomeWrapper__item"
-              key={index}
-              onClick={() => {
-                setSelectedBoard(parseInt(board.id));
-                history.push(`/app/dashboard/boards/${board.id}`);
-              }}
-              style={{
-                backgroundImage: `url(${board.backgroundImage}?w=245&h=285&auto=format)`,
-                backgroundSize: "cover",
-              }}
-            >
-              <div className="BoardsHomeWrapper__item--pseudo">
-                <div className="BoardsHomeWrapper__item__title">
-                  {board.title}
-                  <br />
-                  {board.id}
-                </div>
+          {boards.some((board) => board.isStarred) && (
+            <div className="BoardsHomeWrapper__workSpace">
+              <div className="BoardsHomeWrapper__workSpace--title">
+                <span className="BoardsHomeWrapper__workSpace--title--subContainer">
+                  <span
+                    className="icon-lg icon-star"
+                    style={{ color: "#9c6271", fontSize: "30px" }}
+                  />
+                  <p>Starred Boards</p>
+                </span>
+              </div>
+              <div className="BoardsHomeWrapper__workSpace--content">
+                {boards.map((board, index) => {
+                  if (board.isStarred) {
+                    return <HomeBoardItem key={index} board={board} />;
+                  } else {
+                    return null;
+                  }
+                })}
               </div>
             </div>
-          ))}
+          )}
+          <div className="BoardsHomeWrapper__workSpace">
+            <div className="BoardsHomeWrapper__workSpace--title">
+              <p>Your workspace</p>
+            </div>
+            <div className="BoardsHomeWrapper__workSpace--content">
+              {boards.map((board, index) => {
+                if (!board.isStarred) {
+                  return <HomeBoardItem key={board.id} board={board} />;
+                } else {
+                  return null;
+                }
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </>
