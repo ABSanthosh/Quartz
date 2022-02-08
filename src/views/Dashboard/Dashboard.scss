@@ -1,6 +1,5 @@
 @import "../../styles/mixins";
 
-
 .DashboardWrapper {
   width: 100%;
   height: calc(100% - 28px);
@@ -18,10 +17,10 @@
       @include make-flex($dir: row);
 
       transform: translateX(40px);
-      transition: transform 0.3s ease-in-out;
-      // &--open {
-      //   transform: translateX(0px);
-      // }
+      transition: all 0.1s cubic-bezier(0.19, 1, 0.22, 1);
+      &--open {
+        transform: translateX(0px);
+      }
     }
     &--right {
       column-gap: 10px;
@@ -69,7 +68,7 @@
       margin: unset;
       font-family: "Montserrat", sans-serif;
       text-align: center;
-      transition: transform 0.5s ease-in-out;
+      transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 
       max-width: 230px;
       text-overflow: ellipsis;
@@ -107,7 +106,7 @@
     background-color: #f3efe9;
     height: 100%;
     border-right: 4px solid #cc8296;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
     // margin-left: -240px;
     position: fixed;
     transform: translateX(-240px);
@@ -159,7 +158,7 @@
       position: relative;
       width: 28px;
       @include make-flex();
-      transition: all 0.3s ease-in-out;
+      transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
 
       #NavBarInput {
         cursor: pointer;
@@ -188,7 +187,7 @@
             width: 25px;
             border-top: 1.3px solid rgb(124, 34, 34);
             transform-origin: 4px 0px;
-            transition: transform 0.5s ease-in-out;
+            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
             &:first-child {
               transform-origin: 0% 0%;
             }
@@ -217,16 +216,18 @@
     height: 100%;
     width: 100%;
     background-position: center;
-    // transition: all 0.3s ease-in-out;
+    transition: padding 0.3s cubic-bezier(0.19, 1, 0.22, 1);
     // background-image: url(../../Assets/Img/paperEffect.png);
+    // flex: 1 1 0%;
 
-    // &--open {
-    // width: calc(100% - 244px);
-    // }
+    &--open {
+      // width: calc(100% - 244px);
+      padding-left: 244px;
+    }
   }
 
   &__contentContainer {
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
     max-height: 100%;
     height: 100%;
     width: 100%;
@@ -262,6 +263,7 @@
     &__frame {
       &--open {
         width: 100%;
+        padding-left: unset;
       }
     }
   }
