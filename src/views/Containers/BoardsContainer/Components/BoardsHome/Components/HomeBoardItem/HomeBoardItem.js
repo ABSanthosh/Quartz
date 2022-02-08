@@ -2,19 +2,26 @@ import { useStoreActions } from "easy-peasy";
 import { useHistory } from "react-router-dom";
 import propTypes from "prop-types";
 import { useState } from "react";
+import SmallContentEditable from "../../../../../../../Components/SmallContentEditable/SmallContentEditable";
+import { ControlIconsDefinitions } from "../../../../../../../Assets/Font/IconMap";
 
 export default function HomeBoardItem({ board }) {
   const setSelectedBoard = useStoreActions((action) => action.setSelectedBoard);
   const setBoardStarState = useStoreActions(
     (action) => action.setBoardStarState
   );
+  const setSelectedBoardTitle = useStoreActions(
+    (action) => action.setSelectedBoardTitle
+  );
+
+  const deleteBoard = useStoreActions((action) => action.deleteBoard);
   const history = useHistory();
   const [isHovering, setIsHovering] = useState(false);
   return (
     <div
       className="BoardsHomeWrapper__item"
       onClick={(e) => {
-        if (!e.target.className.includes("icon-lg icon-star")) {
+        if (e.target.className.includes("BoardsHomeWrapper__item--pseudo")) {
           setSelectedBoard(parseInt(board.id));
           history.push(`/app/dashboard/boards/${board.id}`);
         }
@@ -25,7 +32,20 @@ export default function HomeBoardItem({ board }) {
       }}
     >
       <div className="BoardsHomeWrapper__item--pseudo">
-        <div className="BoardsHomeWrapper__item__title">{board.title}</div>
+        <div className="BoardsHomeWrapper__item__title">
+          <SmallContentEditable
+            html={board.title}
+            setOptionalEllipsis={() => {}}
+            setNewValue={(newValue) => {
+              setSelectedBoardTitle({
+                id: board.id,
+                title: newValue,
+              });
+            }}
+            style={{ color: "white" }}
+            data-bordercolor="white"
+          />
+        </div>
         <div className="BoardsHomeWrapper__item__subContainer">
           <span
             className={`icon-lg icon-star${
@@ -51,6 +71,16 @@ export default function HomeBoardItem({ board }) {
               color: board.isStarred ? "#f2d600" : "#fff",
             }}
           />
+          <span
+            className={`controlIcons BoardsHomeWrapper__item__subContainer--bin BoardsHomeWrapper__item__subContainer--bin--translate`}
+            style={{ marginRight: board.isStarred ? "-26px" : "" }}
+            title="Delete this board"
+            onClick={() => {
+              deleteBoard(parseInt(board.id));
+            }}
+          >
+            {ControlIconsDefinitions.Delete}
+          </span>
         </div>
       </div>
     </div>
