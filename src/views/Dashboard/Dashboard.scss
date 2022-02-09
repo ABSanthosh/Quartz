@@ -304,6 +304,18 @@
     }
   }
 }
+@media only screen and (max-width: 425px) {
+  .DashboardWrapper {
+    &__subHeader {
+      &--left {
+        max-width: unset !important;
+        width: calc(100% - 15px);
+        justify-content: flex-start;
+      }
+    }
+  }
+}
+
 @media only screen and (max-width: 420px) {
   .DashboardWrapper {
     &__subHeader {
