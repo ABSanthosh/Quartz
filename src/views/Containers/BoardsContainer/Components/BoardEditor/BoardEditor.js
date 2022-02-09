@@ -73,10 +73,10 @@ function BoardEditor({ navState }) {
               });
             }}
             style={{
-              fontSize: "26px",
+              fontSize: "21px",
               marginRight: "0px",
               cursor: "pointer",
-              color: selectedBoard.isStarred ? "#f2d600" : "black",
+              color: selectedBoard.isStarred ? "#ffec5a" : "black",
               opacity: "1",
             }}
           />
@@ -105,7 +105,15 @@ function BoardEditor({ navState }) {
         <div className="BoardEditorWrapper__contentContainer">
           {selectedBoard.boardPanels.map((panel, index) => {
             return (
-              <div className="BoardEditorWrapper__panel" key={index}>
+              <div
+                className="BoardEditorWrapper__panel"
+                style={{
+                  background: selectedBoard.backgroundImage.isDark
+                    ? "rgba(255, 255, 255, 0.15)"
+                    : "rgb(0 0 0 / 15%)",
+                }}
+                key={index}
+              >
                 <div className="BoardEditorWrapper__panel--title">
                   <div className="BoardEditorWrapper__panel--title--left">
                     <SmallContentEditable
