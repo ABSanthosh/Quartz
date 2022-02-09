@@ -111,7 +111,7 @@ function Dashboard() {
 
   const frameStyle = {
     backgroundImage: isBoardEditor
-      ? `url(${selectedBoard.backgroundImage}?auto=format)`
+      ? `url(${selectedBoard.backgroundImage.backgroundImage}?auto=format)`
       : `url(${paperEffect})`,
 
     backgroundSize: isBoardEditor ? "cover" : "",

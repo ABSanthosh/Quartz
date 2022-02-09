@@ -29,7 +29,7 @@ export default function HomeBoardItem({ board }) {
       }}
       to={`/app/dashboard/boards/${board.id}`}
       style={{
-        backgroundImage: `url(${board.backgroundImage}?w=245&h=155&auto=format)`,
+        backgroundImage: `url(${board.backgroundImage.backgroundImage}?w=245&h=155&auto=format)`,
         backgroundSize: "cover",
       }}
     >
