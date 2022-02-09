@@ -1,5 +1,5 @@
 import { useStoreActions } from "easy-peasy";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import propTypes from "prop-types";
 import { useState } from "react";
 import SmallContentEditable from "../../../../../../../Components/SmallContentEditable/SmallContentEditable";
@@ -15,17 +15,19 @@ export default function HomeBoardItem({ board }) {
   );
 
   const deleteBoard = useStoreActions((action) => action.deleteBoard);
-  const history = useHistory();
   const [isHovering, setIsHovering] = useState(false);
   return (
-    <div
+    <Link
       className="BoardsHomeWrapper__item"
+      id={board.id}
       onClick={(e) => {
         if (e.target.className.includes("BoardsHomeWrapper__item--pseudo")) {
           setSelectedBoard(parseInt(board.id));
-          history.push(`/app/dashboard/boards/${board.id}`);
+        } else {
+          e.preventDefault();
         }
       }}
+      to={`/app/dashboard/boards/${board.id}`}
       style={{
         backgroundImage: `url(${board.backgroundImage}?w=245&h=155&auto=format)`,
         backgroundSize: "cover",
@@ -42,7 +44,7 @@ export default function HomeBoardItem({ board }) {
                 title: newValue,
               });
             }}
-            style={{ color: "white" }}
+            style={{ color: "white", width: "100%", maxWidth: "305px" }}
             data-bordercolor="white"
           />
         </div>
@@ -83,7 +85,7 @@ export default function HomeBoardItem({ board }) {
           </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
