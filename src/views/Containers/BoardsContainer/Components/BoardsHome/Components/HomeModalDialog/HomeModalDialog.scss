@@ -1,0 +1,76 @@
+@import "../../../../../../../styles/mixins";
+
+.HomeModalDialogWrapper {
+  width: 90%;
+  height: auto;
+  //   min-height: 334px;
+  max-width: 446px;
+  background-color: white;
+
+  animation-name: fade-in;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  border-radius: 6px;
+
+  border: 1px solid #d0d7de;
+
+  &__top {
+    @include make-flex($dir: row, $just: space-between);
+    padding: 16px;
+    height: 54px;
+    background-color: #f6f8fa;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    font-weight: 600;
+    color: #24292f;
+    border-bottom: 1px solid #d0d7de;
+  }
+
+  &__bottom {
+    height: calc(100% - 54px);
+    width: 100%;
+    padding: 20px;
+    gap: 20px;
+    @include make-flex($just: flex-start, $align: flex-start);
+
+    &--boardName,
+    &--presetSelector {
+      width: 100%;
+      @include make-flex($align: flex-start);
+      gap: 10px;
+      font-weight: 600;
+      color: #24292f;
+
+      select {
+        height: 35px;
+        padding: 0 10px;
+        width: 100%;
+        border-radius: 5px;
+        background-color: white;
+        font-size: 16px;
+        border: 1px solid black;
+        option {
+          width: 100%;
+        }
+      }
+    }
+
+    &--submit {
+      width: 100%;
+      @include make-flex($dir: row, $just: flex-start);
+
+      button {
+        padding: 5px 16px;
+        font-size: 16px;
+        border-radius: 6px;
+        cursor: pointer;
+
+        &:disabled {
+          border: 1px solid #cecece;
+          color: #cecece;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}
