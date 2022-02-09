@@ -3,11 +3,12 @@ import { createStore, action, computed, persist, debug } from "easy-peasy";
 import getRandomImage from "../Assets/Img/unsplashImages";
 import { lastModified } from "../Utils/lastModified";
 import { sortByLastModified } from "../Utils/sortByLastModified";
+// eslint-disable-next-line no-unused-vars
 import { defaultBoards, themes } from "./defaultValues";
 import shortid from "shortid";
 
 // let localNotesList = defaultNotes;
-let localBoardsList = defaultBoards;
+// let localBoardsList = defaultBoards;
 
 // TODO: add a backup state to reset to if reloaded without saving
 
@@ -25,7 +26,7 @@ const Store = createStore(
     }),
 
     // Boards related states and actions
-    boards: localBoardsList,
+    boards: [],
     selectedBoard: null,
     boardCount: computed((state) => state.boards.length),
 
@@ -45,12 +46,36 @@ const Store = createStore(
       //   panelItems: [panelItem],
       // };
 
+      const presets = {
+        BasicKanban: [
+          {
+            id: shortid.generate(),
+            title: "To Do",
+            position: payload.position ? payload.position : 0,
+            panelItems: [],
+          },
+          {
+            id: shortid.generate(),
+            title: "In Progress",
+            position: payload.position ? payload.position : 0,
+            panelItems: [],
+          },
+          {
+            id: shortid.generate(),
+            title: "Done",
+            position: payload.position ? payload.position : 0,
+            panelItems: [],
+          },
+        ],
+        Empty: [],
+      };
+
       const newBoard = {
         id: payload.id ? payload.id : newBoardId,
-        title: "Untitled",
+        title: payload.title ? payload.title : "Untitled",
         uid: payload.uid ? payload.uid : state.userState.id,
         isStarred: false,
-        boardPanels: [],
+        boardPanels: payload.preset ? presets[payload.preset] : [],
         backgroundImage: getRandomImage(
           state.boards.map(
             (board) =>
