@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "./BoardsHome.scss";
-import {  useStoreState } from "easy-peasy";
+import { useStoreState } from "easy-peasy";
 import paperEffect from "../../../../../Assets/Img/paperEffect.png";
 import HomeBoardItem from "./Components/HomeBoardItem/HomeBoardItem";
 import Modal from "../../../../../Components/Modal/Modal";
@@ -9,7 +9,7 @@ import HomeModalDialog from "./Components/HomeModalDialog/HomeModalDialog";
 
 function BoardsHome({ navState }) {
   const boards = useStoreState((state) => state.boards);
-  const [openModal, setOpenModal] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
 
   const cacheImages = async (imageArray) => {
     const imagePromises = imageArray.map((image) => {
@@ -29,6 +29,11 @@ function BoardsHome({ navState }) {
     imageArray.push(paperEffect);
     cacheImages(imageArray);
   });
+
+  // function lum(r, b, g) {
+  //   const lum = r * 0.2126 + g * 0.7152 + b * 0.0722;
+  //   return { lum, fg: lum < 140 ? "#fff" : "#000" };
+  // }
 
   return (
     <>
