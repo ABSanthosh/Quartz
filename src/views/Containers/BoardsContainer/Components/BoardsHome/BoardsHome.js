@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "./BoardsHome.scss";
-import { useStoreActions, useStoreState } from "easy-peasy";
+import {  useStoreState } from "easy-peasy";
 import paperEffect from "../../../../../Assets/Img/paperEffect.png";
 import HomeBoardItem from "./Components/HomeBoardItem/HomeBoardItem";
+import Modal from "../../../../../Components/Modal/Modal";
+import HomeModalDialog from "./Components/HomeModalDialog/HomeModalDialog";
 
 function BoardsHome({ navState }) {
   const boards = useStoreState((state) => state.boards);
-  const addBoard = useStoreActions((actions) => actions.addBoard);
+  const [openModal, setOpenModal] = useState(true);
 
   const cacheImages = async (imageArray) => {
     const imagePromises = imageArray.map((image) => {
@@ -30,6 +32,11 @@ function BoardsHome({ navState }) {
 
   return (
     <>
+      {openModal && (
+        <Modal>
+          <HomeModalDialog closeDialog={setOpenModal} />
+        </Modal>
+      )}
       <div className="DashboardWrapper__subHeader">
         <div
           className={`DashboardWrapper__subHeader--left ${
@@ -80,7 +87,8 @@ function BoardsHome({ navState }) {
               <div
                 className="BoardsHomeWrapper__item BoardsHomeWrapper__item--addBoard"
                 onClick={() => {
-                  addBoard({});
+                  // addBoard({});
+                  setOpenModal(true);
                 }}
               >
                 Create new board
