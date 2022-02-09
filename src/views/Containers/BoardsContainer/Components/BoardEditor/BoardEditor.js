@@ -92,7 +92,7 @@ function BoardEditor({ navState }) {
           />
           {isEllipsisable && (
             <span
-              style={{ fontSize: "15px", color: "#a5a5a5", marginLeft: "10px" }}
+              style={{ fontSize: "15px", color: "black", marginLeft: "10px" }}
               className="controlIcons"
             >
               {ControlIconsDefinitions.Edit}

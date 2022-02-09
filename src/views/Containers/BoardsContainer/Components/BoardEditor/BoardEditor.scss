@@ -47,12 +47,10 @@
     max-height: 100%;
     position: relative;
     width: 300px;
-    // background: rgba(255, 255, 255, 0.17);
     background: rgba(255, 255, 255, 0.15);
-    // box-shadow: inset 0px 79px 85px -38px rgba(0, 0, 0, 0.25);
-
     backdrop-filter: blur(60px);
     border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.336);
 
     &--title {
       width: 100%;
