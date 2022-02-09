@@ -183,6 +183,8 @@ const Store = createStore(
         }
         return board;
       });
+
+      state.selectedBoard = newBoard;
     }),
 
     /* #region Notes */
