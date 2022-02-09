@@ -75,6 +75,7 @@ function HomeModalDialog({ closeDialog }) {
 
         <div className="HomeModalDialogWrapper__bottom--submit">
           <button
+            title={title === "" ? "Pick board name first" : "Create Board"}
             onClick={() => {
               const newBoardId = new Date().getTime();
               addBoard({
