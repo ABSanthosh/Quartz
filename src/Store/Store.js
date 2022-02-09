@@ -70,20 +70,22 @@ const Store = createStore(
         Empty: [],
       };
 
+      const image = getRandomImage(
+        state.boards.map(
+          (board) =>
+            board.backgroundImage.backgroundImage.split(
+              "https://images.unsplash.com/photo-"
+            )[1]
+        )
+      );
+
       const newBoard = {
         id: payload.id ? payload.id : newBoardId,
         title: payload.title ? payload.title : "Untitled",
         uid: payload.uid ? payload.uid : state.userState.id,
         isStarred: false,
         boardPanels: payload.preset ? presets[payload.preset] : [],
-        backgroundImage: getRandomImage(
-          state.boards.map(
-            (board) =>
-              board.backgroundImage.split(
-                "https://images.unsplash.com/photo-"
-              )[1]
-          )
-        ),
+        backgroundImage: image,
         lastModified: lastModified(),
       };
       state.boards.push(newBoard);
