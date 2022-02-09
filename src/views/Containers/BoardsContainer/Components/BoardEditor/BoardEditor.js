@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "./BoardEditor.scss";
 import { ControlIconsDefinitions } from "../../../../../Assets/Font/IconMap";
-import { action, useStoreActions, useStoreState } from "easy-peasy";
+import { useStoreActions, useStoreState } from "easy-peasy";
 import { Link } from "react-router-dom";
 import SmallContentEditable from "../../../../../Components/SmallContentEditable/SmallContentEditable";
 
@@ -73,7 +73,7 @@ function BoardEditor({ navState }) {
               });
             }}
             style={{
-              fontSize: "20px",
+              fontSize: "26px",
               marginRight: "0px",
               cursor: "pointer",
               color: selectedBoard.isStarred ? "#f2d600" : "black",
@@ -149,21 +149,6 @@ function BoardEditor({ navState }) {
                     })}
                   </div>
                 )}
-                {/* <div className="BoardEditorWrapper__panel--bottom">
-                  <div
-                    className="BoardEditorWrapper__panel--content--placeholderCard"
-                    onClick={() => {
-                      addPanelItem({
-                        id: panel.id,
-                      });
-                    }}
-                  >
-                    <span className="controlIcons" style={{ fontSize: "15px" }}>
-                      {ControlIconsDefinitions.Add}
-                    </span>
-                    Add Item
-                  </div>
-                </div> */}
               </div>
             );
           })}
