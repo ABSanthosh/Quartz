@@ -4,6 +4,8 @@
   position: fixed;
   width: 100vw;
   height: 100vh;
+  top: 0;
+  left: 0;
   @include make-flex($just: flex-start);
   z-index: 20;
   padding: 20px;
