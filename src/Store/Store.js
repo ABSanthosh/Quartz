@@ -105,6 +105,17 @@ const Store = createStore(
       state.selectedBoard = board;
     }),
 
+    setSelectedBoardData: action((state, payload) => {
+      const { id, data } = payload;
+      state.boards = state.boards.map((board) => {
+        if (board.id === id) {
+          return data;
+        }
+        return board;
+      });
+      state.selectedBoard = data;
+    }),
+
     setSelectedBoardTitle: action((state, payload) => {
       const title = payload.title;
       const id = payload.id;
