@@ -44,8 +44,9 @@
     max-height: 100%;
     position: relative;
     width: 300px;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(60px);
+    // background: rgba(255, 255, 255, 0.15);
+    // backdrop-filter: blur(60px);
+    background-color: rgba(0, 0, 0, 0.54);
     border-radius: 6px;
     border: 1px solid rgba(255, 255, 255, 0.336);
 
@@ -56,6 +57,17 @@
       )
       scaleX(var(--scalePanel-x, 1)) scaleY(var(--scalePanel-y, 1));
 
+    &__right--delete {
+      cursor: pointer;
+      height: 28px;
+      color: white;
+      font-size: 18px;
+      &:hover {
+        background-color: rgba(255, 255, 255, 0);
+        border: 1px solid white;
+        color: rgb(255, 147, 147);
+      }
+    }
     &--title {
       width: 100%;
       height: 55px;
@@ -185,6 +197,16 @@
       &--content {
         padding: 16px;
       }
+    }
+  }
+}
+
+@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+  .BoardEditorWrapper {
+    &__panel {
+      background-color: #00000029;
+      -webkit-backdrop-filter: blur(60px);
+      backdrop-filter: blur(60px);
     }
   }
 }
