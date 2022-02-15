@@ -354,9 +354,14 @@ function BoardEditor({ navState }) {
                 return { ...prev, boardPanels: updatedBoardPanels };
               });
             }
+
+            setActiveId(null);
           }}
         >
-          <div className="BoardEditorWrapper__contentContainer">
+          <div
+            className="BoardEditorWrapper__contentContainer"
+            style={{ scrollSnapType: activeId ? "none" : "x mandatory" }}
+          >
             <SortableContext
               items={[...boardData.boardPanels]}
               strategy={horizontalListSortingStrategy}
