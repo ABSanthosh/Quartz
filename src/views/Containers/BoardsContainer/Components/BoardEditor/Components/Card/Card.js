@@ -28,7 +28,6 @@ export default function Card({ panelId, cardIndex, card, getIndex }) {
       key={cardIndex}
       ref={setNodeRef}
       style={{
-        // ...wrapperStyle,
         transition,
         "--translate-x": transform ? `${Math.round(transform.x)}px` : undefined,
         "--translate-y": transform ? `${Math.round(transform.y)}px` : undefined,

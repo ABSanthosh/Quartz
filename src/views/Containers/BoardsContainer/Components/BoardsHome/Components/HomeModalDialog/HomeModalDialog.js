@@ -43,20 +43,18 @@ function HomeModalDialog({ closeDialog }) {
             setOptionalEllipsis={() => {}}
             setNewValue={(newValue) => {
               setTitle(newValue);
-              // setSelectedBoardTitle({
-              //   id: board.id,
-              //   title: newValue,
-              // });
             }}
             style={{
               color: "black",
               width: "100%",
+              height: "35px",
               maxWidth: "unset",
               border: "1px solid gray",
               borderRadius: "5px",
               fontWeight: "normal",
             }}
           />
+          {/* TODO: New component with input for small input needs */}
         </div>
 
         <div className="HomeModalDialogWrapper__bottom--presetSelector">

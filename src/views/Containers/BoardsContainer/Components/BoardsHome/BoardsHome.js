@@ -31,11 +31,6 @@ function BoardsHome({ navState }) {
     cacheImages(imageArray);
   });
 
-  // function lum(r, b, g) {
-  //   const lum = r * 0.2126 + g * 0.7152 + b * 0.0722;
-  //   return { lum, fg: lum < 140 ? "#fff" : "#000" };
-  // }
-
   return (
     <>
       {openModal && (
