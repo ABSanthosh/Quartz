@@ -30,9 +30,6 @@
       width: 300px;
       height: 100%;
       max-height: 100%;
-      // height: calc(100% - 55px);
-      // margin-top: 55px;
-      // max-height: calc(100% - 55px);
       background: rgba(255, 255, 255, 0.685);
       backdrop-filter: blur(60px);
       border-radius: 6px;
@@ -153,10 +150,6 @@
 @media only screen and (max-width: 425px) {
   .BoardEditorWrapper {
     overflow-x: hidden;
-    &__contentContainer {
-      padding: 0 20px 20px 20px;
-    }
-
     &__panel {
       // width: 90vw;
       width: 100%;
@@ -164,14 +157,22 @@
       flex: none;
     }
     &__contentContainer {
-      width: 100%;
-      scroll-snap-type: x mandatory;
-      flex-flow: row nowrap;
+      padding: 0 20px 20px 20px;
+      width: 100vw;
       overflow-x: auto;
+
+      &::after {
+        content: "EasterEGGGGGGG";
+        color: rgba(0, 255, 255, 0);
+      }
 
       &--addPanel {
         width: 100%;
+        // width: 90vw;
         flex: none;
+
+        position: relative;
+
         scroll-snap-align: center;
       }
     }
