@@ -198,6 +198,36 @@ const Store = createStore(
         return board;
       });
     }),
+    removePanelItem: action((state, payload) => {
+      const { cardId, panelId } = payload;
+
+      const board = state.boards.find((board) => {
+        return board.boardPanels.find((panel) => panel.id === panelId);
+      });
+
+      const panel = board.boardPanels.find((panel) => panel.id === panelId);
+      const index = panel.panelItems.findIndex(
+        (panelItem) => panelItem.id === cardId
+      );
+      panel.panelItems.splice(index, 1);
+
+      state.selectedBoard = board;
+    }),
+
+    removePanel: action((state, payload) => {
+      const panelId = payload;
+
+      const board = state.boards.find((board) => {
+        return board.boardPanels.find((panel) => panel.id === panelId);
+      });
+
+      const index = board.boardPanels.findIndex(
+        (panel) => panel.id === panelId
+      );
+      board.boardPanels.splice(index, 1);
+
+      state.selectedBoard = board;
+    }),
 
     setBoardPanelItemOrder: action((state, payload) => {
       const boardPanels = payload;
