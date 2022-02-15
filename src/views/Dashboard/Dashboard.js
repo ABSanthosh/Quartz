@@ -48,6 +48,15 @@ function Dashboard() {
     (actions) => actions.setCurrentOption
   );
   const selectedBoard = useStoreState((state) => state.selectedBoard);
+  const setSelectedBoard = useStoreActions(
+    (actions) => actions.setSelectedBoard
+  );
+
+  useEffect(() => {
+    if (mode === "boards" && selectedBoard === null) {
+      setSelectedBoard(parseInt(modeId));
+    }
+  });
 
   const fetchNotes = async () => {
     await supabase

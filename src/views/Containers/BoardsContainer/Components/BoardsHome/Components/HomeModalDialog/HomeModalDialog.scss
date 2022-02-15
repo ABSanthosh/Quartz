@@ -12,7 +12,7 @@
   animation-timing-function: ease-in-out;
   border-radius: 6px;
 
-  border: 1px solid #d0d7de;
+  border: 1px solid #cc8296;
 
   &__top {
     @include make-flex($dir: row, $just: space-between);
@@ -23,7 +23,7 @@
     border-top-right-radius: 6px;
     font-weight: 600;
     color: #24292f;
-    border-bottom: 1px solid #d0d7de;
+    border-bottom: 1px solid #cc8296;
   }
 
   &__bottom {
@@ -72,5 +72,12 @@
         }
       }
     }
+  }
+}
+
+@media only screen and (max-width: 555px) {
+  .HomeModalDialogWrapper {
+    width: 100%;
+    max-width: unset;
   }
 }
