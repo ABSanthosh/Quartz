@@ -52,6 +52,13 @@
     border-radius: 6px;
     border: 1px solid rgba(255, 255, 255, 0.336);
 
+    transform: translate3d(
+        var(--translatePanel-x, 0),
+        var(--translatePanel-y, 0),
+        0
+      )
+      scaleX(var(--scalePanel-x, 1)) scaleY(var(--scalePanel-y, 1));
+
     &--title {
       width: 100%;
       height: 55px;
@@ -104,8 +111,6 @@
       }
 
       &--card {
-        @include make-flex($dir: row, $just: space-between);
-        padding: 10px 10px 10px 15px;
       }
 
       &--placeholderCard {
