@@ -26,7 +26,7 @@
   &__right {
     height: 100%;
     @include make-flex($dir: row);
-    gap: 3px;
+    gap: 5px;
 
     &--delete,
     &--dragIcon {

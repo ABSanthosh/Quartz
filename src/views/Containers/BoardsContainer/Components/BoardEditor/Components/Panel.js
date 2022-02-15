@@ -1,5 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { useStoreActions } from "easy-peasy";
+import { useState } from "react";
 import { ControlIconsDefinitions } from "../../../../../../Assets/Font/IconMap";
 import SmallContentEditable from "../../../../../../Components/SmallContentEditable/SmallContentEditable";
 import DragHandle from "./DragHandle/DragHandle";
@@ -30,8 +31,10 @@ export default function Panel({ panelIndex, panel, children }) {
   );
 
   const addPanelItem = useStoreActions((action) => action.addPanelItem);
+  const removePanel = useStoreActions((action) => action.removePanel);
+  const [isHovering, setIsHovering] = useState(false);
 
-  // console.log("panel: ", panel.id);
+  //TODO: add modal to confirm delete if there are panelItems
 
   return (
     <div
@@ -53,7 +56,11 @@ export default function Panel({ panelIndex, panel, children }) {
         "--scalePanel-y": transform?.scaleY ? `${transform.scaleY}` : undefined,
       }}
     >
-      <div className="BoardEditorWrapper__panel--title">
+      <div
+        className="BoardEditorWrapper__panel--title"
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+      >
         <div className="BoardEditorWrapper__panel--title--left">
           <SmallContentEditable
             html={panel.title}
@@ -66,6 +73,14 @@ export default function Panel({ panelIndex, panel, children }) {
           />
         </div>
         <div className="BoardEditorWrapper__panel--title--right">
+          {isHovering && (
+            <span
+              className="controlIcons BoardEditorWrapper__panel__right--delete"
+              onClick={() => removePanel(panel.id)}
+            >
+              {ControlIconsDefinitions.Delete}
+            </span>
+          )}
           <span
             className="controlIcons"
             style={{ cursor: "pointer" }}

@@ -1,16 +1,12 @@
 import { useSortable } from "@dnd-kit/sortable";
+import { useStoreActions } from "easy-peasy";
+import { useState } from "react";
+import { ControlIconsDefinitions } from "../../../../../../../Assets/Font/IconMap";
 import DragHandle from "../DragHandle/DragHandle";
 import "./Card.scss";
 // aka SortableItem
 
-export default function Card({
-  removeCard,
-  panelId,
-  cardIndex,
-  card,
-  panelIndex,
-  getIndex,
-}) {
+export default function Card({ panelId, cardIndex, card, getIndex }) {
   const {
     setNodeRef,
     listeners,
@@ -24,6 +20,8 @@ export default function Card({
     id: card.id,
   });
 
+  const removePanelItem = useStoreActions((action) => action.removePanelItem);
+  const [isHovering, setIsHovering] = useState(false);
   return (
     <div
       className="CardWrapper"
@@ -37,6 +35,8 @@ export default function Card({
         "--scale-x": transform?.scaleX ? `${transform.scaleX}` : undefined,
         "--scale-y": transform?.scaleY ? `${transform.scaleY}` : undefined,
       }}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
     >
       <div
         className="CardWrapper__content"
@@ -50,14 +50,17 @@ export default function Card({
       >
         {card.id}
         <div className="CardWrapper__right">
-          <span
-            className="CardWrapper__right--delete"
-            onClick={() => {
-              removeCard(cardIndex, panelIndex);
-            }}
-          >
-            x
-          </span>
+          {isHovering && (
+            <span
+              className="controlIcons CardWrapper__right--delete"
+              style={{ fontSize: "18px", height: "28px" }}
+              onClick={() => {
+                removePanelItem({ cardId: card.id, panelId });
+              }}
+            >
+              {ControlIconsDefinitions.Delete}
+            </span>
+          )}
           <DragHandle
             {...listeners}
             style={{ border: "1px solid black" }}
