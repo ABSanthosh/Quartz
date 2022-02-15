@@ -24,7 +24,8 @@ function BoardsHome({ navState }) {
 
   useEffect(() => {
     const imageArray = boards.map(
-      (board) => board.backgroundImage + "?auto=format"
+      (board) =>
+        `${board.backgroundImage}?auto=format&h=${window.screen.height}&fit=max)`
     );
     imageArray.push(paperEffect);
     cacheImages(imageArray);
