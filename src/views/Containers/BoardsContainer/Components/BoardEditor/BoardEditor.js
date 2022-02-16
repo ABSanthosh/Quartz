@@ -203,6 +203,8 @@ function BoardEditor({ navState }) {
             <span
               style={{ fontSize: "15px", color: "black", marginLeft: "10px" }}
               className="controlIcons"
+              onMouseEnter={() => setIsHovering(true)}
+              onMouseLeave={() => setIsHovering(false)}
             >
               {ControlIconsDefinitions.Edit}
             </span>
