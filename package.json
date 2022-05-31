@@ -1,65 +1,27 @@
 {
-  "name": "quartz",
-  "version": "0.1.0",
+  "name": "remix-template-netlify",
   "private": true,
+  "sideEffects": false,
+  "scripts": {
+    "build": "remix build",
+    "dev": "cross-env NODE_ENV=development netlify dev",
+    "start": "cross-env NODE_ENV=production netlify dev"
+  },
   "dependencies": {
-    "@dnd-kit/core": "^5.0.1",
-    "@dnd-kit/sortable": "^6.0.0",
-    "@dnd-kit/utilities": "^3.1.0",
-    "@loadable/component": "^5.15.2",
-    "@supabase/supabase-js": "^1.29.1",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "dompurify": "^2.3.5",
-    "easy-peasy": "^5.0.4",
-    "fuse.js": "^6.5.3",
-    "prop-types": "^15.7.2",
+    "@netlify/functions": "^1.0.0",
+    "@remix-run/netlify": "^1.5.1",
+    "@remix-run/node": "^1.5.1",
+    "@remix-run/react": "^1.5.1",
+    "cross-env": "^7.0.3",
     "react": "^17.0.2",
-    "react-contenteditable": "^3.3.6",
-    "react-delay": "^0.1.0",
-    "react-dom": "^17.0.2",
-    "react-responsive": "^8.2.0",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.3",
-    "shortid": "^2.2.16",
-    "web-vitals": "^1.0.1"
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
-    "eslint": "^7.11.0",
-    "eslint-config-airbnb": "18.2.1",
-    "eslint-config-prettier": "7.1.0",
-    "eslint-plugin-import": "2.22.1",
-    "eslint-plugin-jsx-a11y": "6.4.1",
-    "eslint-plugin-prettier": "3.3.1",
-    "eslint-plugin-react": "7.22.0",
-    "eslint-plugin-react-hooks": "4.2.0",
-    "prettier": "^2.2.1",
-    "sass": "^1.32.4"
+    "@remix-run/dev": "^1.5.1",
+    "@remix-run/eslint-config": "^1.5.1",
+    "eslint": "^8.15.0"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "engines": {
+    "node": ">=14"
   }
 }
