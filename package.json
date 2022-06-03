@@ -1,10 +1,11 @@
 {
-  "name": "remix-template-netlify",
+  "name": "remix-boilerplate",
   "private": true,
   "sideEffects": false,
   "scripts": {
     "build": "remix build",
-    "dev": "cross-env NODE_ENV=development netlify dev",
+    "sass": "sass --watch app/:app/",
+    "dev": "concurrently \"npm run sass\" \"cross-env NODE_ENV=development netlify dev\"",
     "start": "cross-env NODE_ENV=production netlify dev"
   },
   "dependencies": {
@@ -19,7 +20,9 @@
   "devDependencies": {
     "@remix-run/dev": "^1.5.1",
     "@remix-run/eslint-config": "^1.5.1",
-    "eslint": "^8.15.0"
+    "concurrently": "^7.2.1",
+    "eslint": "^8.15.0",
+    "sass": "^1.52.1"
   },
   "engines": {
     "node": ">=14"
