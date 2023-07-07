@@ -12,10 +12,16 @@ const nextConfig = {
         });
       }
     });
+    config.module.rules.push({
+      test: /\.svg$/i,
+      issuer: /\.[jt]sx?$/,
+      use: ['@svgr/webpack'],
+    })
+
     return config;
   },
   sassOptions: {
-    additionalData: `@import "src/styles/root/_mixins.scss";`,
+    additionalData: `@import "src/styles/root/_mixins.scss"; @import "src/styles/root/_colors.scss";`,
   },
 };
 

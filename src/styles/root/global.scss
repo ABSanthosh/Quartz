@@ -57,6 +57,7 @@ body,
   // overflow: hidden;
   @include box(100vw, 100vh);
   @include make-flex($just: flex-start);
+  background-color: $Main__background;
 
   @include respondAt(915px) {
     width: 100vw;

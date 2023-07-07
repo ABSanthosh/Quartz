@@ -1,0 +1,11 @@
+.MainApp {
+  @include box();
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-template-rows: 1fr;
+
+  &__content {
+    @include box();
+    display: grid;
+  }
+}
