@@ -3,19 +3,22 @@ import "./Sidebar.scss";
 import SidebarIconSVG from "../../../public/icons/sidebar.left.svg";
 import OptionsOutlineSVG from "../../../public/icons/ellipsis.circle.svg";
 import * as DropMenu from "@/components/UtilInputs/DropMenu/DropMenu";
+import { useStoreActions, useStoreState } from "@/hooks/useStoreHooks";
 
 export default function Sidebar() {
-  const [navState, setNavState] = useState(false);
+  // const [isNavOpen, toggleNav] = useState(false);
+  const toggleNav = useStoreActions((actions) => actions.ui.toggleNav);
+  const isNavOpen = useStoreState((state) => state.ui.isNavOpen);
 
   return (
-    <div className={`Sidebar ${navState ? "Sidebar--open" : ""}`}>
+    <div className={`Sidebar ${isNavOpen ? "Sidebar--open" : ""}`}>
       <div className="Sidebar__logo">QUARTZ</div>
       <div className="Sidebar__leftRight">
         <button
           className={`Sidebar__hamburger ${
-            navState ? "Sidebar__hamburger--open" : ""
+            isNavOpen ? "Sidebar__hamburger--open" : ""
           }`}
-          onClick={() => setNavState(!navState)}
+          onClick={() => toggleNav(!isNavOpen)}
         >
           <SidebarIconSVG />
         </button>
