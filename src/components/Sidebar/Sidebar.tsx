@@ -4,6 +4,7 @@ import SidebarIconSVG from "../../../public/icons/sidebar.left.svg";
 import OptionsOutlineSVG from "../../../public/icons/ellipsis.circle.svg";
 import * as DropMenu from "@/components/UtilInputs/DropMenu/DropMenu";
 import { useStoreActions, useStoreState } from "@/hooks/useStoreHooks";
+import SearchBar from "./components/SearchBar/SearchBar";
 
 export default function Sidebar() {
   // const [isNavOpen, toggleNav] = useState(false);
@@ -40,6 +41,7 @@ export default function Sidebar() {
           <DropMenu.Item>Item 1</DropMenu.Item>
         </DropMenu.Root>
       </div>
+      <SearchBar />
       <ul className="Sidebar__MenuList"></ul>
     </div>
   );

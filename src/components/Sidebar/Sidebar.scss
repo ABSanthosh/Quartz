@@ -14,6 +14,8 @@ $padding: 20px;
   transition: transform 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
   background-color: $Sidebar__background;
   z-index: 2;
+  padding: 0 $padding;
+  border-right: 2px solid $Accent;
 
   &--open {
     transform: translateX(-100%);
@@ -23,7 +25,7 @@ $padding: 20px;
   }
 
   &__logo {
-    @include box($height: 26px);
+    @include box(calc(100% + (2 * $padding)), 26px);
     @include make-flex();
     background-color: $Sidebar__header_logo;
     border-bottom: 1px solid $Sidebar__border;
@@ -32,6 +34,8 @@ $padding: 20px;
     font-weight: 400;
     letter-spacing: 8px;
     color: $white;
+    margin-left: -$padding;
+    margin-right: -$padding;
   }
 
   &__MenuList {
@@ -49,7 +53,6 @@ $padding: 20px;
   &__leftRight {
     @include box($height: auto);
     @include make-flex($dir: row, $just: space-between);
-    padding: 0 $padding;
   }
 
   &__hamburger,
@@ -69,15 +72,15 @@ $padding: 20px;
   }
 
   &__hamburger {
-    top: 46px;
+    // top: 46px;
     left: $padding;
     @include box(30px, 22px);
     background-color: $Sidebar__background;
-    transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
     border-radius: 4px;
 
     &--open {
       position: fixed;
+      transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
       top: 46px;
       // top: 20px;
       left: calc(100% + 20px);
