@@ -1,0 +1,106 @@
+$padding: 20px;
+
+.Sidebar {
+  @include make-flex($dir: column, $just: flex-start);
+  top: 0;
+  left: 0;
+  gap: 20px;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  max-width: 290px;
+  transform: translateX(0%);
+  border-right: 1px solid $Sidebar__border;
+  transition: transform 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+  background-color: $Sidebar__background;
+  z-index: 2;
+  padding: 0 $padding;
+  border-right: 2px solid $Accent;
+
+  &--open {
+    transform: translateX(-100%);
+  }
+  &--hide {
+    display: none;
+  }
+
+  &__logo {
+    @include box(calc(100% + (2 * $padding)), 26px);
+    @include make-flex();
+    background-color: $Sidebar__header_logo;
+    border-bottom: 1px solid $Sidebar__border;
+    font-family: "Source Code Pro", monospace;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 8px;
+    color: $white;
+    margin-left: -$padding;
+    margin-right: -$padding;
+  }
+
+  &__MenuList {
+    @include box($height: auto);
+    @include make-flex($just: flex-start, $dir: column);
+    flex-grow: 1;
+    &--item {
+      list-style: none;
+      min-width: 103px;
+      @include box(100%, 45px);
+      @include make-flex();
+    }
+  }
+
+  &__right {
+    @include box($height: auto);
+    @include make-flex($dir: row, $just: flex-end);
+    gap: 15px;
+  }
+
+  &__leftRight {
+    @include box($height: auto);
+    @include make-flex($dir: row, $just: space-between);
+  }
+
+  &__hamburger,
+  &__options {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+
+    svg {
+      @include box();
+      path {
+        fill: $Accent;
+        stroke: $Accent;
+      }
+    }
+  }
+
+  &__hamburger {
+    // top: 46px;
+    left: $padding;
+    @include box(30px, 22px);
+    background-color: $Sidebar__background;
+    border-radius: 4px;
+
+    &--open {
+      position: fixed;
+      transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+      top: 46px;
+      // top: 20px;
+      left: calc(100% + 20px);
+    }
+  }
+
+  &__options {
+    @include box(22px, 22px);
+    border-radius: 50%;
+  }
+
+  &__folders {
+    @include box($height: auto);
+    @include make-flex($align: flex-start);
+    list-style: none;
+  }
+}
