@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 import "./Sidebar.scss";
 import { ReactComponent as SidebarIconSVG } from "@/assets/icons/sidebar.left.svg";
 import { ReactComponent as OptionsOutlineSVG } from "@/assets/icons/ellipsis.circle.svg";
