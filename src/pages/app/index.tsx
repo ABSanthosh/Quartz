@@ -1,13 +1,13 @@
-import Sidebar from "../../components/Sidebar/Sidebar";
+import Sidebar from "@/components/Sidebar/Sidebar";
+import { useStoreState } from "@/hooks/useStoreHooks";
+import "@/styles/routes/main-app.scss";
 
-export default function Index() {
+export default function MainApp() {
+  const isNavOpen = useStoreState((state) => state.ui.isNavOpen);
   return (
-    <div>
-      Vite + React
-      <span role="img" aria-label="ice cream">
-        f
-      </span>
-      <Sidebar/>
-    </div>
+    <main className={`MainApp ${!isNavOpen ? "MainApp--open" : ""}`}>
+      <Sidebar />
+      <div className="MainApp__content">hello</div>
+    </main>
   );
 }

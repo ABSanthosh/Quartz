@@ -18,6 +18,7 @@ export function Router() {
     routes.map((route) => ({
       path: route.path.replace(/^\.\/pages/, "").toLowerCase(),
       element: <Fragment>{route.component()}</Fragment>,
+      caseSensitive: true,
     }))
   );
 

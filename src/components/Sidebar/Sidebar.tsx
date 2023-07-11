@@ -1,12 +1,19 @@
 import { useState } from "react";
 import "./Sidebar.scss";
-import {ReactComponent as SidebarIconSVG} from "@/assets/icons/sidebar.left.svg";
-import {ReactComponent as OptionsOutlineSVG} from "@/assets/icons/ellipsis.circle.svg";
+import { ReactComponent as SidebarIconSVG } from "@/assets/icons/sidebar.left.svg";
+import { ReactComponent as OptionsOutlineSVG } from "@/assets/icons/ellipsis.circle.svg";
 import * as DropMenu from "@/components/UtilInputs/DropMenu/DropMenu";
 import SearchBar from "./components/SearchBar/SearchBar";
+import { useStoreActions, useStoreState } from "@/hooks/useStoreHooks";
 
 export default function Sidebar() {
-  const [isNavOpen, toggleNav] = useState(false);
+  // const [isNavOpen, toggleNav] = useState(false);
+
+  const toggleNav = useStoreActions((actions) => actions.ui.toggleNav);
+  const isNavOpen = useStoreState((state) => state.ui.isNavOpen);
+
+  // const folders = useStoreState((state) => state.data.folders);
+  // const openFolder = useStoreActions((actions) => actions.data.openFolder);
 
   return (
     <div className={`Sidebar ${isNavOpen ? "Sidebar--open" : ""}`}>
