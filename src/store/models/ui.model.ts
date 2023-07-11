@@ -6,7 +6,7 @@ export interface IUIModel {
 }
 
 export const uiModel = {
-  isNavOpen: false,
+  isNavOpen: true,
 
   toggleNav: action<IUIModel>((state) => {
     state.isNavOpen = !state.isNavOpen;
