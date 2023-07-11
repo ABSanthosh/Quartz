@@ -50,6 +50,12 @@ $padding: 20px;
     }
   }
 
+  &__right {
+    @include box($height: auto);
+    @include make-flex($dir: row, $just: flex-end);
+    gap: 15px;
+  }
+
   &__leftRight {
     @include box($height: auto);
     @include make-flex($dir: row, $just: space-between);
@@ -90,5 +96,11 @@ $padding: 20px;
   &__options {
     @include box(22px, 22px);
     border-radius: 50%;
+  }
+
+  &__folders {
+    @include box($height: auto);
+    @include make-flex($align: flex-start);
+    list-style: none;
   }
 }

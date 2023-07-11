@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
 // font-family: 'Roboto', sans-serif;
 // font-family: 'Source Code Pro', monospace;
@@ -9,7 +9,8 @@
   src: url(/fonts/codeIcon.ttf) format("truetype");
 }
 
-[data-icon] {
+[data-icon],
+[data-icon-after] {
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
   font-weight: normal;
   font-style: normal;
@@ -25,12 +26,29 @@
   -webkit-font-smoothing: antialiased;
   color: #fafafa;
   user-select: none;
-
   font: normal normal normal 20px/1 "Icons";
+}
+
+[data-icon] {
   &::before {
     font: inherit;
     content: attr(data-icon);
   }
+}
+
+[data-icon-after] {
+  &::after {
+    font: inherit;
+    content: attr(data-icon-after);
+  }
+}
+
+[data-icon-button] {
+  @include make-flex($dir: row, $just: flex-start);
+  background-color: transparent;
+  color: $Accent;
+  border: none;
+  cursor: pointer;
 }
 
 [data-icon][class*="dark"] {

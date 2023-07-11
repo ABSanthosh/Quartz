@@ -1,5 +1,7 @@
+import { dataModel } from "./data.model";
 import { uiModel } from "./ui.model";
 
 export const storeModels = {
-    ui: uiModel
-}
+  ui: uiModel,
+  data: dataModel,
+};
