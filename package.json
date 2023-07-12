@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prodPush": "git push && git checkout prod && git merge v1 && git push && git checkout v1"
   },
   "dependencies": {
     "@radix-ui/colors": "^1.0.0",
