@@ -5,6 +5,7 @@ import * as DropMenu from "@/components/UtilInputs/DropMenu/DropMenu";
 import SearchBar from "./components/SearchBar/SearchBar";
 import { useStoreActions, useStoreState } from "@/hooks/useStoreHooks";
 import Folder from "./components/Folder/Folder";
+import { IFolder } from "@/store/models/data.model";
 
 export default function Sidebar() {
   // const [isNavOpen, toggleNav] = useState(false);
@@ -76,7 +77,7 @@ export default function Sidebar() {
           return (
             <Folder
               key={folderId}
-              folder={{ ...folder, id: folderId }}
+              folder={{ ...folder, id: folderId } as IFolder & { id: string }}
               onClick={openFolder}
             />
           );

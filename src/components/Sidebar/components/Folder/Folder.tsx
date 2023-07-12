@@ -3,7 +3,7 @@ import "./Folder.scss";
 import { IFolder } from "@/store/models/data.model";
 import * as DropMenu from "@/components/UtilInputs/DropMenu/DropMenu";
 import * as ContextMenu from "@/components/UtilInputs/ContextMenu/ContextMenu";
-import { useStoreActions } from "@/hooks/useStoreHooks";
+import { useStoreActions, useStoreState } from "@/hooks/useStoreHooks";
 
 function Page({
   page,
@@ -16,7 +16,10 @@ function Page({
   const [pageName, setPageName] = useState(page.pageName);
   const renamePage = useStoreActions((actions) => actions.data.renamePage);
   const deletePage = useStoreActions((actions) => actions.data.deletePage);
-
+  const changePage = useStoreActions(
+    (actions) => actions.data.changeCurrentPageId
+  );
+  const activePage = useStoreState((actions) => actions.data.activePage);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -28,7 +31,7 @@ function Page({
   }, [isRename, inputRef]);
 
   return (
-    <li className="Page">
+    <li className={`Page ${activePage === page.id ? "Page--active" : ""}`}>
       <ContextMenu.Root
         trigger={
           <Fragment>
@@ -63,6 +66,9 @@ function Page({
               <button
                 className="Page--button"
                 data-icon-after={String.fromCharCode(60086)}
+                onClick={() => {
+                  changePage({ folderId: folderId, pageId: page.id });
+                }}
               >
                 {page.pageName}
               </button>

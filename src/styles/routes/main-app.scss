@@ -11,5 +11,32 @@
     @include box();
     display: grid;
     background-color: $Main__background;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 42px;
+
+    &--textarea {
+      color: transparent;
+      word-wrap: break-word;
+      background: transparent;
+      border: none;
+      box-sizing: border-box;
+      font-size: 14px;
+      letter-spacing: normal;
+      line-height: calc(1em + 1ex);
+      margin: 0;
+      outline: none;
+      overflow: hidden;
+      padding: 0;
+      resize: none;
+      border-right: 2px solid $SelectionColor;
+      tab-size: 4;
+      white-space: pre-wrap;
+      @include box();
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .MarkdownBody {
+      padding: 20px;
+    }
   }
 }

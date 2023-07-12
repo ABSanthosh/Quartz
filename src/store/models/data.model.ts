@@ -44,6 +44,8 @@ export interface IFolder {
     string,
     {
       pageName: string;
+      type: "md" | "code" | "text";
+      data: string;
     }
   >;
 }
@@ -51,6 +53,7 @@ export interface IFolder {
 export interface IDataModel {
   folders: IFolder[];
   currentFolder: string | null;
+  activePage: string | null;
   openFolder: Action<IDataModel, { id: string; state: boolean }>;
 }
 
@@ -64,17 +67,14 @@ export const dataModel = {
       pages: {
         "1": {
           pageName: "Page 1",
-        },
-        "2": {
-          pageName: "Page 2",
-        },
-        "3": {
-          pageName: "Page 3",
+          type: "md",
+          data: "# Hello World",
         },
       },
     },
   },
   currentFolder: null,
+  activePage: null,
   openFolder: action<IDataModel>(
     (
       state,
@@ -178,6 +178,8 @@ export const dataModel = {
       // @ts-ignore
       temp[payload.folderId! || state.currentFolder!].pages[id] = {
         pageName: payload.pageName,
+        type: "md",
+        data: "",
       };
       state.folders = temp;
     }
@@ -204,4 +206,35 @@ export const dataModel = {
     delete temp[payload.folderId];
     state.folders = temp;
   }),
+
+  changeCurrentPageId: action<IDataModel>(
+    (
+      state,
+      payload: {
+        folderId: string;
+        pageId: string;
+      }
+    ) => {
+      state.activePage = payload.pageId;
+      state.currentFolder = payload.folderId;
+    }
+  ),
+
+  updatePageData: action<IDataModel>(
+    (
+      state,
+      payload: {
+        folderId: string;
+        pageId: string;
+        data: string;
+      }
+    ) => {
+      let temp = { ...state.folders };
+      console.log(payload.folderId, payload.pageId, payload.data);
+      // @ts-ignore
+      temp[payload.folderId].pages[payload.pageId].data = payload.data;
+      state.folders = temp;
+    }
+  ),
+
 };

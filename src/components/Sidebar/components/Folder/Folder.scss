@@ -72,15 +72,24 @@
     position: relative;
 
     &:first-child > span > button {
-      border-radius: 6px 6px 0 0;
+      border-radius: 5px 5px 0 0;
     }
 
     &:last-child > span > button {
-      border-radius: 0 0 6px 6px;
+      border-radius: 0 0 5px 5px;
     }
 
     &:only-child > span > button {
-      border-radius: 6px;
+      border-radius: 5px;
+    }
+
+    &--active > span > button {
+      background-color: #d45d5d56;
+      color: $Accent;
+
+      &:hover {
+        background-color: darken(#d45d5d56, 10%);
+      }
     }
 
     &:not(:last-child) {
