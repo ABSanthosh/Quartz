@@ -1,21 +1,94 @@
 .FolderWrapper {
   @include box(100%, auto);
 
+  &[open] {
+    .Folder {
+      background-color: $SelectionColor;
+      &__icon {
+        transform: rotateZ(90deg);
+      }
+
+      &__action {
+        transition: all 0.4s ease-in-out;
+        &::before {
+          color: $TextColor;
+        }
+      }
+    }
+  }
+
   .Folder {
-    @include box(100%, 38px);
-    border-radius: 4px;
-    background-color: #39393b;
+    @include box(100%, 35px);
+    border-radius: 6px;
+    background-color: #ebebf51a;
     border: none;
     cursor: pointer;
     outline: none;
     @include make-flex($dir: row, $just: space-between);
     padding: 10px;
+    transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+    user-select: none;
+
+    &__icon {
+      transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+      @include box(auto, 15px);
+      @include make-flex();
+    }
 
     &__left {
       @include box();
       @include make-flex($dir: row, $just: flex-start);
-      gap: 15px;
+      gap: 8px;
       color: $TextColor;
+    }
+
+    &__pages {
+      @include box(100%, auto);
+      background-color: $DropDownMenu__background;
+      border: 1px solid #737373;
+      border-radius: 5px;
+      margin-top: 10px;
+
+      list-style: none;
+    }
+  }
+
+  .Page {
+    list-style: none;
+    @include box(100%, 30px);
+
+    &:first-child > button {
+      border-radius: 6px 6px 0 0;
+    }
+
+    &:last-child > button {
+      border-radius: 0 0 6px 6px;
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #737373;
+    }
+
+    &--button {
+      outline: none;
+      border: none;
+      @include box();
+      @include make-flex($dir: row, $just: space-between);
+      padding: 2px 6px;
+      background-color: $Sidebar__background;
+      cursor: pointer;
+      appearance: none;
+      color: $TextColor;
+
+      max-width: 100%;
+      overflow: hidden;
+      text-align: start;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      &:hover {
+        background-color: #ffffff0d;
+      }
     }
   }
 }

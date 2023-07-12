@@ -2,8 +2,7 @@ import "./SearchBar.scss";
 
 function SearchBar() {
   return (
-    <div className="SearchBar">
-      <label htmlFor="SidebarSearch" data-icon={String.fromCharCode(60013)} />
+    <div className="SearchBar" data-icon={String.fromCharCode(60013)}>
       <input id="SidebarSearch" placeholder="Search" />
     </div>
   );

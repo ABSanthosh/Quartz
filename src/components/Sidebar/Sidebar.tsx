@@ -5,6 +5,7 @@ import { ReactComponent as OptionsOutlineSVG } from "@/assets/icons/ellipsis.cir
 import * as DropMenu from "@/components/UtilInputs/DropMenu/DropMenu";
 import SearchBar from "./components/SearchBar/SearchBar";
 import { useStoreActions, useStoreState } from "@/hooks/useStoreHooks";
+import Folder from "./components/Folder/Folder";
 
 export default function Sidebar() {
   // const [isNavOpen, toggleNav] = useState(false);
@@ -12,8 +13,8 @@ export default function Sidebar() {
   const toggleNav = useStoreActions((actions) => actions.ui.toggleNav);
   const isNavOpen = useStoreState((state) => state.ui.isNavOpen);
 
-  // const folders = useStoreState((state) => state.data.folders);
-  // const openFolder = useStoreActions((actions) => actions.data.openFolder);
+  const folders = useStoreState((state) => state.data.folders);
+  const openFolder = useStoreActions((actions) => actions.data.openFolder);
 
   return (
     <div className={`Sidebar ${isNavOpen ? "Sidebar--open" : ""}`}>
@@ -59,7 +60,7 @@ export default function Sidebar() {
         />
       </div>
       <ul className="Sidebar__folders">
-        {/* {folders.map((folder) => (
+        {folders.map((folder) => (
           <Folder
             key={folder.folderId}
             folderName={folder.folderName}
@@ -68,7 +69,7 @@ export default function Sidebar() {
             isOpen={folder.isOpen}
             onClick={openFolder}
           />
-        ))} */}
+        ))}
       </ul>
     </div>
   );

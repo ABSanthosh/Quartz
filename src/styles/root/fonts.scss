@@ -9,8 +9,8 @@
   src: url(/fonts/codeIcon.ttf) format("truetype");
 }
 
-[data-icon],
-[data-icon-after] {
+[data-icon]::before,
+[data-icon-after]::after {
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
   font-weight: normal;
   font-style: normal;
@@ -24,21 +24,21 @@
   font-feature-settings: "liga";
   -webkit-font-feature-settings: "liga";
   -webkit-font-smoothing: antialiased;
-  color: #fafafa;
+  // color: #fafafa;
   user-select: none;
   font: normal normal normal 20px/1 "Icons";
 }
 
 [data-icon] {
   &::before {
-    font: inherit;
+    // font: inherit;
     content: attr(data-icon);
   }
 }
 
 [data-icon-after] {
   &::after {
-    font: inherit;
+    // font: inherit;
     content: attr(data-icon-after);
   }
 }

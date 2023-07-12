@@ -2,16 +2,14 @@
   @include box(100%, 35px);
   position: relative;
 
-  label {
+  &::before {
+    transform: translate(-50%, -50%) rotate(-90deg);
     position: absolute;
     top: 50%;
     left: 18px;
-    // transform: translateY(-50%);
     font-size: 15px;
     font-weight: 600;
     pointer-events: none;
-    // mirror flip
-    transform: translate(-50%, -50%) rotate(-90deg);
   }
 
   input {
