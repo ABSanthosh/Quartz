@@ -60,15 +60,8 @@ export default function Sidebar() {
         />
       </div>
       <ul className="Sidebar__folders">
-        {folders.map((folder) => (
-          <Folder
-            key={folder.folderId}
-            folderName={folder.folderName}
-            folderId={folder.folderId}
-            pages={folder.pages}
-            isOpen={folder.isOpen}
-            onClick={openFolder}
-          />
+        {folders.map((folder, index) => (
+          <Folder key={index} folder={folder} onClick={openFolder} />
         ))}
       </ul>
     </div>

@@ -6,7 +6,7 @@ import * as DropMenu from "@/components/UtilInputs/DropMenu/DropMenu";
 function Page({ page }: { page: IFolder["pages"][0] }) {
   return (
     <Fragment>
-      <li key={page.pageId} className="Page">
+      <li key={page.id} className="Page">
         <button
           className="Page--button"
           data-icon-after={String.fromCharCode(60086)}
@@ -19,25 +19,23 @@ function Page({ page }: { page: IFolder["pages"][0] }) {
 }
 
 function Folder({
-  folderName,
-  folderId,
-  pages,
-  isOpen,
+  folder,
   onClick,
-}: IFolder & {
-  onClick: ({ folderId }: { folderId: string }) => void;
+}: {
+  folder: IFolder;
+  onClick: ({ id }: { id: string; state: boolean }) => void;
 }) {
   const [isOnButton, setIsOnButton] = useState(false);
-  console.log(isOpen);
+  const { folderName, id, pages, isOpen } = folder;
   return (
-    <details
-      className="FolderWrapper"
-      open={isOpen}
-      onClick={() => !isOnButton && false}
-    >
+    <details className="FolderWrapper" open={isOpen}>
       <summary
         className="Folder"
-        onClick={() => !isOnButton && onClick({ folderId: folderId })}
+        onClick={(e) => {
+          e.preventDefault();
+          if (isOnButton) return false;
+          else onClick({ id: id, state: !isOpen });
+        }}
       >
         <div className="Folder__left">
           <span
@@ -71,13 +69,11 @@ function Folder({
         </div>
       </summary>
 
-      
       <ul className="Folder__pages">
-        {pages.map((page) => (
-          <Page page={page} />
+        {pages.map((page, index) => (
+          <Page page={page} key={index} />
         ))}
       </ul>
-      {/* )} */}
     </details>
   );
 }
