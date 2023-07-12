@@ -1,20 +1,37 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import "./Folder.scss";
 import { IFolder } from "@/store/models/data.model";
 import * as DropMenu from "@/components/UtilInputs/DropMenu/DropMenu";
+import * as ContextMenu from "@/components/UtilInputs/ContextMenu/ContextMenu";
 
 function Page({ page }: { page: IFolder["pages"][0] }) {
   return (
-    <Fragment>
-      <li key={page.id} className="Page">
-        <button
-          className="Page--button"
-          data-icon-after={String.fromCharCode(60086)}
-        >
-          {page.pageName}
-        </button>
-      </li>
-    </Fragment>
+    <li key={page.id} className="Page">
+      <ContextMenu.Root
+        trigger={
+          <button
+            className="Page--button"
+            data-icon-after={String.fromCharCode(60086)}
+          >
+            {page.pageName}
+          </button>
+        }
+      >
+        <ContextMenu.Content>
+          <ContextMenu.Item
+            onClick={() => {
+              console.log(`Rename ${page.pageName}`);
+            }}
+            data-icon={String.fromCharCode(60019)}
+          >
+            Rename
+          </ContextMenu.Item>
+          <ContextMenu.Item data-icon={String.fromCharCode(60033)}>
+            Delete
+          </ContextMenu.Item>
+        </ContextMenu.Content>
+      </ContextMenu.Root>
+    </li>
   );
 }
 

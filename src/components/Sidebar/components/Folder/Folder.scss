@@ -57,11 +57,11 @@
     list-style: none;
     @include box(100%, 30px);
 
-    &:first-child > button {
+    &:first-child > span > button {
       border-radius: 6px 6px 0 0;
     }
 
-    &:last-child > button {
+    &:last-child > span > button {
       border-radius: 0 0 6px 6px;
     }
 

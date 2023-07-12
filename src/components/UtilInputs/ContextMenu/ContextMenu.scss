@@ -1,0 +1,93 @@
+.ContextMenu {
+  &__Trigger {
+    @include box();
+  }
+
+  &__Content,
+  &__SubContent {
+    min-width: 180px;
+    overflow: hidden;
+    padding: 7px;
+    z-index: 3;
+    background-color: $DropDownMenu__background;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    box-shadow: inset 0 0 0 1px #ffffff33, 0 8px 40px #0000008c;
+    backdrop-filter: saturate(60px) blur(220%);
+  }
+
+  &__Item,
+  &__CheckboxItem,
+  &__RadioItem,
+  &__SubTrigger {
+    font-size: 13px;
+    line-height: 1;
+    color: $TextColor;
+    @include make-flex($dir: row, $just: flex-start);
+    @include box($height: 25px);
+    padding: 8px 8px 8px 6px;
+    position: relative;
+    user-select: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 5px;
+    gap: 5px;
+    &::before {
+      font-size: 13px;
+    }
+
+    &:hover {
+      background-color: #d60017;
+    }
+  }
+  &__SubTrigger[data-state="open"] {
+    background-color: #d60017;
+  }
+  &__Item[data-disabled],
+  &__CheckboxItem[data-disabled],
+  &__RadioItem[data-disabled],
+  &__SubTrigger[data-disabled] {
+    color: var(--gray-8);
+    pointer-events: "none";
+  }
+  &__Item[data-highlighted],
+  &__CheckboxItem[data-highlighted],
+  &__RadioItem[data-highlighted],
+  &__SubTrigger[data-highlighted] {
+    background-color: #d60017;
+  }
+
+  &__Label {
+    padding-left: 25px;
+    font-size: 12px;
+    line-height: 25px;
+    color: var(--gray-11);
+  }
+
+  &__Separator {
+    height: 1px;
+    background-color: #d60017;
+    margin: 5px;
+  }
+
+  &__ItemIndicator {
+    position: absolute;
+    left: 0;
+    width: 25px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .RightSlot {
+    margin-left: auto;
+    padding-left: 20px;
+    color: var(--gray-11);
+  }
+  [data-highlighted] > .RightSlot {
+    color: white;
+  }
+  [data-disabled] .RightSlot {
+    color: var(--gray-8);
+  }
+}
