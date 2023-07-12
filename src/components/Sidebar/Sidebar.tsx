@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import "./Sidebar.scss";
 import { ReactComponent as SidebarIconSVG } from "@/assets/icons/sidebar.left.svg";
 import { ReactComponent as OptionsOutlineSVG } from "@/assets/icons/ellipsis.circle.svg";
@@ -15,6 +14,9 @@ export default function Sidebar() {
 
   const folders = useStoreState((state) => state.data.folders);
   const openFolder = useStoreActions((actions) => actions.data.openFolder);
+  const addFolder = useStoreActions((actions) => actions.data.addFolder);
+  const addPage = useStoreActions((actions) => actions.data.addPage);
+  const currentFolder = useStoreState((state) => state.data.currentFolder);
 
   return (
     <div className={`Sidebar ${isNavOpen ? "Sidebar--open" : ""}`}>
@@ -22,7 +24,7 @@ export default function Sidebar() {
       <div className="Sidebar__leftRight">
         <button
           className={`Sidebar__hamburger ${
-            isNavOpen ? "Sidebar__hamburger--open" : ""
+            !isNavOpen ? "Sidebar__hamburger--open" : ""
           }`}
           onClick={() => toggleNav(!isNavOpen)}
         >
@@ -50,19 +52,35 @@ export default function Sidebar() {
       <div className="Sidebar__right">
         <button
           data-icon-button
-          title="New Note"
+          title="New Page"
           data-icon={String.fromCharCode(60031)}
+          onClick={() => {
+            if (currentFolder) addPage({ pageName: "New Page" });
+            else alert("Select a folder first");
+          }}
         />
         <button
           data-icon-button
           title="New Notebook"
           data-icon={String.fromCharCode(60032)}
+          onClick={() =>
+            addFolder({
+              folderName: "New Folder",
+            })
+          }
         />
       </div>
       <ul className="Sidebar__folders">
-        {folders.map((folder, index) => (
-          <Folder key={index} folder={folder} onClick={openFolder} />
-        ))}
+        {Object.keys(folders).map((folderId: string) => {
+          const folder = folders[folderId as keyof typeof folders];
+          return (
+            <Folder
+              key={folderId}
+              folder={{ ...folder, id: folderId }}
+              onClick={openFolder}
+            />
+          );
+        })}
       </ul>
     </div>
   );

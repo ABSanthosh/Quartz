@@ -1,6 +1,7 @@
 .ContextMenu {
   &__Trigger {
     @include box();
+    @include make-flex();
   }
 
   &__Content,
@@ -37,11 +38,11 @@
     }
 
     &:hover {
-      background-color: #d60017;
+      background-color: $ActiveSelection;
     }
   }
   &__SubTrigger[data-state="open"] {
-    background-color: #d60017;
+    background-color: $ActiveSelection;
   }
   &__Item[data-disabled],
   &__CheckboxItem[data-disabled],
@@ -54,7 +55,7 @@
   &__CheckboxItem[data-highlighted],
   &__RadioItem[data-highlighted],
   &__SubTrigger[data-highlighted] {
-    background-color: #d60017;
+    background-color: $ActiveSelection;
   }
 
   &__Label {
@@ -66,7 +67,7 @@
 
   &__Separator {
     height: 1px;
-    background-color: #d60017;
+    background-color: $ActiveSelection;
     margin: 5px;
   }
 

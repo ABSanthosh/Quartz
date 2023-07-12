@@ -25,7 +25,7 @@
     cursor: pointer;
     outline: none;
     @include make-flex($dir: row, $just: space-between);
-    padding: 10px;
+    padding: 7px 10px;
     transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
     user-select: none;
 
@@ -51,11 +51,25 @@
 
       list-style: none;
     }
+
+    &--input {
+      @include box();
+      padding: 8px 5px;
+      border: 1.5px solid #d5dae1;
+      background-color: #ffffff1a;
+      border-radius: 3px;
+      color: $TextColor;
+      border: 1px solid #545454;
+      font-size: 15.5px;
+      margin: auto;
+      outline: none;
+    }
   }
 
   .Page {
     list-style: none;
     @include box(100%, 30px);
+    position: relative;
 
     &:first-child > span > button {
       border-radius: 6px 6px 0 0;
@@ -63,6 +77,10 @@
 
     &:last-child > span > button {
       border-radius: 0 0 6px 6px;
+    }
+
+    &:only-child > span > button {
+      border-radius: 6px;
     }
 
     &:not(:last-child) {
@@ -89,6 +107,29 @@
       &:hover {
         background-color: #ffffff0d;
       }
+    }
+
+    &--input {
+      @include box(calc(100% - 7px), calc(100% - 7px));
+      padding: 8px 5px;
+      border: 1.5px solid #d5dae1;
+      background-color: #ffffff1a;
+      border-radius: 3px;
+      color: $TextColor;
+      border: 1px solid #545454;
+      font-size: 15.5px;
+      margin: auto;
+      outline: none;
+    }
+
+    &--empty {
+      @include box(100%, 100%);
+      @include make-flex($dir: row, $just: center, $align: center);
+      color: $TextColor;
+      font-size: 15px;
+      font-weight: 500;
+      text-align: center;
+      padding: 10px;
     }
   }
 }

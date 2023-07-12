@@ -42,13 +42,17 @@
     font-size: 13px;
     line-height: 1;
     color: $TextColor;
-    @include make-flex($align: flex-start);
+    @include make-flex($dir: row, $just: flex-start);
     @include box($height: 32px);
     padding: 10px;
     position: relative;
     user-select: none;
     outline: none;
     cursor: pointer;
+    gap: 5px;
+    &::before {
+      font-size: 13px;
+    }
 
     &:first-child {
       border-top-left-radius: 5px;

@@ -9,19 +9,19 @@ $padding: 20px;
   height: 100vh;
   position: fixed;
   max-width: 290px;
-  transform: translateX(0%);
   padding: 0 $padding $padding;
   border-right: 2px solid $Accent;
   background-color: $Sidebar__background;
   border-right: 1px solid $Sidebar__border;
   // @include make-flex($dir: column, $just: flex-start);
   transition: transform 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+  transform: translateX(-100%);
 
   display: grid;
   grid-template-rows: 26px 22px 35px 20px 1fr;
 
   &--open {
-    transform: translateX(-100%);
+    transform: translateX(0%);
   }
   &--hide {
     display: none;
@@ -113,7 +113,7 @@ $padding: 20px;
 
     padding-right: calc($padding - $scrollbarWidth - $scrollbarOffset);
     scrollbar-gutter: stable;
-    scroll-behavior: smooth;  
+    scroll-behavior: smooth;
     &::-webkit-scrollbar {
       @include box($scrollbarWidth, $scrollbarWidth);
     }
