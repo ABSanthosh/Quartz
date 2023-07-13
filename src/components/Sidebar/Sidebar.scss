@@ -1,19 +1,28 @@
 $padding: 20px;
 
-.LeftPane {
+.Sidebar {
+  top: 0;
+  left: 0;
   gap: 15px;
   z-index: 2;
   width: 100%;
   height: 100vh;
-  position: relative;
+  position: fixed;
+  max-width: 290px;
   padding: 0 $padding $padding;
   border-right: 2px solid $Accent;
   background-color: $Sidebar__background;
   border-right: 1px solid $Sidebar__border;
+  // @include make-flex($dir: column, $just: flex-start);
+  transition: transform 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+  transform: translateX(-100%);
 
   display: grid;
   grid-template-rows: 26px 22px 35px 20px 1fr;
 
+  &--open {
+    transform: translateX(0%);
+  }
   &--hide {
     display: none;
   }
@@ -72,9 +81,19 @@ $padding: 20px;
   }
 
   &__hamburger {
+    // top: 46px;
+    left: $padding;
     @include box(30px, 22px);
     background-color: $Sidebar__background;
     border-radius: 4px;
+
+    &--open {
+      position: fixed;
+      transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+      // top: 46px;
+      top: 10px;
+      left: calc(100% + 10px);
+    }
   }
 
   &__options {

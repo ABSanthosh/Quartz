@@ -1,5 +1,5 @@
-import "./LeftPane.scss";
-import { ReactComponent as LeftPaneIconSVG } from "@/assets/icons/sidebar.left.svg";
+import "./Sidebar.scss";
+import { ReactComponent as SidebarIconSVG } from "@/assets/icons/sidebar.left.svg";
 import { ReactComponent as OptionsOutlineSVG } from "@/assets/icons/ellipsis.circle.svg";
 import * as DropMenu from "@/components/UtilInputs/DropMenu/DropMenu";
 import SearchBar from "./components/SearchBar/SearchBar";
@@ -7,7 +7,7 @@ import { useStoreActions, useStoreState } from "@/hooks/useStoreHooks";
 import Folder from "./components/Folder/Folder";
 import { IFolder } from "@/store/models/data.model";
 
-export default function LeftPane() {
+export default function Sidebar() {
   // const [isNavOpen, toggleNav] = useState(false);
 
   const toggleNav = useStoreActions((actions) => actions.ui.toggleNav);
@@ -20,21 +20,21 @@ export default function LeftPane() {
   const currentFolder = useStoreState((state) => state.data.currentFolder);
 
   return (
-    <div className={`LeftPane ${isNavOpen ? "LeftPane--open" : ""}`}>
-      <div className="LeftPane__logo">QUARTZ</div>
-      <div className="LeftPane__leftRight">
+    <div className={`Sidebar ${isNavOpen ? "Sidebar--open" : ""}`}>
+      <div className="Sidebar__logo">QUARTZ</div>
+      <div className="Sidebar__leftRight">
         <button
-          className={`LeftPane__hamburger ${
-            !isNavOpen ? "LeftPane__hamburger--open" : ""
+          className={`Sidebar__hamburger ${
+            !isNavOpen ? "Sidebar__hamburger--open" : ""
           }`}
           onClick={() => toggleNav(!isNavOpen)}
         >
-          <LeftPaneIconSVG />
+          <SidebarIconSVG />
         </button>
         <DropMenu.Root
           align="end"
           triggerButton={
-            <button className="LeftPane__options">
+            <button className="Sidebar__options">
               <OptionsOutlineSVG />
             </button>
           }
@@ -50,7 +50,7 @@ export default function LeftPane() {
         </DropMenu.Root>
       </div>
       <SearchBar />
-      <div className="LeftPane__right">
+      <div className="Sidebar__right">
         <button
           data-icon-button
           title="New Page"
@@ -71,7 +71,7 @@ export default function LeftPane() {
           }
         />
       </div>
-      <ul className="LeftPane__folders">
+      <ul className="Sidebar__folders">
         {Object.keys(folders).map((folderId: string) => {
           const folder = folders[folderId as keyof typeof folders];
           return (

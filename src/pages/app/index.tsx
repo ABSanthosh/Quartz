@@ -1,4 +1,4 @@
-import LeftPane from "@/components/LeftPane/LeftPane";
+import Sidebar from "@/components/Sidebar/Sidebar";
 import { useStoreActions, useStoreState } from "@/hooks/useStoreHooks";
 import "@/styles/routes/main-app.scss";
 import { useEffect, useState } from "react";
@@ -7,10 +7,8 @@ import remarkGfm from "remark-gfm";
 import "@/styles/routes/markdown.scss";
 import useDebounce from "@/hooks/useDebounce";
 import { IFolder } from "@/store/models/data.model";
-import Split from "react-split-grid";
-import RightPane from "@/components/RightPane/RightPane";
 
-export default function Workbench() {
+export default function MainApp() {
   const isNavOpen = useStoreState((state) => state.ui.isNavOpen);
   const activePage = useStoreState((actions) => actions.data.activePage);
   const currentFolder = useStoreState((state) => state.data.currentFolder);
@@ -21,7 +19,6 @@ export default function Workbench() {
   );
   const [markdown, setMarkdown] = useState<string>(`# Hello, world!`);
   const debouncedValue = useDebounce(markdown, 1000);
-  const [gridTemplate, setGridTemplate] = useState("290px 4px 1fr 4px 290px");
 
   useEffect(() => {
     if (currentFolder && activePage) {
@@ -36,49 +33,27 @@ export default function Workbench() {
 
   useEffect(() => {
     if (currentFolder && activePage) {
-      const pageData = (folders[currentFolder] as IFolder).pages[activePage]
-        .data;
+      const pageData = (folders[currentFolder] as IFolder).pages[activePage].data
       console.log(pageData);
       setMarkdown(pageData);
     }
   }, [activePage]);
 
   return (
-    // @ts-ignore
-    <Split
-      // snapOffset={240}
-      onDrag={(_, __, gridTemplateStyle) => setGridTemplate(gridTemplateStyle)}
-    >
-      {({
-        getGridProps,
-        getGutterProps,
-      }: {
-        getGridProps: any;
-        getGutterProps: any;
-      }) => (
-        <main
-          className="Workbench"
-          {...getGridProps()}
-          style={{
-            gridTemplateColumns: gridTemplate,
-          }}
-        >
-          <LeftPane />
-          <span
-            role="presentation"
-            className="Workbench__sash Workbench__sash--left"
-            {...getGutterProps("column", 1)}
-          />
-          <div className="Workbench__content"></div>
-
-          <span
-            role="presentation"
-            className="Workbench__sash Workbench__sash--right"
-            {...getGutterProps("column", 3)}
-          />
-          <RightPane />
-        </main>
-      )}
-    </Split>
+    <main className={`MainApp ${!isNavOpen ? "MainApp--open" : ""}`}>
+      <Sidebar />
+      <div className="MainApp__content">
+        <textarea
+          className="MainApp__content--textarea MarkdownBody"
+          value={markdown}
+          onChange={(e) => setMarkdown(e.target.value)}
+        />
+        <ReactMarkdown
+          children={markdown}
+          className="MarkdownBody"
+          remarkPlugins={[remarkGfm]}
+        />
+      </div>
+    </main>
   );
 }
