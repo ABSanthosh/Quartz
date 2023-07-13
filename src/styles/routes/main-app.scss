@@ -1,42 +1,75 @@
-.MainApp {
+.Workbench {
   @include box();
-  @include make-flex($dir: row);
-  transition: padding 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
-  padding-left: 290px;
+  display: grid;
+  
+  &__sash {
+    cursor: col-resize;
 
-  &--open {
-    padding-left: 0;
-  }
-  &__content {
-    @include box();
-    display: grid;
-    background-color: $Main__background;
-    grid-template-columns: 1fr 1fr;
-    padding-top: 42px;
+    @include box(4px);
+    z-index: 2;
+    transition: background-color 0.2s ease-in-out;
+    display: flex;
 
-    &--textarea {
-      color: transparent;
-      word-wrap: break-word;
-      background: transparent;
-      border: none;
-      box-sizing: border-box;
-      font-size: 14px;
-      letter-spacing: normal;
-      line-height: calc(1em + 1ex);
-      margin: 0;
-      outline: none;
-      overflow: hidden;
-      padding: 0;
-      resize: none;
-      border-right: 2px solid $SelectionColor;
-      tab-size: 4;
-      white-space: pre-wrap;
-      @include box();
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
-    .MarkdownBody {
-      padding: 20px;
+    &:active,
+    &:hover {
+      background-color: $Accent;
     }
   }
 }
+
+// .Workbench {
+//   @include box();
+//   // @include make-flex($dir: row);
+//   transition: padding 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+//   padding-left: 290px;
+
+//   &--open {
+//     padding-left: 0;
+//   }
+//   &__content {
+//     @include box();
+//     display: grid;
+//     background-color: $Main__background;
+//     grid-template-columns: 1fr 1fr;
+//     // padding-top: 42px;
+
+//     &--textarea {
+//       color: transparent;
+//       word-wrap: break-word;
+//       background: transparent;
+//       border: none;
+//       box-sizing: border-box;
+//       font-size: 14px;
+//       letter-spacing: normal;
+//       line-height: calc(1em + 1ex);
+//       margin: 0;
+//       outline: none;
+//       overflow: hidden;
+//       padding: 0;
+//       resize: none;
+//       border-right: 2px solid $SelectionColor;
+//       tab-size: 4;
+//       white-space: pre-wrap;
+//       @include box();
+//       -webkit-print-color-adjust: exact;
+//       print-color-adjust: exact;
+//     }
+//     .MarkdownBody {
+//       padding: 20px;
+//     }
+//   }
+
+// &__sash {
+//   cursor: col-resize;
+
+//   @include box(4px);
+//   z-index: 2;
+//   transition: background-color 0.2s ease-in-out;
+//   display: flex;
+
+//   &:active,
+//   &:hover {
+//     background-color: $Accent;
+//   }
+// }
+// }
